@@ -133,11 +133,12 @@
    },
    "visdoc": {
     "metric": "ndcg_linear@5",
-    "n_tasks": 23,
-    "complete": false,
-    "mean": 85.693,
+    "n_tasks": 24,
+    "complete": true,
+    "mean": 84.7794,
     "tasks": {
      "MMLongBench-doc": 58.2251,
+     "MMLongBench-page": 63.766,
      "ViDoRe_arxivqa": 89.5223,
      "ViDoRe_biomedical_lectures_v2_multilingual": 69.3495,
      "ViDoRe_docvqa": 58.7487,
@@ -208,12 +209,14 @@
    },
    "visdoc": {
     "metric": "ndcg_linear@5",
-    "n_tasks": 11,
+    "n_tasks": 13,
     "complete": false,
-    "mean": 89.1339,
+    "mean": 86.7276,
     "tasks": {
      "ViDoRe_arxivqa": 87.3001,
+     "ViDoRe_biomedical_lectures_v2_multilingual": 73.4091,
      "ViDoRe_docvqa": 58.4651,
+     "ViDoRe_economics_reports_v2_multilingual": 73.577,
      "ViDoRe_esg_reports_human_labeled_v2": 83.2629,
      "ViDoRe_infovqa": 93.8066,
      "ViDoRe_shiftproject": 90.6013,
@@ -229,10 +232,11 @@
   "Qwen3.8-27B, pointwise": {
    "image": {
     "metric": "hit@1",
-    "n_tasks": 6,
+    "n_tasks": 7,
     "complete": false,
-    "mean": 72.3833,
+    "mean": 74.0143,
     "tasks": {
+     "EDIS": 83.8,
      "MSCOCO_i2t": 62.1,
      "MSCOCO_t2i": 73.1,
      "VisDial": 80.1,
