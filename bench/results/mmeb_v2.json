@@ -133,10 +133,11 @@
    },
    "visdoc": {
     "metric": "ndcg_linear@5",
-    "n_tasks": 21,
+    "n_tasks": 23,
     "complete": false,
-    "mean": 86.9798,
+    "mean": 85.693,
     "tasks": {
+     "MMLongBench-doc": 58.2251,
      "ViDoRe_arxivqa": 89.5223,
      "ViDoRe_biomedical_lectures_v2_multilingual": 69.3495,
      "ViDoRe_docvqa": 58.7487,
@@ -151,6 +152,7 @@
      "ViDoRe_syntheticDocQA_healthcare_industry": 100.0,
      "ViDoRe_tabfquad": 98.2695,
      "ViDoRe_tatdqa": 80.3137,
+     "ViDoSeek-doc": 86.1377,
      "ViDoSeek-page": 92.7512,
      "VisRAG_ArxivQA": 89.646,
      "VisRAG_ChartQA": 89.55,
@@ -206,15 +208,19 @@
    },
    "visdoc": {
     "metric": "ndcg_linear@5",
-    "n_tasks": 7,
+    "n_tasks": 11,
     "complete": false,
-    "mean": 86.3868,
+    "mean": 89.1339,
     "tasks": {
      "ViDoRe_arxivqa": 87.3001,
      "ViDoRe_docvqa": 58.4651,
+     "ViDoRe_esg_reports_human_labeled_v2": 83.2629,
      "ViDoRe_infovqa": 93.8066,
      "ViDoRe_shiftproject": 90.6013,
      "ViDoRe_syntheticDocQA_artificial_intelligence": 100.0,
+     "ViDoRe_syntheticDocQA_energy": 96.3928,
+     "ViDoRe_syntheticDocQA_government_reports": 98.1546,
+     "ViDoRe_syntheticDocQA_healthcare_industry": 97.9544,
      "ViDoRe_tabfquad": 97.5389,
      "ViDoRe_tatdqa": 76.9957
     }
@@ -223,11 +229,16 @@
   "Qwen3.8-27B, pointwise": {
    "image": {
     "metric": "hit@1",
-    "n_tasks": 1,
+    "n_tasks": 6,
     "complete": false,
-    "mean": 62.1,
+    "mean": 72.3833,
     "tasks": {
-     "MSCOCO_i2t": 62.1
+     "MSCOCO_i2t": 62.1,
+     "MSCOCO_t2i": 73.1,
+     "VisDial": 80.1,
+     "VisualNews_i2t": 62.7,
+     "VisualNews_t2i": 67.3,
+     "WebQA": 89.0
     }
    }
   },

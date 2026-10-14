@@ -1,0 +1,32 @@
+% Shared visual identity of VLM-as-Jev (from the README cover): colours, the gradient, the mark.
+% \input by techreport.sty users and by the standalone figures. Needs xcolor and tikz.
+\definecolor{jevink}{HTML}{1F1F1F}
+\definecolor{jevmuted}{HTML}{444746}
+\definecolor{jevsubtle}{HTML}{5E6368}
+\definecolor{jevline}{HTML}{DDE3EA}
+\definecolor{jevline2}{HTML}{E3E8EF}
+\definecolor{jevfill}{HTML}{F0F4F9}
+\definecolor{jevground}{HTML}{F8FAFD}
+\definecolor{jevlink}{HTML}{0B57D0}
+\definecolor{jevblue}{HTML}{4285F4}
+\definecolor{jevpurple}{HTML}{9B72CB}
+\definecolor{jevrose}{HTML}{D96570}
+\definecolor{jevred}{HTML}{EA4335}
+\definecolor{jevyellow}{HTML}{FBBC04}
+\definecolor{jevgreen}{HTML}{34A853}
+\pgfdeclarehorizontalshading{jevgrad}{100bp}{color(0bp)=(jevblue); color(25bp)=(jevblue); color(52bp)=(jevpurple);
+  color(75bp)=(jevrose); color(100bp)=(jevrose)}
+% the mark: a rounded tile with four probability bars and a target, drawn at width #1
+\newcommand{\vlmjevmark}[1]{%
+  \begin{tikzpicture}[x=#1/360, y=#1/360, line cap=round]
+    \draw[jevline2, line width=#1/180, fill=white, rounded corners=#1*88/360] (2,2) rectangle (358,358);
+    \shade[shading=jevgrad, rounded corners=#1*18/360] (64,252) rectangle (224,288);
+    \draw[jevrose, line width=#1/45] (272,270) circle[radius=28];
+    \fill[jevrose] (272,270) circle[radius=13];
+    \fill[jevred, rounded corners=#1*18/360] (64,192) rectangle (168,228);
+    \fill[jevyellow, rounded corners=#1*18/360] (64,132) rectangle (128,168);
+    \fill[jevgreen, rounded corners=#1*18/360] (64,72) rectangle (100,108);
+  \end{tikzpicture}}
+% the target icon of the cover, at height #1
+\newcommand{\jevtarget}[1]{%
+  \tikz[baseline=-0.5ex]{\draw[jevrose, line width=#1*0.12] (0,0) circle[radius=#1*0.38]; \fill[jevrose] (0,0) circle[radius=#1*0.18];}}

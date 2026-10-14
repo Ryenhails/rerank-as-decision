@@ -21,7 +21,9 @@ def table(header_start):
     for x in lines[start + 2:]:
         if not x.startswith("|"):
             break
-        rows.append([re.sub(r"&nbsp;|<sup>.*?</sup>", "", c).strip() for c in x.strip().strip("|").split("|")])
+        cells = [re.sub(r"&nbsp;|<sup>.*?</sup>|\*\*", "", c).strip() for c in x.strip().strip("|").split("|")]
+        if any(cells[1:]):  # group rows such as "*Supervised rerankers*" have no values
+            rows.append(cells)
     assert rows, header_start
     return rows
 
@@ -30,25 +32,30 @@ def expected(entry):
     return "%.2f" % entry["mean"] if entry and entry["complete"] else "—"
 
 
+MAIN_ROWS = {"Qwen3-VL-Embedding-2B (first stage)": "Qwen3-VL-Embedding-2B",
+             "Qwen3-VL-Reranker-2B": "Qwen3-VL-Reranker-2B", "Qwen3-VL-Reranker-8B": "Qwen3-VL-Reranker-8B",
+             "Qwen3.8-27B": "VLM-as-Jev, Qwen3.8-27B", "JEV-27B-VL (decision-tuned on text)": "VLM-as-Jev, JEV-27B-VL"}
+
+
 def test_main_table():
-    rows = table("| reranker | trained for reranking |")
-    assert [r[0] for r in rows] == ["Qwen3-VL-Embedding-2B", "Qwen3-VL-Reranker-2B", "Qwen3-VL-Reranker-8B",
-                                    "VLM-as-Jev, Qwen3.8-27B", "VLM-as-Jev, JEV-27B-VL"]
-    for name, _, image, visdoc, vidore in rows:
+    rows = table("| | MMEB-V2 image")
+    assert [r[0] for r in rows] == list(MAIN_ROWS)
+    for row, image, visdoc, vidore in rows:
+        name = MAIN_ROWS[row]
         assert image == expected(MMEB.get(name, {}).get("image")), (name, "image")
         assert visdoc == expected(MMEB.get(name, {}).get("visdoc")), (name, "visdoc")
         assert vidore == expected(VIDORE.get(name, {}).get("pooled")), (name, "vidore pooled")
 
 
 def test_vidore_english_table():
-    for name, cell in table("| reranker | ViDoRe V3 English |"):
+    for name, cell in table("| reranker | nDCG@10 · 8 datasets |"):
         assert cell == expected(VIDORE.get(name, {}).get("english")), name
 
 
 def test_readout_table():
     first_stage = expected(MMEB["Qwen3-VL-Embedding-2B"]["image"])
     assert f"the first stage scores {first_stage})" in README
-    for backbone, listwise, pointwise in table("| backbone | listwise, 1 prompt |"):
+    for backbone, listwise, pointwise in table("| backbone | listwise · 1 prompt |"):
         assert listwise == expected(MMEB.get(f"VLM-as-Jev, {backbone}", {}).get("image")), backbone
         assert pointwise == expected(MMEB.get(f"{backbone}, pointwise", {}).get("image")), backbone
 

@@ -15,3 +15,5 @@ Retrieval*.
   read a missing label as probability 0; no label was missing in any of them.
 - Scripts: `eval_mmeb.py`, `eval_vidore3.py`, `latency.py`, `summarize.py`; results in `bench/results/`.
 - `patches/qwen3vl_reranker_tf5_compat.patch`: runs Qwen3-VL-Reranker's released code under transformers 5.
+- README with the cover, a figure of the readout (`assets/how_it_works.png`, TikZ source in `assets/src/`) and the
+  results tables.
