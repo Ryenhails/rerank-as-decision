@@ -1,0 +1,15 @@
+--- a/src/models/qwen3_vl_reranker.py
++++ b/src/models/qwen3_vl_reranker.py
+@@ -219,6 +219,12 @@
+         )
+         for key in temp_inputs:
+             inputs[key] = temp_inputs[key]
++        # VLM-as-Jev compatibility patch (transformers >= 5): the processor also returns mm_token_type_ids, which the
++        # model needs for M-RoPE; rebuild it from the final (truncated, left-padded) input_ids so it is a tensor aligned
++        # with them. Not present under transformers 4.57, where this is a no-op.
++        if 'mm_token_type_ids' in inputs:
++            inputs['mm_token_type_ids'] = torch.tensor(
++                self.processor.create_mm_token_type_ids(inputs['input_ids'].tolist()), dtype=inputs['input_ids'].dtype)
+             
+         return inputs
+ 

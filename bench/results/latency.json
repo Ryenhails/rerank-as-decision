@@ -1,0 +1,69 @@
+{
+ "meta": {
+  "gpu": "NVIDIA H200",
+  "domains": [
+   "computer_science",
+   "hr"
+  ],
+  "queries": 110,
+  "warmup_dropped": 10,
+  "topk": 16,
+  "candidates_from": {
+   "computer_science": "Qwen3-VL-Embedding-2B",
+   "hr": "Qwen3-VL-Embedding-2B"
+  },
+  "max_pixels": 1843200,
+  "concurrency": 1
+ },
+ "unit": "seconds per query",
+ "results": {
+  "Qwen3-VL-Reranker-2B": {
+   "n": 100,
+   "mean_s": 2.7472615339368347,
+   "median_s": 2.7403642720310017,
+   "p90_s": 2.8011385570280254,
+   "mean_prefill_tokens": 29564.96,
+   "calls_per_query": 16
+  },
+  "Qwen3-VL-Reranker-8B": {
+   "n": 100,
+   "mean_s": 3.667404995924444,
+   "median_s": 3.655606386513682,
+   "p90_s": 3.695201852999162,
+   "mean_prefill_tokens": 29564.96,
+   "calls_per_query": 16
+  },
+  "VLM-as-Jev, Qwen3.8-27B": {
+   "n": 100,
+   "mean_s": 3.973302386224386,
+   "median_s": 3.9833372505090665,
+   "p90_s": 4.036186234035995,
+   "mean_prefill_tokens": 28817.25,
+   "calls_per_query": 1
+  },
+  "VLM-as-Jev, JEV-27B-VL": {
+   "n": 100,
+   "mean_s": 4.483900830632774,
+   "median_s": 4.52119042299455,
+   "p90_s": 4.5566187660442665,
+   "mean_prefill_tokens": 28890.25,
+   "calls_per_query": 1
+  },
+  "Qwen3.8-27B, pointwise": {
+   "n": 100,
+   "mean_s": 3.097867439450929,
+   "median_s": 3.1032518334977794,
+   "p90_s": 3.134661880962085,
+   "mean_prefill_tokens": 29792.8,
+   "calls_per_query": 16
+  },
+  "JEV-27B-VL, pointwise": {
+   "n": 100,
+   "mean_s": 3.5698899636708665,
+   "median_s": 3.5815992934803944,
+   "p90_s": 3.6093214750289917,
+   "mean_prefill_tokens": 29872.8,
+   "calls_per_query": 16
+  }
+ }
+}

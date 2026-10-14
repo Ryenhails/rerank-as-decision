@@ -1,0 +1,48 @@
+{
+ "benchmark": "ViDoRe V3, nDCG@10, top-16 of Qwen3-VL-Embedding-2B",
+ "protocols": {
+  "pooled": "all six languages pooled per dataset, mean over datasets",
+  "english": "English queries only, mean over datasets"
+ },
+ "unit": "percent",
+ "systems": {
+  "Qwen3-VL-Embedding-2B": {
+   "pooled": {
+    "n_datasets": 8,
+    "complete": true,
+    "queries": 14514,
+    "mean": 53.008,
+    "datasets": {
+     "computer_science": 72.2093,
+     "energy": 58.0644,
+     "finance_en": 56.4673,
+     "finance_fr": 36.2457,
+     "hr": 51.9599,
+     "industrial": 40.3246,
+     "pharmaceuticals": 61.9358,
+     "physics": 46.8568
+    }
+   },
+   "english": {
+    "n_datasets": 8,
+    "complete": true,
+    "queries": 2419,
+    "mean": 56.0835,
+    "datasets": {
+     "computer_science": 74.4037,
+     "energy": 57.383,
+     "finance_en": 63.1934,
+     "finance_fr": 35.129,
+     "hr": 58.7267,
+     "industrial": 48.2724,
+     "pharmaceuticals": 64.3027,
+     "physics": 47.2569
+    }
+   }
+  },
+  "Qwen3-VL-Reranker-2B": {},
+  "Qwen3-VL-Reranker-8B": {},
+  "VLM-as-Jev, Qwen3.8-27B": {},
+  "VLM-as-Jev, JEV-27B-VL": {}
+ }
+}

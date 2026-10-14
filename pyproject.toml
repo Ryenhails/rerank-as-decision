@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vlm-as-jev"
+version = "0.1.0"
+description = "Vision-language models as zero-shot System One rerankers: rank up to 16 images or pages by the next-token probabilities of their labels, in one forward pass."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [
+    { name = "Zhuchenyang Liu" },
+    { name = "Yao Zhang" },
+    { name = "Yu Xiao" },
+]
+keywords = ["reranking", "multimodal retrieval", "vision-language model", "zero-shot", "system-one", "jev", "vllm"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = ["pillow>=10"]
+
+[project.optional-dependencies]
+# ChatBackend maps the labels to token ids with the model's tokenizer
+client = ["transformers>=4.57"]
+# scripts/: ViDoRe V3 from the Hub as parquet, the Qwen3-VL-Embedding loaders' config files
+eval = ["transformers>=4.57", "huggingface_hub>=0.30", "pyarrow>=15", "pyyaml>=6"]
+dev = ["pytest>=8", "ruff"]
+
+[tool.setuptools.packages.find]
+include = ["vlm_as_jev*"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

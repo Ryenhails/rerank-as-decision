@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the technical report."
+title: "VLM-as-Jev"
+type: software
+license: Apache-2.0
+version: 0.1.0
+authors:
+  - family-names: Liu
+    given-names: Zhuchenyang
+    affiliation: Aalto University
+  - family-names: Zhang
+    given-names: Yao
+    affiliation: Aalto University
+  - family-names: Xiao
+    given-names: Yu
+    affiliation: Aalto University
+keywords:
+  - multimodal retrieval
+  - reranking
+  - vision-language models
+  - zero-shot
+  - system one
+preferred-citation:
+  type: report
+  title: "VLMs as Zero-Shot System One Rerankers for Multimodal Retrieval"
+  authors:
+    - family-names: Liu
+      given-names: Zhuchenyang
+    - family-names: Zhang
+      given-names: Yao
+    - family-names: Xiao
+      given-names: Yu
+  institution:
+    name: Aalto University
+  year: 2026

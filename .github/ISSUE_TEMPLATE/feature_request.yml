@@ -1,0 +1,19 @@
+name: Feature or new result
+description: A new backend, a new kind of decision, or results on a new task
+labels: [enhancement]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What would you like to add?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: What does it make possible?
+  - type: textarea
+    id: plan
+    attributes:
+      label: How would you build or evaluate it?
+      description: For new results, the data, the metric, and the command you would run.
