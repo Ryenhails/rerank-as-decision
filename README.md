@@ -6,6 +6,7 @@
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-3b82f6.svg)](pyproject.toml)
+[![CI](https://github.com/Ryenhails/VLM-as-Jev/actions/workflows/ci.yml/badge.svg)](https://github.com/Ryenhails/VLM-as-Jev/actions/workflows/ci.yml)
 [![Technical Report](https://img.shields.io/badge/Technical%20Report-coming%20soon-b31b1b.svg)](#-citation)
 
 **Zhuchenyang Liu** &nbsp;·&nbsp; **Yao Zhang** &nbsp;·&nbsp; **Yu Xiao**

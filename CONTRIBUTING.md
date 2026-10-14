@@ -7,7 +7,7 @@ are in [ROADMAP.md](ROADMAP.md); the ones marked **help wanted** are good places
 ## Development setup
 
 ```bash
-git clone <your fork>
+git clone https://github.com/Ryenhails/VLM-as-Jev.git      # or your fork
 cd VLM-as-Jev
 pip install -e ".[dev]"
 ruff check vlm_as_jev scripts tests && pytest -q      # what CI runs; CPU only, a few seconds

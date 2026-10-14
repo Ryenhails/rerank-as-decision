@@ -34,6 +34,11 @@ client = ["transformers>=4.57"]
 eval = ["transformers>=4.57", "huggingface_hub>=0.30", "pyarrow>=15", "pyyaml>=6"]
 dev = ["pytest>=8", "ruff"]
 
+[project.urls]
+Homepage = "https://github.com/Ryenhails/VLM-as-Jev"
+Repository = "https://github.com/Ryenhails/VLM-as-Jev"
+Changelog = "https://github.com/Ryenhails/VLM-as-Jev/blob/main/CHANGELOG.md"
+
 [tool.setuptools.packages.find]
 include = ["vlm_as_jev*"]
 
