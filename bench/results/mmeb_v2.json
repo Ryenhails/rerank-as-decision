@@ -164,7 +164,7 @@
     }
    }
   },
-  "VLM-as-Jev, Qwen3.8-27B": {
+  "VLM-as-Jev (Qwen3.8-27B)": {
    "image": {
     "metric": "hit@1",
     "n_tasks": 12,
@@ -186,7 +186,7 @@
     }
    }
   },
-  "VLM-as-Jev, JEV-27B-VL": {
+  "JEV-27B-VL, decision head": {
    "image": {
     "metric": "hit@1",
     "n_tasks": 12,

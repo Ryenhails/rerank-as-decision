@@ -93,8 +93,8 @@ have not compared its numbers with these.
 
 | report | `--backend` | `--model` | `--readout` |
 |---|---|---|---|
-| VLM-as-Jev, Qwen3.8-27B | `chat` | `autotrust/JEV-27B-VL` | `listwise` |
-| VLM-as-Jev, JEV-27B-VL | `jev` | | `listwise` |
+| VLM-as-Jev (Qwen3.8-27B) | `chat` | `autotrust/JEV-27B-VL` | `listwise` |
+| JEV-27B-VL, decision head | `jev` | | `listwise` |
 | Qwen3.8-27B, pointwise | `chat` | `autotrust/JEV-27B-VL` | `pointwise` |
 | JEV-27B-VL, pointwise | `jev` | | `pointwise` |
 

@@ -13,7 +13,7 @@
     font=\sffamily\small, text=jevink,
     card/.style={fill=white, draw=jevline2, line width=0.6pt, rounded corners=9pt,
                  blur shadow={shadow blur steps=8, shadow xshift=0pt, shadow yshift=-1.2pt, shadow opacity=12}},
-    chip/.style={fill=jevfill, rounded corners=7pt, inner sep=0pt},
+    chip/.style={fill=jevfill, rounded corners=7pt, inner ysep=0pt},
     lab/.style={circle, minimum size=13pt, inner sep=0pt, font=\notomono\scriptsize\semib},
     steptitle/.style={font=\sffamily\footnotesize\semib, text=jevmuted},
     num/.style={circle, fill=jevink, text=white, minimum size=12pt, inner sep=0pt, font=\sffamily\scriptsize\semib},
@@ -27,9 +27,8 @@
   \node[steptitle, anchor=west] at (0.48,6.05) {One prompt};
   \node[card, minimum width=6.3cm, minimum height=5.15cm, anchor=north west] (p) at (0,5.75) {};
   % query chip
-  \node[chip, minimum width=5.8cm, minimum height=0.62cm, anchor=north west] (q) at (0.25,5.5) {};
-  \node[anchor=center] at (0.55,5.19) {\jevtarget{9pt}};
-  \node[anchor=west, font=\sffamily\footnotesize] at (0.78,5.19) {What was the operating margin in 2023?};
+  \node[chip, anchor=north west, minimum height=0.62cm, inner xsep=6pt, font=\sffamily\fontsize{7.4}{9}\selectfont] (q) at (0.25,5.5)
+       {\jevtarget{9pt}\hspace{6pt}What was the operating margin in 2023?};
   % candidates: label, page thumbnail, name
   \foreach \L/\c/\y in {A/jevblue/4.38, B/jevred/3.68, C/jevyellow/2.98, D/jevgreen/2.28} {
     \node[lab, fill=jevfill, text=jevmuted] at (0.55,\y) {\L};
@@ -43,9 +42,11 @@
   }
   \node[anchor=west, font=\sffamily\footnotesize, text=jevsubtle] at (1.68,1.78) {\dots\ up to Candidate P};
   % question line
-  \node[chip, minimum width=5.8cm, minimum height=0.62cm, anchor=south west] at (0.25,0.85) {};
-  \node[anchor=west, font=\sffamily\footnotesize, text=jevmuted, align=left] at (0.38,1.16)
-       {Which candidate best matches the query?};
+  \node[chip, anchor=south west, minimum height=0.62cm, inner xsep=6pt, font=\sffamily\fontsize{7.4}{9}\selectfont, text=jevmuted]
+       (qq) at (0.25,0.85) {Which candidate best matches the query?};
+  % report the chips' right edges: both must stay inside the card (right edge 6.3 cm, inner padding 0.25 cm)
+  \path (q.east); \pgfgetlastxy{\qx}{\qy}\typeout{CHIPEAST q=\qx}
+  \path (qq.east); \pgfgetlastxy{\qx}{\qy}\typeout{CHIPEAST qq=\qx}
 
   % ---------------------------------------------------------------- 2. one forward pass
   \node[num] at (8.0,5.42) {2};

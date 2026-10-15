@@ -54,8 +54,8 @@ r.order, r.scores            # candidate indices, best first; one probability pe
 
 A state or an option is a string, an image, a dict with `"image"` and `"text"`, or a list of these. Images are
 downscaled to 1800 × 32 × 32 pixels. `Decider.yes_no(state, question)` returns the probability of yes, and
-`Reranker(..., readout="pointwise")` uses it per candidate. To use JEV-27B-VL's own decision head, pass
-`JevDecideBackend("http://127.0.0.1:8000")` instead of `ChatBackend`.
+`Reranker(..., readout="pointwise")` uses it per candidate. JEV-27B-VL, a Jev-style decision model on the same
+backbone, can be queried through its own decision head with `JevDecideBackend("http://127.0.0.1:8000")`.
 
 ## Results
 
@@ -68,9 +68,10 @@ budget. "—" marks a run that is still going.
 | *Supervised rerankers* | | | |
 | Qwen3-VL-Reranker-2B | 74.49 | 82.72 | 59.18 |
 | Qwen3-VL-Reranker-8B | 78.36 | 84.78 | — |
-| *Zero-shot, VLM-as-Jev* | | | |
-| Qwen3.8-27B | 76.76 | — | — |
-| JEV-27B-VL (decision-tuned on text) | 76.80 | 85.42 | — |
+| *Jev-style decision model* | | | |
+| JEV-27B-VL, decision head | 76.80 | 85.42 | — |
+| *Ours, zero-shot* | | | |
+| **VLM-as-Jev** (Qwen3.8-27B) | 76.76 | — | — |
 
 <sub>ViDoRe V3 pools its six languages within each dataset.</sub>
 
@@ -94,8 +95,8 @@ the 16 pairs one after another; the 27B models run on vLLM 0.30.0.
 |:--|:--:|:--:|
 | Qwen3-VL-Reranker-2B | 16 | 2.75 |
 | Qwen3-VL-Reranker-8B | 16 | 3.67 |
-| VLM-as-Jev, Qwen3.8-27B | 1 | 3.97 |
-| VLM-as-Jev, JEV-27B-VL | 1 | 4.48 |
+| VLM-as-Jev (Qwen3.8-27B) | 1 | 3.97 |
+| JEV-27B-VL, decision head | 1 | 4.48 |
 | Qwen3.8-27B, pointwise | 16 | 3.10 |
 | JEV-27B-VL, pointwise | 16 | 3.57 |
 
