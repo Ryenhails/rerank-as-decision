@@ -233,14 +233,17 @@
   "Qwen3.8-27B, pointwise": {
    "image": {
     "metric": "hit@1",
-    "n_tasks": 9,
-    "complete": false,
-    "mean": 74.1222,
+    "n_tasks": 12,
+    "complete": true,
+    "mean": 69.5,
     "tasks": {
      "CIRR": 66.0,
      "EDIS": 83.8,
+     "FashionIQ": 32.5,
      "MSCOCO_i2t": 62.1,
      "MSCOCO_t2i": 73.1,
+     "NIGHTS": 64.1,
+     "OVEN": 70.3,
      "VisDial": 80.1,
      "VisualNews_i2t": 62.7,
      "VisualNews_t2i": 67.3,
