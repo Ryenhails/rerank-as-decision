@@ -209,10 +209,12 @@
    },
    "visdoc": {
     "metric": "ndcg_linear@5",
-    "n_tasks": 14,
-    "complete": false,
-    "mean": 85.859,
+    "n_tasks": 24,
+    "complete": true,
+    "mean": 85.4177,
     "tasks": {
+     "MMLongBench-doc": 57.4722,
+     "MMLongBench-page": 66.2053,
      "ViDoRe_arxivqa": 87.3001,
      "ViDoRe_biomedical_lectures_v2_multilingual": 73.4091,
      "ViDoRe_docvqa": 58.4651,
@@ -226,7 +228,15 @@
      "ViDoRe_syntheticDocQA_government_reports": 98.1546,
      "ViDoRe_syntheticDocQA_healthcare_industry": 97.9544,
      "ViDoRe_tabfquad": 97.5389,
-     "ViDoRe_tatdqa": 76.9957
+     "ViDoRe_tatdqa": 76.9957,
+     "ViDoSeek-doc": 85.0733,
+     "ViDoSeek-page": 95.9011,
+     "VisRAG_ArxivQA": 87.6976,
+     "VisRAG_ChartQA": 93.065,
+     "VisRAG_InfoVQA": 96.8685,
+     "VisRAG_MP-DocVQA": 94.1725,
+     "VisRAG_PlotQA": 73.4677,
+     "VisRAG_SlideVQA": 98.0753
     }
    }
   },

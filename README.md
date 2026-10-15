@@ -75,7 +75,7 @@ budget. "—" marks a run that is still going.
 | Qwen3-VL-Reranker-8B | 78.36 | 84.78 | — |
 | *Zero-shot, VLM-as-Jev* | | | |
 | Qwen3.8-27B | 76.76 | — | — <sup>†</sup> |
-| JEV-27B-VL (decision-tuned on text) | 76.80 | — | — |
+| JEV-27B-VL (decision-tuned on text) | 76.80 | 85.42 | — |
 
 <sub>ViDoRe V3 pools its six languages within each dataset. † Qwen3.8-27B was run on the English queries only; see
 below.</sub>
