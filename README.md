@@ -8,11 +8,6 @@
   <a href="https://github.com/Ryenhails/VLM-as-Jev/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Ryenhails/VLM-as-Jev/actions/workflows/ci.yml/badge.svg"></a>
 </p>
 
-<p align="center">
-  <b>Zhuchenyang Liu</b> &nbsp;·&nbsp; <b>Yao Zhang</b> &nbsp;·&nbsp; <b>Yu Xiao</b><br>
-  <sub>Aalto University</sub>
-</p>
-
 VLM-as-Jev reads a typed decision from an off-the-shelf vision-language model. You give it a state (images, document
 pages, text, or a mix) and a question with 2 to 16 options, which can be text or images. It returns one probability per
 option from a single forward pass, with no training and no decoding. Our technical report applies it to reranking for
