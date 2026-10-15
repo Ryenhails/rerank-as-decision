@@ -1,8 +1,8 @@
-"""How a decision is written into a prompt.
+"""How a ranking prompt is written.
 
-A prompt is a list of *parts*: strings, and ``{"image": url}`` dicts (a data URL or an http URL). A choice puts its
-options into the state under letter labels (``Option A:``, ``Option B:``, ...); each option can be text, images or
-both. The answer is read at the label tokens.
+A prompt is a list of *parts*: strings, and ``{"image": url}`` dicts (a data URL or an http URL). A listwise prompt puts
+the candidates into the state under letter labels (``Candidate A:``, ``Candidate B:``, ...); each candidate can be
+text, images or both. The ranking is read at the label tokens.
 """
 from dataclasses import dataclass
 from typing import Dict, List, Sequence, Union

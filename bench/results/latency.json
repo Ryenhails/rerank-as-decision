@@ -33,7 +33,7 @@
    "mean_prefill_tokens": 29564.96,
    "calls_per_query": 16
   },
-  "VLM-as-Jev (Qwen3.8-27B)": {
+  "GlanceRank (Qwen3.8-27B)": {
    "n": 100,
    "mean_s": 3.973302386224386,
    "median_s": 3.9833372505090665,

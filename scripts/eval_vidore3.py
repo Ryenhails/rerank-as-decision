@@ -6,7 +6,7 @@ are pooled within each dataset, nDCG@10 per dataset, mean over the 8 datasets. `
 Stages, one per call; results go to --out/<dataset>/:
   emb     Qwen3-VL-Embedding-2B (the Qwen repo's Qwen3VLEmbedder) -> emb_top100.json
   rr      a Qwen3-VL-Reranker with the repo's own per-pair scoring on the top-K -> rr_<name>_top<K>_<langs>.json
-  rerank  VLM-as-Jev on the top-K page images -> <name>_top<K>_<langs>.json (+ _calls.jsonl, resumable)
+  rerank  GlanceRank on the top-K page images -> <name>_top<K>_<langs>.json (+ _calls.jsonl, resumable)
   score   nDCG@10 of every system found -> summary_{pooled,english}.json
 
     python scripts/eval_vidore3.py emb --out runs/vidore3 --qwen-repo Qwen3-VL-Embedding \
@@ -30,7 +30,7 @@ import sys
 import threading
 import time
 
-from vlm_as_jev import MAX_OPTIONS, ChatBackend, JevDecideBackend, Reranker, to_data_url
+from glancerank import MAX_CANDIDATES, ChatBackend, JevDecideBackend, Ranker, to_data_url
 
 DATASETS = ["computer_science", "energy", "finance_en", "finance_fr", "hr", "industrial", "pharmaceuticals", "physics"]
 QUERY_INSTRUCTION = "Find a document image that matches the given query."  # the MMEB VisDoc query instruction
@@ -138,16 +138,16 @@ def stage_rr(args):
               f"{sum(lat) / len(lat):.2f} s/query", flush=True)
 
 
-def make_reranker(args):
+def make_ranker(args):
     if args.backend == "jev":
         backend = JevDecideBackend(args.url)
     else:
         backend = ChatBackend(args.url, args.model, tokenizer=args.tokenizer)
-    return Reranker(backend, readout=args.readout, max_pixels=args.max_pixels)
+    return Ranker(backend, readout=args.readout, max_pixels=args.max_pixels)
 
 
 def stage_rerank(args):
-    reranker = make_reranker(args)
+    ranker = make_ranker(args)
     for d in args.datasets:
         out = f"{args.out}/{d}"
         path = f"{out}/{args.name}_top{args.topk}_{args.langs}.json"
@@ -177,7 +177,7 @@ def stage_rerank(args):
             t = time.time()
             for _ in range(3):
                 try:
-                    r = reranker.rerank(q["query"], [{"image": urls[c]} for c in ids], instruction=QUERY_INSTRUCTION)
+                    r = ranker.rank(q["query"], [{"image": urls[c]} for c in ids], instruction=QUERY_INSTRUCTION)
                     rec.update(probs=r.scores, prompt_tokens=r.prompt_tokens, calls=r.calls, error=None)
                     break
                 except Exception as e:  # noqa: BLE001 - logged per query, the query keeps the first-stage order
@@ -259,8 +259,8 @@ def main():
     if args.stage == "rerank":
         if not args.url or (args.backend == "chat" and not args.model):
             ap.error("rerank needs --url, and --model with --backend chat")
-        if not 2 <= args.topk <= MAX_OPTIONS:
-            ap.error(f"rerank: --topk must be between 2 and {MAX_OPTIONS}")
+        if not 2 <= args.topk <= MAX_CANDIDATES:
+            ap.error(f"rerank: --topk must be between 2 and {MAX_CANDIDATES}")
     {"emb": stage_emb, "rr": stage_rr, "rerank": stage_rerank, "score": stage_score}[args.stage](args)
 
 

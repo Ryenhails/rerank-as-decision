@@ -164,7 +164,7 @@
     }
    }
   },
-  "VLM-as-Jev (Qwen3.8-27B)": {
+  "GlanceRank (Qwen3.8-27B)": {
    "image": {
     "metric": "hit@1",
     "n_tasks": 12,

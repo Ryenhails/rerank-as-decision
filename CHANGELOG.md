@@ -5,10 +5,10 @@
 First public version, released with the technical report *VLMs as Zero-Shot System One Rerankers for Multimodal
 Retrieval*.
 
-- `Decider`: `choice` (2 to 16 options, text or images, under the labels A–P) and `yes_no`, each read from the
-  next-token probabilities in one forward pass.
-- `Reranker`: reranking as a choice over the retrieved candidates (listwise), or one yes/no question per candidate
+- `Ranker.rank(query, candidates)`: up to 16 candidates (images, document pages, text or a mix) in one prompt under the
+  labels A–P, ranked by the next-token probabilities of the labels (listwise); or one yes/no question per candidate
   (pointwise). Its prompts and requests are byte-identical to the ones behind the report's numbers.
+- The project was called VLM-as-Jev in its first drafts; it is now GlanceRank (package `glancerank`).
 - Backends: `ChatBackend` (any OpenAI-compatible chat endpoint with log-probabilities, tested with vLLM 0.30.0),
   `JevDecideBackend` (JEV-27B-VL's `/v1/decide`), `FakeBackend` (tests).
 - `ChatBackend` raises `LabelTokenError` when the server returns no log-probability for a label. The report's runs

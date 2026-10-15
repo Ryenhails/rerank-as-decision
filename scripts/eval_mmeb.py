@@ -1,4 +1,4 @@
-"""Rerank the MMEB-V2 retrieval tasks (image, visdoc) with VLM-as-Jev, under the protocol of Qwen3-VL-Reranker's own
+"""Rerank the MMEB-V2 retrieval tasks (image, visdoc) with GlanceRank, under the protocol of Qwen3-VL-Reranker's own
 evaluation (github.com/QwenLM/Qwen3-VL-Embedding at 393e297):
 
 - candidates: the first --topk ids of Qwen3-VL-Embedding-2B's ``<task>_pred.jsonl`` (the file their reranker reads);
@@ -22,16 +22,16 @@ import sys
 import threading
 import time
 
-from vlm_as_jev import MAX_OPTIONS, ChatBackend, JevDecideBackend, Reranker
-from vlm_as_jev.reranker import DEFAULT_INSTRUCTION
+from glancerank import MAX_CANDIDATES, ChatBackend, JevDecideBackend, Ranker
+from glancerank.ranker import DEFAULT_INSTRUCTION
 
 
-def make_reranker(args):
+def make_ranker(args):
     if args.backend == "jev":
         backend = JevDecideBackend(args.url)
     else:
         backend = ChatBackend(args.url, model=args.model, tokenizer=args.tokenizer)
-    return Reranker(backend, readout=args.readout, max_pixels=args.max_pixels)
+    return Ranker(backend, readout=args.readout, max_pixels=args.max_pixels)
 
 
 def main():
@@ -52,8 +52,8 @@ def main():
     ap.add_argument("--workers", type=int, default=8, help="queries in flight")
     ap.add_argument("--limit", type=int, help="first N queries per task (a smoke test: nothing is written but the log)")
     args = ap.parse_args()
-    if not 2 <= args.topk <= MAX_OPTIONS:
-        ap.error(f"--topk must be between 2 and {MAX_OPTIONS}")
+    if not 2 <= args.topk <= MAX_CANDIDATES:
+        ap.error(f"--topk must be between 2 and {MAX_CANDIDATES}")
     if args.backend == "chat" and not args.model:
         ap.error("--backend chat needs --model")
     sys.path.insert(0, args.qwen_repo)
@@ -63,7 +63,7 @@ def main():
     from src.evaluation.mmeb_v2.eval_reranker import build_corpus_lookup, load_topk_from_pred
     from src.evaluation.mmeb_v2.utils.eval_utils.metrics import RankingMetrics
 
-    reranker = make_reranker(args)
+    ranker = make_ranker(args)
     os.makedirs(args.out, exist_ok=True)
     configs = yaml.safe_load(open(args.config))
     for task, cfg in configs.items():
@@ -78,7 +78,7 @@ def main():
         for k in ["image_root", "video_root", "frame_root", "clip_root", "data_path"]:
             if cfg.get(k):
                 cfg[k] = os.path.join(args.data_basedir, cfg[k])
-        qry, corpus = AutoEvalPairDataset.instantiate(model_args=RerankArguments(model_name_or_path="vlm-as-jev"),
+        qry, corpus = AutoEvalPairDataset.instantiate(model_args=RerankArguments(model_name_or_path="glancerank"),
                                                       data_args=DataArguments(dataset_config=args.config), **cfg)
         cands = generate_cand_dataset(qry, corpus)
         qry = qry.add_column("topk_ids", topk_ids)
@@ -105,7 +105,7 @@ def main():
                 t = time.time()
                 for _ in range(3):
                     try:
-                        r = reranker.rerank(q, [lookup[d] for d in ids], instruction=instruction)
+                        r = ranker.rank(q, [lookup[d] for d in ids], instruction=instruction)
                         rec.update(probs=r.scores, prompt_tokens=r.prompt_tokens, calls=r.calls, error=None)
                         break
                     except Exception as e:  # noqa: BLE001 - logged per query, the query keeps the first-stage order
@@ -136,7 +136,7 @@ def main():
         metrics = RankingMetrics(cfg.get("metrics", ["hit", "ndcg", "precision", "recall", "f1", "map", "mrr"]))
         sd = metrics.evaluate(preds)
         sd.update(num_pred=len(preds), num_data=len(preds), topk=args.topk,
-                  reranker_model=f"vlm-as-jev backend={reranker.backend.name} readout={args.readout}",
+                  reranker_model=f"glancerank backend={ranker.backend.name} readout={args.readout}",
                   failed=sum(1 for r in recs if not r["probs"]),
                   mean_prompt_tokens=sum(r["prompt_tokens"] for r in recs) / max(1, len(recs)),
                   wall_seconds=round(time.time() - t_task, 1))

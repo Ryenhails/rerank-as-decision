@@ -1,7 +1,7 @@
 import pytest
 
-from vlm_as_jev import FakeBackend, Reranker
-from vlm_as_jev.reranker import CHOICE_QUESTION, YESNO_QUESTION
+from glancerank import FakeBackend, Ranker
+from glancerank.ranker import CHOICE_QUESTION, YESNO_QUESTION
 
 
 def score_by_digit(text):
@@ -24,7 +24,7 @@ class Recorder(FakeBackend):
 
 def test_listwise_prompt_and_order():
     backend = Recorder(score_by_digit)
-    r = Reranker(backend).rerank("the   query", ["c1", "c5", "c3"], instruction="Find it.")
+    r = Ranker(backend).rank("the   query", ["c1", "c5", "c3"], instruction="Find it.")
     assert r.order == [1, 2, 0] and r.calls == 1 and sum(r.scores) == pytest.approx(1)
     (p,) = backend.prompts
     assert p.state == ["Instruction: Find it.\nQuery:", "the query", "\nCandidates:", "\nCandidate A:", "c1",
@@ -35,16 +35,16 @@ def test_listwise_prompt_and_order():
 
 def test_pointwise_makes_one_call_per_candidate():
     backend = Recorder(score_by_digit)
-    r = Reranker(backend, readout="pointwise").rerank("q", ["c1", "c5", "c3", "c4"])
+    r = Ranker(backend, readout="pointwise").rank("q", ["c1", "c5", "c3", "c4"])
     assert r.order == [1, 3, 2, 0] and r.calls == 4 and backend.calls == 4
     state, question = next(p for p in backend.prompts if p[0][-1] == "c5")
     assert state[-2:] == ["\nCandidate:", "c5"] and question == YESNO_QUESTION
 
 
 def test_ties_keep_the_input_order_and_limits():
-    assert Reranker(FakeBackend(lambda text: 0.0)).rerank("q", ["a", "b", "c"]).order == [0, 1, 2]
-    assert Reranker(FakeBackend(score_by_digit)).rerank("q", ["only"]).order == [0]
+    assert Ranker(FakeBackend(lambda text: 0.0)).rank("q", ["a", "b", "c"]).order == [0, 1, 2]
+    assert Ranker(FakeBackend(score_by_digit)).rank("q", ["only"]).order == [0]
     with pytest.raises(ValueError):
-        Reranker(FakeBackend(score_by_digit)).rerank("q", ["c"] * 17)
+        Ranker(FakeBackend(score_by_digit)).rank("q", ["c"] * 17)
     with pytest.raises(ValueError):
-        Reranker(FakeBackend(score_by_digit), readout="setwise")
+        Ranker(FakeBackend(score_by_digit), readout="setwise")

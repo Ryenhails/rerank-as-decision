@@ -108,7 +108,7 @@
     }
    }
   },
-  "VLM-as-Jev (Qwen3.8-27B)": {},
+  "GlanceRank (Qwen3.8-27B)": {},
   "JEV-27B-VL, decision head": {
    "pooled": {
     "n_datasets": 4,

@@ -1,4 +1,4 @@
-% Shared visual identity of VLM-as-Jev (from the README cover): colours, the gradient, the mark.
+% Shared visual identity of GlanceRank (from the README cover): colours, the gradient, the mark.
 % \input by techreport.sty users and by the standalone figures. Needs xcolor and tikz.
 \definecolor{jevink}{HTML}{1F1F1F}
 \definecolor{jevmuted}{HTML}{444746}
@@ -17,7 +17,7 @@
 \pgfdeclarehorizontalshading{jevgrad}{100bp}{color(0bp)=(jevblue); color(25bp)=(jevblue); color(52bp)=(jevpurple);
   color(75bp)=(jevrose); color(100bp)=(jevrose)}
 % the mark: a rounded tile with four probability bars and a target, drawn at width #1
-\newcommand{\vlmjevmark}[1]{%
+\newcommand{\glancemark}[1]{%
   \begin{tikzpicture}[x=#1/360, y=#1/360, line cap=round]
     \draw[jevline2, line width=#1/180, fill=white, rounded corners=#1*88/360] (2,2) rectangle (358,358);
     \shade[shading=jevgrad, rounded corners=#1*18/360] (64,252) rectangle (224,288);

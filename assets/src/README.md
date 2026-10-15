@@ -7,4 +7,4 @@ pdflatex how_it_works.tex
 python -c "import fitz; fitz.open('how_it_works.pdf')[0].get_pixmap(dpi=365).save('../how_it_works.png')"
 ```
 
-The colours, the gradient and the mark are in `vlmjev-style.tex`.
+The colours, the gradient and the mark are in `glancerank-style.tex`.

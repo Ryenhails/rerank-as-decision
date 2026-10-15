@@ -1,5 +1,5 @@
 name: Feature or new result
-description: A new backend, a new kind of decision, or results on a new task
+description: A new backend, a new readout, or results on a new task
 labels: [enhancement]
 body:
   - type: textarea

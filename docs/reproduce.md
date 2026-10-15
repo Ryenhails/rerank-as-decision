@@ -44,7 +44,7 @@ Under transformers 5, first apply the patch to the Qwen repository (without it t
 `get_rope_index`; under transformers 4.57 the patch changes nothing):
 
 ```bash
-cd Qwen3-VL-Embedding && git apply ../VLM-as-Jev/patches/qwen3vl_reranker_tf5_compat.patch
+cd Qwen3-VL-Embedding && git apply ../GlanceRank/patches/qwen3vl_reranker_tf5_compat.patch
 ```
 
 **MMEB-V2**, in the Qwen repository:
@@ -70,7 +70,7 @@ done
 
 On one H200 this took 2.0 s per query for the 2B model and 2.9 s for the 8B model (14,514 queries).
 
-## 3. VLM-as-Jev
+## 3. GlanceRank and JEV-27B-VL
 
 **Server.** Our runs served JEV-27B-VL with the server in its repository (`serve_decide.py`, vLLM 0.30.0). The same
 server answers chat requests for the model name `autotrust/JEV-27B-VL` with the unchanged Qwen3.8-27B weights, and
@@ -93,7 +93,7 @@ have not compared its numbers with these.
 
 | report | `--backend` | `--model` | `--readout` |
 |---|---|---|---|
-| VLM-as-Jev (Qwen3.8-27B) | `chat` | `autotrust/JEV-27B-VL` | `listwise` |
+| GlanceRank (Qwen3.8-27B) | `chat` | `autotrust/JEV-27B-VL` | `listwise` |
 | JEV-27B-VL, decision head | `jev` | | `listwise` |
 | Qwen3.8-27B, pointwise | `chat` | `autotrust/JEV-27B-VL` | `pointwise` |
 | JEV-27B-VL, pointwise | `jev` | | `pointwise` |

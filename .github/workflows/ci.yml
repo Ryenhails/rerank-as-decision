@@ -15,5 +15,5 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - run: pip install -e ".[dev]"
-      - run: ruff check vlm_as_jev scripts tests
+      - run: ruff check glancerank scripts tests
       - run: pytest -q

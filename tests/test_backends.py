@@ -2,8 +2,8 @@ import math
 
 import pytest
 
-from vlm_as_jev import ChatBackend, JevDecideBackend, LabelTokenError
-from vlm_as_jev.prompts import choice_prompt
+from glancerank import ChatBackend, JevDecideBackend, LabelTokenError
+from glancerank.prompts import choice_prompt
 
 from .conftest import CharTokenizer
 

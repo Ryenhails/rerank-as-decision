@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite the technical report."
-title: "VLM-as-Jev"
+title: "GlanceRank"
 type: software
 license: Apache-2.0
 version: 0.1.0

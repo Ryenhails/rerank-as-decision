@@ -1,9 +1,9 @@
 # Limitations
 
-- **One evaluated use.** The technical report measures reranking for multimodal retrieval. `Decider.choice` and
-  `Decider.yes_no` run other decisions through the same readout, and we report no numbers for them.
-- **At most 16 options.** The labels are A–P, so a choice has 2 to 16 options, and a reranker refines the top 16 of a
-  first-stage list in one prompt. The published Qwen3-VL-Reranker numbers rerank the top 100.
+- **One evaluated setting.** The technical report measures reranking for multimodal retrieval: a first-stage
+  retriever followed by GlanceRank on its top 16.
+- **At most 16 candidates.** The labels are A–P, so one prompt ranks 2 to 16 candidates, and GlanceRank refines the top
+  16 of a first-stage list. The published Qwen3-VL-Reranker numbers rerank the top 100.
 - **Option order.** A listwise readout can change its answer when the options are reordered; AnyJev, Runoff and
   others measure this for text options. We present candidates in first-stage order and have not measured the effect
   for image candidates.
