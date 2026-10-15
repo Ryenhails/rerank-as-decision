@@ -42,43 +42,63 @@
   },
   "Qwen3-VL-Reranker-2B": {
    "pooled": {
-    "n_datasets": 2,
-    "complete": false,
-    "queries": 3138,
-    "mean": 71.3643,
+    "n_datasets": 8,
+    "complete": true,
+    "queries": 14514,
+    "mean": 59.1798,
     "datasets": {
      "computer_science": 77.8302,
-     "energy": 64.8984
+     "energy": 64.8984,
+     "finance_en": 63.2518,
+     "finance_fr": 44.4352,
+     "hr": 59.3407,
+     "industrial": 48.4366,
+     "pharmaceuticals": 65.4172,
+     "physics": 49.8283
     }
    },
    "english": {
-    "n_datasets": 2,
-    "complete": false,
-    "queries": 523,
-    "mean": 72.5178,
+    "n_datasets": 8,
+    "complete": true,
+    "queries": 2419,
+    "mean": 61.9268,
     "datasets": {
      "computer_science": 79.8748,
-     "energy": 65.1607
+     "energy": 65.1607,
+     "finance_en": 69.6563,
+     "finance_fr": 42.3356,
+     "hr": 65.55,
+     "industrial": 55.1929,
+     "pharmaceuticals": 67.0924,
+     "physics": 50.5514
     }
    }
   },
   "Qwen3-VL-Reranker-8B": {
    "pooled": {
-    "n_datasets": 1,
+    "n_datasets": 5,
     "complete": false,
-    "queries": 1290,
-    "mean": 79.356,
+    "queries": 8820,
+    "mean": 64.909,
     "datasets": {
-     "computer_science": 79.356
+     "computer_science": 79.356,
+     "energy": 68.2867,
+     "finance_en": 66.2151,
+     "finance_fr": 47.4799,
+     "hr": 63.2072
     }
    },
    "english": {
-    "n_datasets": 1,
+    "n_datasets": 5,
     "complete": false,
-    "queries": 215,
-    "mean": 80.1114,
+    "queries": 1470,
+    "mean": 66.5909,
     "datasets": {
-     "computer_science": 80.1114
+     "computer_science": 80.1114,
+     "energy": 67.7465,
+     "finance_en": 71.1147,
+     "finance_fr": 45.6089,
+     "hr": 68.373
     }
    }
   },
@@ -100,6 +120,29 @@
     }
    }
   },
-  "VLM-as-Jev, JEV-27B-VL": {}
+  "VLM-as-Jev, JEV-27B-VL": {
+   "pooled": {
+    "n_datasets": 3,
+    "complete": false,
+    "queries": 4992,
+    "mean": 72.0339,
+    "datasets": {
+     "computer_science": 80.0274,
+     "energy": 69.9968,
+     "finance_en": 66.0774
+    }
+   },
+   "english": {
+    "n_datasets": 3,
+    "complete": false,
+    "queries": 832,
+    "mean": 73.6324,
+    "datasets": {
+     "computer_science": 80.3421,
+     "energy": 69.9894,
+     "finance_en": 70.5658
+    }
+   }
+  }
  }
 }

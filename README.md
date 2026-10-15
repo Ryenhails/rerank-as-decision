@@ -71,7 +71,7 @@ budget. "—" marks a run that is still going.
 |:--|:--:|:--:|:--:|
 | Qwen3-VL-Embedding-2B (first stage) | 74.85 | 79.20 | 53.01 |
 | *Supervised rerankers* | | | |
-| Qwen3-VL-Reranker-2B | 74.49 | 82.72 | — |
+| Qwen3-VL-Reranker-2B | 74.49 | 82.72 | 59.18 |
 | Qwen3-VL-Reranker-8B | 78.36 | 84.78 | — |
 | *Zero-shot, VLM-as-Jev* | | | |
 | Qwen3.8-27B | 76.76 | — | — <sup>†</sup> |
@@ -115,7 +115,7 @@ the 16 pairs one after another; the 27B models run on vLLM 0.30.0.
 | reranker | nDCG@10 · 8 datasets |
 |:--|:--:|
 | Qwen3-VL-Embedding-2B | 56.08 |
-| Qwen3-VL-Reranker-2B | — |
+| Qwen3-VL-Reranker-2B | 61.93 |
 | Qwen3-VL-Reranker-8B | — |
 | VLM-as-Jev, Qwen3.8-27B | 63.13 |
 | VLM-as-Jev, JEV-27B-VL | — |
