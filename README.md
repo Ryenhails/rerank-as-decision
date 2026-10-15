@@ -69,11 +69,10 @@ budget. "—" marks a run that is still going.
 | Qwen3-VL-Reranker-2B | 74.49 | 82.72 | 59.18 |
 | Qwen3-VL-Reranker-8B | 78.36 | 84.78 | — |
 | *Zero-shot, VLM-as-Jev* | | | |
-| Qwen3.8-27B | 76.76 | — | — <sup>†</sup> |
+| Qwen3.8-27B | 76.76 | — | — |
 | JEV-27B-VL (decision-tuned on text) | 76.80 | 85.42 | — |
 
-<sub>ViDoRe V3 pools its six languages within each dataset. † Qwen3.8-27B was run on the English queries only; see
-below.</sub>
+<sub>ViDoRe V3 pools its six languages within each dataset.</sub>
 
 **Listwise or pointwise, with or without decision tuning** (MMEB-V2 image, hit@1; the first stage scores 74.85)
 
@@ -99,21 +98,6 @@ the 16 pairs one after another; the 27B models run on vLLM 0.30.0.
 | VLM-as-Jev, JEV-27B-VL | 1 | 4.48 |
 | Qwen3.8-27B, pointwise | 16 | 3.10 |
 | JEV-27B-VL, pointwise | 16 | 3.57 |
-
-</details>
-
-<details>
-<summary><b>ViDoRe V3, English queries</b></summary>
-
-<br>
-
-| reranker | nDCG@10 · 8 datasets |
-|:--|:--:|
-| Qwen3-VL-Embedding-2B | 56.08 |
-| Qwen3-VL-Reranker-2B | 61.93 |
-| Qwen3-VL-Reranker-8B | — |
-| VLM-as-Jev, Qwen3.8-27B | 63.13 |
-| VLM-as-Jev, JEV-27B-VL | — |
 
 </details>
 

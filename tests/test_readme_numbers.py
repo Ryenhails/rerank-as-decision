@@ -47,11 +47,6 @@ def test_main_table():
         assert vidore == expected(VIDORE.get(name, {}).get("pooled")), (name, "vidore pooled")
 
 
-def test_vidore_english_table():
-    for name, cell in table("| reranker | nDCG@10 · 8 datasets |"):
-        assert cell == expected(VIDORE.get(name, {}).get("english")), name
-
-
 def test_readout_table():
     first_stage = expected(MMEB["Qwen3-VL-Embedding-2B"]["image"])
     assert f"the first stage scores {first_stage})" in README

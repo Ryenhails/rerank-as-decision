@@ -102,24 +102,7 @@
     }
    }
   },
-  "VLM-as-Jev, Qwen3.8-27B": {
-   "english": {
-    "n_datasets": 8,
-    "complete": true,
-    "queries": 2419,
-    "mean": 63.1316,
-    "datasets": {
-     "computer_science": 79.4885,
-     "energy": 69.192,
-     "finance_en": 68.9578,
-     "finance_fr": 43.9442,
-     "hr": 66.9093,
-     "industrial": 56.3827,
-     "pharmaceuticals": 69.9714,
-     "physics": 50.2072
-    }
-   }
-  },
+  "VLM-as-Jev, Qwen3.8-27B": {},
   "VLM-as-Jev, JEV-27B-VL": {
    "pooled": {
     "n_datasets": 3,
