@@ -76,54 +76,62 @@
   },
   "Qwen3-VL-Reranker-8B": {
    "pooled": {
-    "n_datasets": 5,
-    "complete": false,
-    "queries": 8820,
-    "mean": 64.909,
+    "n_datasets": 8,
+    "complete": true,
+    "queries": 14514,
+    "mean": 61.9755,
     "datasets": {
      "computer_science": 79.356,
      "energy": 68.2867,
      "finance_en": 66.2151,
      "finance_fr": 47.4799,
-     "hr": 63.2072
+     "hr": 63.2072,
+     "industrial": 51.3752,
+     "pharmaceuticals": 68.1973,
+     "physics": 51.687
     }
    },
    "english": {
-    "n_datasets": 5,
-    "complete": false,
-    "queries": 1470,
-    "mean": 66.5909,
+    "n_datasets": 8,
+    "complete": true,
+    "queries": 2419,
+    "mean": 64.2631,
     "datasets": {
      "computer_science": 80.1114,
      "energy": 67.7465,
      "finance_en": 71.1147,
      "finance_fr": 45.6089,
-     "hr": 68.373
+     "hr": 68.373,
+     "industrial": 58.1223,
+     "pharmaceuticals": 70.6891,
+     "physics": 52.3387
     }
    }
   },
   "VLM-as-Jev (Qwen3.8-27B)": {},
   "JEV-27B-VL, decision head": {
    "pooled": {
-    "n_datasets": 3,
+    "n_datasets": 4,
     "complete": false,
-    "queries": 4992,
-    "mean": 72.0339,
+    "queries": 6912,
+    "mean": 65.8779,
     "datasets": {
      "computer_science": 80.0274,
      "energy": 69.9968,
-     "finance_en": 66.0774
+     "finance_en": 66.0774,
+     "finance_fr": 47.41
     }
    },
    "english": {
-    "n_datasets": 3,
+    "n_datasets": 4,
     "complete": false,
-    "queries": 832,
-    "mean": 73.6324,
+    "queries": 1152,
+    "mean": 66.6902,
     "datasets": {
      "computer_science": 80.3421,
      "energy": 69.9894,
-     "finance_en": 70.5658
+     "finance_en": 70.5658,
+     "finance_fr": 45.8636
     }
    }
   }

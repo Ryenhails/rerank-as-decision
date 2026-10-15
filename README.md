@@ -67,7 +67,7 @@ budget. "—" marks a run that is still going.
 | Qwen3-VL-Embedding-2B (first stage) | 74.85 | 79.20 | 53.01 |
 | *Supervised rerankers* | | | |
 | Qwen3-VL-Reranker-2B | 74.49 | 82.72 | 59.18 |
-| Qwen3-VL-Reranker-8B | 78.36 | 84.78 | — |
+| Qwen3-VL-Reranker-8B | 78.36 | 84.78 | 61.98 |
 | *Jev-style decision model* | | | |
 | JEV-27B-VL, decision head | 76.80 | 85.42 | — |
 | *Ours, zero-shot* | | | |
