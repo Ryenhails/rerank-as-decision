@@ -84,7 +84,7 @@ below.</sub>
 
 | backbone | listwise · 1 prompt | pointwise · 16 prompts |
 |:--|:--:|:--:|
-| Qwen3.8-27B | 76.76 | — |
+| Qwen3.8-27B | 76.76 | 69.50 |
 | JEV-27B-VL | 76.80 | 71.42 |
 
 <details>
