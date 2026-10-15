@@ -209,15 +209,16 @@
    },
    "visdoc": {
     "metric": "ndcg_linear@5",
-    "n_tasks": 13,
+    "n_tasks": 14,
     "complete": false,
-    "mean": 86.7276,
+    "mean": 85.859,
     "tasks": {
      "ViDoRe_arxivqa": 87.3001,
      "ViDoRe_biomedical_lectures_v2_multilingual": 73.4091,
      "ViDoRe_docvqa": 58.4651,
      "ViDoRe_economics_reports_v2_multilingual": 73.577,
      "ViDoRe_esg_reports_human_labeled_v2": 83.2629,
+     "ViDoRe_esg_reports_v2_multilingual": 74.5675,
      "ViDoRe_infovqa": 93.8066,
      "ViDoRe_shiftproject": 90.6013,
      "ViDoRe_syntheticDocQA_artificial_intelligence": 100.0,
@@ -232,17 +233,19 @@
   "Qwen3.8-27B, pointwise": {
    "image": {
     "metric": "hit@1",
-    "n_tasks": 7,
+    "n_tasks": 9,
     "complete": false,
-    "mean": 74.0143,
+    "mean": 74.1222,
     "tasks": {
+     "CIRR": 66.0,
      "EDIS": 83.8,
      "MSCOCO_i2t": 62.1,
      "MSCOCO_t2i": 73.1,
      "VisDial": 80.1,
      "VisualNews_i2t": 62.7,
      "VisualNews_t2i": 67.3,
-     "WebQA": 89.0
+     "WebQA": 89.0,
+     "Wiki-SS-NQ": 83.0
     }
    }
   },

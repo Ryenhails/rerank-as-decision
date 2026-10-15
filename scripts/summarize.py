@@ -7,7 +7,8 @@
         --latency "VLM-as-Jev, Qwen3.8-27B=runs/latency/latency_base_listwise.json:base_listwise"
 
 --mmeb NAME=DIR[:first_stage]  DIR/<modality>/<task>_rerank_score.json (or <task>_score.json for the first stage)
---vidore NAME=RUN              RUN as named in DIR/summary_{pooled,english}.json (written by eval_vidore3.py score)
+--vidore NAME=RUN[:english]    RUN as named in DIR/summary_{pooled,english}.json (written by eval_vidore3.py score);
+                               ":english" for a run on the English queries only (kept out of the pooled table)
 --latency NAME=FILE:KEY        one row of a latency.py output
 Values are in percent (MMEB, ViDoRe) or seconds (latency); every task found is kept, with its count.
 """
@@ -68,8 +69,11 @@ def main():
         summaries = {p: json.load(open(f"{args.vidore_dir}/summary_{p}.json")) for p in ("pooled", "english")}
         systems = {}
         for name, run in args.vidore:
+            run, _, only = run.partition(":")
             systems[name] = {}
             for proto, table in summaries.items():
+                if only and proto != only:
+                    continue
                 per = {d: v for d, v in table.get(run, {}).items() if d != "_mean"}
                 if per:
                     ds = {d: round(100 * v["ndcg10"], 4) for d, v in per.items()}

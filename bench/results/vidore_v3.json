@@ -40,9 +40,66 @@
     }
    }
   },
-  "Qwen3-VL-Reranker-2B": {},
-  "Qwen3-VL-Reranker-8B": {},
-  "VLM-as-Jev, Qwen3.8-27B": {},
+  "Qwen3-VL-Reranker-2B": {
+   "pooled": {
+    "n_datasets": 2,
+    "complete": false,
+    "queries": 3138,
+    "mean": 71.3643,
+    "datasets": {
+     "computer_science": 77.8302,
+     "energy": 64.8984
+    }
+   },
+   "english": {
+    "n_datasets": 2,
+    "complete": false,
+    "queries": 523,
+    "mean": 72.5178,
+    "datasets": {
+     "computer_science": 79.8748,
+     "energy": 65.1607
+    }
+   }
+  },
+  "Qwen3-VL-Reranker-8B": {
+   "pooled": {
+    "n_datasets": 1,
+    "complete": false,
+    "queries": 1290,
+    "mean": 79.356,
+    "datasets": {
+     "computer_science": 79.356
+    }
+   },
+   "english": {
+    "n_datasets": 1,
+    "complete": false,
+    "queries": 215,
+    "mean": 80.1114,
+    "datasets": {
+     "computer_science": 80.1114
+    }
+   }
+  },
+  "VLM-as-Jev, Qwen3.8-27B": {
+   "english": {
+    "n_datasets": 8,
+    "complete": true,
+    "queries": 2419,
+    "mean": 63.1316,
+    "datasets": {
+     "computer_science": 79.4885,
+     "energy": 69.192,
+     "finance_en": 68.9578,
+     "finance_fr": 43.9442,
+     "hr": 66.9093,
+     "industrial": 56.3827,
+     "pharmaceuticals": 69.9714,
+     "physics": 50.2072
+    }
+   }
+  },
   "VLM-as-Jev, JEV-27B-VL": {}
  }
 }

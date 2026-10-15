@@ -117,7 +117,7 @@ the 16 pairs one after another; the 27B models run on vLLM 0.30.0.
 | Qwen3-VL-Embedding-2B | 56.08 |
 | Qwen3-VL-Reranker-2B | — |
 | Qwen3-VL-Reranker-8B | — |
-| VLM-as-Jev, Qwen3.8-27B | — |
+| VLM-as-Jev, Qwen3.8-27B | 63.13 |
 | VLM-as-Jev, JEV-27B-VL | — |
 
 </details>
