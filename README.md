@@ -25,6 +25,12 @@ which is what System One means here. Our technical report uses it to rerank the 
 Because all candidates share one prompt, the model compares them with each other. The pointwise alternative asks one
 yes/no question per candidate, the readout of supervised rerankers such as Qwen3-VL-Reranker.
 
+<p align="center"><img src="assets/listwise_prompt.png" width="100%" alt="The listwise prompt: a user turn with the instruction, the query and sixteen page images labelled A to P, then the question; an assistant turn with thinking off, where the next-token logits of A to P are read and renormalized into one probability per candidate"></p>
+
+The prompt, simplified: one user turn holds the instruction, the query and the candidates, each after its label, and
+the question. The assistant turn opens with thinking off, and the next-token logits at that position are read for the
+labels A–P. Chat-template tokens are omitted; `glancerank/ranker.py` builds the exact prompt.
+
 ## Quickstart
 
 ```bash
