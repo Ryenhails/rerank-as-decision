@@ -34,7 +34,8 @@ def expected(entry):
 
 MAIN_ROWS = {"Qwen3-VL-Embedding-2B (first stage)": "Qwen3-VL-Embedding-2B",
              "Qwen3-VL-Reranker-2B": "Qwen3-VL-Reranker-2B", "Qwen3-VL-Reranker-8B": "Qwen3-VL-Reranker-8B",
-             "JEV-27B-VL, decision head": "JEV-27B-VL, decision head", "VLM-as-Jev (Qwen3.8-27B)": "VLM-as-Jev (Qwen3.8-27B)"}
+             "JEV-27B-VL, decision head": "JEV-27B-VL, decision head",
+             "VLM-as-Jev (Qwen3.8-27B)": "VLM-as-Jev (Qwen3.8-27B)"}
 LISTWISE = {"Qwen3.8-27B": "VLM-as-Jev (Qwen3.8-27B)", "JEV-27B-VL": "JEV-27B-VL, decision head"}
 
 
