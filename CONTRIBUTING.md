@@ -7,16 +7,16 @@ are in [ROADMAP.md](ROADMAP.md); the ones marked **help wanted** are good places
 ## Development setup
 
 ```bash
-git clone https://github.com/Ryenhails/GlanceRank.git      # or your fork
-cd GlanceRank
+git clone https://github.com/Ryenhails/vlm-listwise-rerank.git      # or your fork
+cd vlm-listwise-rerank
 pip install -e ".[dev]"
-ruff check glancerank scripts tests && pytest -q      # what CI runs; CPU only, a few seconds
+ruff check listwise_rerank scripts tests && pytest -q      # what CI runs; CPU only, a few seconds
 ```
 
 The unit tests need no model and no GPU: `tests/conftest.py` starts a small local HTTP server that answers like
 vLLM's chat endpoint and JEV's `/v1/decide`, and `FakeBackend` scores options without a model.
 
-## Adding a backend (`glancerank/backends/<engine>.py`)
+## Adding a backend (`listwise_rerank/backends/<engine>.py`)
 
 A backend is one file with two methods, each one forward pass of the model:
 
@@ -29,7 +29,7 @@ def yes_no(self, state: Sequence[Part], question: str) -> tuple[float, int]:
 ```
 
 `ChoicePrompt` holds the state with the labelled options already in it, the question and the labels
-(`glancerank/prompts.py`). Read the label probabilities from the model's next-token distribution at the answer
+(`listwise_rerank/prompts.py`). Read the label probabilities from the model's next-token distribution at the answer
 position. Prompt building, image handling and ranking live above the backend and are tested once. Add a test with a
 stubbed engine, in the style of `tests/test_backends.py`.
 

@@ -19,7 +19,7 @@ body:
     id: setup
     attributes:
       label: Setup
-      description: Backend, model, server and version (for vLLM, the full `vllm serve` command), Python and glancerank versions.
+      description: Backend, model, server and version (for vLLM, the full `vllm serve` command), Python and vlm-listwise-rerank versions.
     validations:
       required: true
   - type: textarea

@@ -1,5 +1,5 @@
-"""Rerank the MMEB-V2 retrieval tasks (image, visdoc) with GlanceRank, under the protocol of Qwen3-VL-Reranker's own
-evaluation (github.com/QwenLM/Qwen3-VL-Embedding at 393e297):
+"""Rerank the MMEB-V2 retrieval tasks (image, visdoc) with the listwise readout, under the protocol of
+Qwen3-VL-Reranker's own evaluation (github.com/QwenLM/Qwen3-VL-Embedding at 393e297):
 
 - candidates: the first --topk ids of Qwen3-VL-Embedding-2B's ``<task>_pred.jsonl`` (the file their reranker reads);
 - queries, candidates and per-query instructions: the repo's dataset loaders;
@@ -22,8 +22,8 @@ import sys
 import threading
 import time
 
-from glancerank import MAX_CANDIDATES, ChatBackend, JevDecideBackend, Ranker
-from glancerank.ranker import DEFAULT_INSTRUCTION
+from listwise_rerank import MAX_CANDIDATES, ChatBackend, JevDecideBackend, Ranker
+from listwise_rerank.ranker import DEFAULT_INSTRUCTION
 
 
 def make_ranker(args):
@@ -78,7 +78,7 @@ def main():
         for k in ["image_root", "video_root", "frame_root", "clip_root", "data_path"]:
             if cfg.get(k):
                 cfg[k] = os.path.join(args.data_basedir, cfg[k])
-        qry, corpus = AutoEvalPairDataset.instantiate(model_args=RerankArguments(model_name_or_path="glancerank"),
+        qry, corpus = AutoEvalPairDataset.instantiate(model_args=RerankArguments(model_name_or_path="listwise_rerank"),
                                                       data_args=DataArguments(dataset_config=args.config), **cfg)
         cands = generate_cand_dataset(qry, corpus)
         qry = qry.add_column("topk_ids", topk_ids)
@@ -136,7 +136,7 @@ def main():
         metrics = RankingMetrics(cfg.get("metrics", ["hit", "ndcg", "precision", "recall", "f1", "map", "mrr"]))
         sd = metrics.evaluate(preds)
         sd.update(num_pred=len(preds), num_data=len(preds), topk=args.topk,
-                  reranker_model=f"glancerank backend={ranker.backend.name} readout={args.readout}",
+                  reranker_model=f"listwise_rerank backend={ranker.backend.name} readout={args.readout}",
                   failed=sum(1 for r in recs if not r["probs"]),
                   mean_prompt_tokens=sum(r["prompt_tokens"] for r in recs) / max(1, len(recs)),
                   wall_seconds=round(time.time() - t_task, 1))

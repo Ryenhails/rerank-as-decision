@@ -8,7 +8,8 @@ Retrieval*.
 - `Ranker.rank(query, candidates)`: up to 16 candidates (images, document pages, text or a mix) in one prompt under the
   labels A–P, ranked by the next-token probabilities of the labels (listwise); or one yes/no question per candidate
   (pointwise). Its prompts and requests are byte-identical to the ones behind the report's numbers.
-- The project was called VLM-as-Jev in its first drafts; it is now GlanceRank (package `glancerank`).
+- The project was called VLM-as-Jev and then GlanceRank in its drafts; it is now vlm-listwise-rerank (package
+  `listwise_rerank`). The method has no name of its own: it is the listwise readout.
 - Backends: `ChatBackend` (any OpenAI-compatible chat endpoint with log-probabilities, tested with vLLM 0.30.0),
   `JevDecideBackend` (JEV-27B-VL's `/v1/decide`), `FakeBackend` (tests).
 - `ChatBackend` raises `LabelTokenError` when the server returns no log-probability for a label. The report's runs

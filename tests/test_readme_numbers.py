@@ -34,9 +34,9 @@ def expected(entry):
 
 MAIN_ROWS = {"Qwen3-VL-Embedding-2B (first stage)": "Qwen3-VL-Embedding-2B",
              "Qwen3-VL-Reranker-2B": "Qwen3-VL-Reranker-2B", "Qwen3-VL-Reranker-8B": "Qwen3-VL-Reranker-8B",
-             "JEV-27B-VL, decision head": "JEV-27B-VL, decision head",
-             "GlanceRank (Qwen3.8-27B)": "GlanceRank (Qwen3.8-27B)"}
-LISTWISE = {"Qwen3.8-27B": "GlanceRank (Qwen3.8-27B)", "JEV-27B-VL": "JEV-27B-VL, decision head"}
+             "JEV-27B-VL, listwise (decision head)": "JEV-27B-VL, listwise",
+             "Qwen3.8-27B, listwise": "Qwen3.8-27B, listwise"}
+LISTWISE = {"Qwen3.8-27B": "Qwen3.8-27B, listwise", "JEV-27B-VL": "JEV-27B-VL, listwise"}
 
 
 def test_main_table():

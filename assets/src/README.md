@@ -10,4 +10,4 @@ pdflatex listwise_prompt.tex
 python -c "import fitz; fitz.open('listwise_prompt.pdf')[0].get_pixmap(dpi=384).save('../listwise_prompt.png')"
 ```
 
-The colours, the gradient and the mark are in `glancerank-style.tex`.
+The colours, the gradient and the target icon are in `report-style.tex`.

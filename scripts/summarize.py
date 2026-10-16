@@ -2,9 +2,9 @@
 
     python scripts/summarize.py --out bench/results \\
         --mmeb "Qwen3-VL-Embedding-2B=runs/mmeb/Qwen3-VL-Embedding-2B:first_stage" \\
-        --mmeb "GlanceRank (Qwen3.8-27B)=runs/mmeb/base_listwise" \\
-        --vidore-dir runs/vidore3 --vidore "GlanceRank (Qwen3.8-27B)=base_listwise_top16_all" \\
-        --latency "GlanceRank (Qwen3.8-27B)=runs/latency/latency_base_listwise.json:base_listwise"
+        --mmeb "Qwen3.8-27B, listwise=runs/mmeb/base_listwise" \\
+        --vidore-dir runs/vidore3 --vidore "Qwen3.8-27B, listwise=base_listwise_top16_all" \\
+        --latency "Qwen3.8-27B, listwise=runs/latency/latency_base_listwise.json:base_listwise"
 
 --mmeb NAME=DIR[:first_stage]  DIR/<modality>/<task>_rerank_score.json (or <task>_score.json for the first stage)
 --vidore NAME=RUN[:english]    RUN as named in DIR/summary_{pooled,english}.json (written by eval_vidore3.py score);

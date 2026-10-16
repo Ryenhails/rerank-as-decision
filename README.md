@@ -1,17 +1,16 @@
-<p align="center">
-  <img src="assets/cover.png" width="100%" alt="GlanceRank: rank images and document pages at a glance, with one forward pass of a vision-language model">
-</p>
+# vlm-listwise-rerank
 
-<p align="center">
+<p>
   <a href="#citation"><img alt="Technical report" src="https://img.shields.io/badge/technical%20report-coming%20soon-D96570"></a>
   <a href="LICENSE"><img alt="License: Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-34A853"></a>
-  <a href="https://github.com/Ryenhails/GlanceRank/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Ryenhails/GlanceRank/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/Ryenhails/vlm-listwise-rerank/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Ryenhails/vlm-listwise-rerank/actions/workflows/ci.yml/badge.svg"></a>
 </p>
 
-GlanceRank ranks images and document pages with one forward pass of an off-the-shelf vision-language model. The query
-and up to 16 candidates go into one prompt under the labels **A–P**, and the next-token probabilities of the labels are
-the ranking. There is no training, no decoding and no reasoning step: the model compares the candidates at a glance,
-which is what System One means here. Our technical report uses it to rerank the top-16 of a first-stage retriever.
+Zero-shot reranking of images and document pages with one forward pass of an off-the-shelf vision-language model.
+The query and up to 16 candidates go into one prompt under the labels **A–P**, and the next-token probabilities of the
+labels are the ranking: one prefill, no decoding, no training. This is the listwise readout of FIRST (Reddy et al.,
+2024), applied to images and pages; the model compares the candidates at a glance, which is what *System One* means in
+our technical report. The report uses it to rerank the top 16 of a first-stage retriever.
 
 ## How it works
 
@@ -29,7 +28,7 @@ yes/no question per candidate, the readout of supervised rerankers such as Qwen3
 
 The prompt, simplified: one user turn holds the instruction, the query and the candidates, each after its label, and
 the question. The assistant turn opens with thinking off, and the next-token logits at that position are read for the
-labels A–P. Chat-template tokens are omitted; `glancerank/ranker.py` builds the exact prompt.
+labels A–P. Chat-template tokens are omitted; `listwise_rerank/ranker.py` builds the exact prompt.
 
 ## Quickstart
 
@@ -41,7 +40,7 @@ vllm serve Qwen/Qwen3.8-27B --logprobs-mode processed_logprobs \
 
 ```python
 from PIL import Image
-from glancerank import ChatBackend, Ranker
+from listwise_rerank import ChatBackend, Ranker
 
 ranker = Ranker(ChatBackend("http://127.0.0.1:8000", model="Qwen/Qwen3.8-27B"))
 
@@ -69,14 +68,13 @@ budget.
 | Qwen3-VL-Reranker-2B | 74.49 | 82.72 | 59.18 |
 | Qwen3-VL-Reranker-8B | 78.36 | 84.78 | 61.98 |
 | *Jev-style decision model* | | | |
-| JEV-27B-VL, decision head | 76.80 | 85.42 | 62.03 |
-| *Ours, zero-shot* | | | |
-| **GlanceRank** (Qwen3.8-27B) | 76.76 | 84.79 | 60.94 |
+| JEV-27B-VL, listwise (decision head) | 76.80 | 85.42 | 62.03 |
+| *Zero-shot, no training* | | | |
+| **Qwen3.8-27B, listwise** | 76.76 | 84.79 | 60.94 |
 
 <sub>ViDoRe V3 pools its six languages within each dataset.</sub>
 
-**Listwise or pointwise, with or without decision tuning** (MMEB-V2 image, hit@1; the first stage scores 74.85; the
-listwise cell of Qwen3.8-27B is GlanceRank)
+**Listwise or pointwise, with or without decision tuning** (MMEB-V2 image, hit@1; the first stage scores 74.85)
 
 | backbone | listwise · 1 prompt | pointwise · 16 prompts |
 |:--|:--:|:--:|
@@ -96,8 +94,8 @@ the 16 pairs one after another; the 27B models run on vLLM 0.30.0.
 |:--|:--:|:--:|
 | Qwen3-VL-Reranker-2B | 16 | 2.75 |
 | Qwen3-VL-Reranker-8B | 16 | 3.67 |
-| GlanceRank (Qwen3.8-27B) | 1 | 3.97 |
-| JEV-27B-VL, decision head | 1 | 4.48 |
+| Qwen3.8-27B, listwise | 1 | 3.97 |
+| JEV-27B-VL, listwise | 1 | 4.48 |
 | Qwen3.8-27B, pointwise | 16 | 3.10 |
 | JEV-27B-VL, pointwise | 16 | 3.57 |
 
@@ -115,7 +113,7 @@ and [ROADMAP.md](ROADMAP.md).
 ## Citation
 
 ```bibtex
-@techreport{liu2026glancerank,
+@techreport{liu2026systemone,
   title       = {VLMs as Zero-Shot System One Rerankers for Multimodal Retrieval},
   author      = {Liu, Zhuchenyang and Zhang, Yao and Xiao, Yu},
   institution = {Aalto University},

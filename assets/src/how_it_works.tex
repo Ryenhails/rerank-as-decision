@@ -1,4 +1,4 @@
-% How GlanceRank ranks: one prompt -> one forward pass -> label probabilities -> new order.
+% The listwise readout: one prompt -> one forward pass -> label probabilities -> new order.
 % Shared by the technical report (Figure 1) and the repository README (rendered to PNG).
 % Illustrative: the bar lengths are not measured values.
 \documentclass[tikz, border=0pt]{standalone}
@@ -6,7 +6,7 @@
 \usepackage[type1, sfdefault]{noto-sans}
 \usepackage[type1, scale=0.92]{noto-mono}
 \usetikzlibrary{arrows.meta, positioning, calc, shadows.blur}
-\input{glancerank-style}
+\input{report-style}
 \newcommand{\semib}{\fontseries{sb}\selectfont}
 \begin{document}
 \begin{tikzpicture}[

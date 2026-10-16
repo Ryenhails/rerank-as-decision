@@ -6,7 +6,7 @@ are pooled within each dataset, nDCG@10 per dataset, mean over the 8 datasets. `
 Stages, one per call; results go to --out/<dataset>/:
   emb     Qwen3-VL-Embedding-2B (the Qwen repo's Qwen3VLEmbedder) -> emb_top100.json
   rr      a Qwen3-VL-Reranker with the repo's own per-pair scoring on the top-K -> rr_<name>_top<K>_<langs>.json
-  rerank  GlanceRank on the top-K page images -> <name>_top<K>_<langs>.json (+ _calls.jsonl, resumable)
+  rerank  the listwise readout on the top-K page images -> <name>_top<K>_<langs>.json (+ _calls.jsonl, resumable)
   score   nDCG@10 of every system found -> summary_{pooled,english}.json
 
     python scripts/eval_vidore3.py emb --out runs/vidore3 --qwen-repo Qwen3-VL-Embedding \
@@ -30,7 +30,7 @@ import sys
 import threading
 import time
 
-from glancerank import MAX_CANDIDATES, ChatBackend, JevDecideBackend, Ranker, to_data_url
+from listwise_rerank import MAX_CANDIDATES, ChatBackend, JevDecideBackend, Ranker, to_data_url
 
 DATASETS = ["computer_science", "energy", "finance_en", "finance_fr", "hr", "industrial", "pharmaceuticals", "physics"]
 QUERY_INSTRUCTION = "Find a document image that matches the given query."  # the MMEB VisDoc query instruction

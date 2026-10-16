@@ -108,7 +108,7 @@
     }
    }
   },
-  "GlanceRank (Qwen3.8-27B)": {
+  "Qwen3.8-27B, listwise": {
    "pooled": {
     "n_datasets": 8,
     "complete": true,
@@ -142,7 +142,7 @@
     }
    }
   },
-  "JEV-27B-VL, decision head": {
+  "JEV-27B-VL, listwise": {
    "pooled": {
     "n_datasets": 8,
     "complete": true,

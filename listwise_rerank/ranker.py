@@ -1,4 +1,4 @@
-"""GlanceRank: rank up to 16 candidates from one forward pass of a vision-language model.
+"""The listwise readout: rank up to 16 candidates from one forward pass of a vision-language model.
 
 The query and the candidates go into one prompt under the labels A..P; the next-token probabilities of the labels are
 the ranking. These are the prompts behind every number of the technical report.
@@ -26,7 +26,7 @@ class RankResult:
 
 class Ranker:
     """`backend`: a `ChatBackend`, `JevDecideBackend` or any object with `choice` and `yes_no` (see
-    `glancerank.backends.base`). `readout`: ``"listwise"`` (one prompt with all candidates under the labels A..P,
+    `listwise_rerank.backends.base`). `readout`: ``"listwise"`` (one prompt with all candidates under the labels A..P,
     ranked by the probability of each label) or ``"pointwise"`` (one yes/no prompt per candidate, sent `workers` at a
     time)."""
 

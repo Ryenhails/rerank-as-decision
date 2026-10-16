@@ -164,7 +164,7 @@
     }
    }
   },
-  "GlanceRank (Qwen3.8-27B)": {
+  "Qwen3.8-27B, listwise": {
    "image": {
     "metric": "hit@1",
     "n_tasks": 12,
@@ -218,7 +218,7 @@
     }
    }
   },
-  "JEV-27B-VL, decision head": {
+  "JEV-27B-VL, listwise": {
    "image": {
     "metric": "hit@1",
     "n_tasks": 12,

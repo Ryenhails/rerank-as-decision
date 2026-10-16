@@ -5,7 +5,7 @@ before timing. The first --warmup queries are run and dropped.
     # Qwen3-VL-Reranker with the released code (bf16, FlashAttention-2, the K pairs one after another)
     python scripts/latency.py qwen --vidore-out runs/vidore3 --qwen-repo Qwen3-VL-Embedding \\
         --models 2B=Qwen/Qwen3-VL-Reranker-2B 8B=Qwen/Qwen3-VL-Reranker-8B --out runs/latency
-    # GlanceRank against a running server
+    # the listwise readout against a running server
     python scripts/latency.py vlm --vidore-out runs/vidore3 --backend chat --url http://127.0.0.1:8000 \\
         --model Qwen/Qwen3.8-27B --readout listwise --name base_listwise --out runs/latency
 
@@ -22,7 +22,7 @@ import time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from eval_vidore3 import QUERY_INSTRUCTION, iter_pages, load_meta, make_ranker, select  # noqa: E402
 
-from glancerank import to_data_url  # noqa: E402
+from listwise_rerank import to_data_url  # noqa: E402
 
 
 def workload(vidore_out, datasets, n_per_dataset, k):
@@ -104,7 +104,7 @@ def main():
     ap.add_argument("--model", help="vlm --backend chat: the served model name")
     ap.add_argument("--tokenizer", help="vlm --backend chat: tokenizer name or path (default: --model)")
     ap.add_argument("--readout", choices=["listwise", "pointwise"], default="listwise")
-    ap.add_argument("--name", default="glancerank", help="vlm: the row name in the output")
+    ap.add_argument("--name", default="listwise", help="vlm: the row name in the output")
     args = ap.parse_args()
     items = workload(args.vidore_out, args.datasets, args.n, args.topk)
     pages = {}

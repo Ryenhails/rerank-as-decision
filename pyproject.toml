@@ -3,9 +3,9 @@ requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "glancerank"
+name = "vlm-listwise-rerank"
 version = "0.1.0"
-description = "GlanceRank: zero-shot System One ranking of images and document pages, from one forward pass of a vision-language model."
+description = "Zero-shot listwise reranking of images and document pages from one forward pass of a vision-language model."
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
@@ -35,12 +35,12 @@ eval = ["transformers>=4.57", "huggingface_hub>=0.30", "pyarrow>=15", "pyyaml>=6
 dev = ["pytest>=8", "ruff"]
 
 [project.urls]
-Homepage = "https://github.com/Ryenhails/GlanceRank"
-Repository = "https://github.com/Ryenhails/GlanceRank"
-Changelog = "https://github.com/Ryenhails/GlanceRank/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/Ryenhails/vlm-listwise-rerank"
+Repository = "https://github.com/Ryenhails/vlm-listwise-rerank"
+Changelog = "https://github.com/Ryenhails/vlm-listwise-rerank/blob/main/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
-include = ["glancerank*"]
+include = ["listwise_rerank*"]
 
 [tool.ruff]
 line-length = 120

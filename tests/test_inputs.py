@@ -3,7 +3,7 @@ import io
 
 from PIL import Image
 
-from glancerank import to_data_url, to_parts
+from listwise_rerank import to_data_url, to_parts
 
 
 def test_to_parts_images_first_then_text():

@@ -1,7 +1,7 @@
 import pytest
 
-from glancerank import FakeBackend, Ranker
-from glancerank.ranker import CHOICE_QUESTION, YESNO_QUESTION
+from listwise_rerank import FakeBackend, Ranker
+from listwise_rerank.ranker import CHOICE_QUESTION, YESNO_QUESTION
 
 
 def score_by_digit(text):
