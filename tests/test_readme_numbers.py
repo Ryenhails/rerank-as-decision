@@ -34,8 +34,8 @@ def expected(entry):
 
 MAIN_ROWS = {"Qwen3-VL-Embedding-2B (first stage)": "Qwen3-VL-Embedding-2B",
              "Qwen3-VL-Reranker-2B": "Qwen3-VL-Reranker-2B", "Qwen3-VL-Reranker-8B": "Qwen3-VL-Reranker-8B",
-             "JEV-27B-VL, listwise (decision head)": "JEV-27B-VL, listwise",
-             "Qwen3.8-27B, listwise": "Qwen3.8-27B, listwise"}
+             "JEV-27B-VL, listwise (text decision tuning)": "JEV-27B-VL, listwise",
+             "Qwen3.8-27B, listwise (no decision tuning)": "Qwen3.8-27B, listwise"}
 LISTWISE = {"Qwen3.8-27B": "Qwen3.8-27B, listwise", "JEV-27B-VL": "JEV-27B-VL, listwise"}
 
 
@@ -52,7 +52,8 @@ def test_main_table():
 def test_readout_table():
     first_stage = expected(MMEB["Qwen3-VL-Embedding-2B"]["image"])
     assert f"the first stage scores {first_stage}" in README
-    for backbone, listwise, pointwise in table("| backbone | listwise · 1 prompt |"):
+    for row, listwise, pointwise in table("| backbone | listwise · 1 prompt |"):
+        backbone = row.split(" (")[0]  # "Qwen3.8-27B (no decision tuning)" -> "Qwen3.8-27B"
         assert listwise == expected(MMEB.get(LISTWISE[backbone], {}).get("image")), backbone
         assert pointwise == expected(MMEB.get(f"{backbone}, pointwise", {}).get("image")), backbone
 
