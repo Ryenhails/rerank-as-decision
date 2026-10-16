@@ -60,7 +60,7 @@ with `JevDecideBackend("http://127.0.0.1:8000")`.
 ## Results
 
 From the technical report. Every reranker refines the same top-16 of Qwen3-VL-Embedding-2B and sees images at the same
-budget. "—" marks a run that is still going.
+budget.
 
 | | MMEB-V2 image<br><sub>hit@1 · 12 tasks</sub> | MMEB-V2 visdoc<br><sub>nDCG@5 · 24 tasks</sub> | ViDoRe V3<br><sub>nDCG@10 · 8 datasets</sub> |
 |:--|:--:|:--:|:--:|
@@ -69,9 +69,9 @@ budget. "—" marks a run that is still going.
 | Qwen3-VL-Reranker-2B | 74.49 | 82.72 | 59.18 |
 | Qwen3-VL-Reranker-8B | 78.36 | 84.78 | 61.98 |
 | *Jev-style decision model* | | | |
-| JEV-27B-VL, decision head | 76.80 | 85.42 | — |
+| JEV-27B-VL, decision head | 76.80 | 85.42 | 62.03 |
 | *Ours, zero-shot* | | | |
-| **GlanceRank** (Qwen3.8-27B) | 76.76 | — | — |
+| **GlanceRank** (Qwen3.8-27B) | 76.76 | 84.79 | 60.94 |
 
 <sub>ViDoRe V3 pools its six languages within each dataset.</sub>
 

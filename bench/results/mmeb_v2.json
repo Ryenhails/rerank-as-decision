@@ -184,6 +184,38 @@
      "WebQA": 92.4,
      "Wiki-SS-NQ": 87.3
     }
+   },
+   "visdoc": {
+    "metric": "ndcg_linear@5",
+    "n_tasks": 24,
+    "complete": true,
+    "mean": 84.7879,
+    "tasks": {
+     "MMLongBench-doc": 55.8991,
+     "MMLongBench-page": 65.3809,
+     "ViDoRe_arxivqa": 85.6686,
+     "ViDoRe_biomedical_lectures_v2_multilingual": 72.7788,
+     "ViDoRe_docvqa": 57.66,
+     "ViDoRe_economics_reports_v2_multilingual": 70.8122,
+     "ViDoRe_esg_reports_human_labeled_v2": 81.5219,
+     "ViDoRe_esg_reports_v2_multilingual": 72.09,
+     "ViDoRe_infovqa": 93.0836,
+     "ViDoRe_shiftproject": 89.6505,
+     "ViDoRe_syntheticDocQA_artificial_intelligence": 100.0,
+     "ViDoRe_syntheticDocQA_energy": 96.016,
+     "ViDoRe_syntheticDocQA_government_reports": 98.5237,
+     "ViDoRe_syntheticDocQA_healthcare_industry": 99.0178,
+     "ViDoRe_tabfquad": 97.5772,
+     "ViDoRe_tatdqa": 76.8218,
+     "ViDoSeek-doc": 83.4632,
+     "ViDoSeek-page": 95.4672,
+     "VisRAG_ArxivQA": 88.5815,
+     "VisRAG_ChartQA": 93.065,
+     "VisRAG_InfoVQA": 96.8353,
+     "VisRAG_MP-DocVQA": 93.4228,
+     "VisRAG_PlotQA": 73.7386,
+     "VisRAG_SlideVQA": 97.834
+    }
    }
   },
   "JEV-27B-VL, decision head": {
