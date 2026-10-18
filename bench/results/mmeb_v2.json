@@ -315,6 +315,276 @@
      "Wiki-SS-NQ": 83.5
     }
    }
+  },
+  "Gemma-4-E2B, listwise": {
+   "image": {
+    "metric": "hit@1",
+    "n_tasks": 12,
+    "complete": true,
+    "mean": 64.675,
+    "tasks": {
+     "CIRR": 60.0,
+     "EDIS": 91.4,
+     "FashionIQ": 22.1,
+     "MSCOCO_i2t": 46.2,
+     "MSCOCO_t2i": 75.5,
+     "NIGHTS": 68.1,
+     "OVEN": 73.7,
+     "VisDial": 75.4,
+     "VisualNews_i2t": 34.3,
+     "VisualNews_t2i": 71.7,
+     "WebQA": 78.4,
+     "Wiki-SS-NQ": 79.3
+    }
+   },
+   "visdoc": {
+    "metric": "ndcg_linear@5",
+    "n_tasks": 24,
+    "complete": true,
+    "mean": 68.8719,
+    "tasks": {
+     "MMLongBench-doc": 48.8409,
+     "MMLongBench-page": 44.4045,
+     "ViDoRe_arxivqa": 73.8573,
+     "ViDoRe_biomedical_lectures_v2_multilingual": 57.6183,
+     "ViDoRe_docvqa": 45.048,
+     "ViDoRe_economics_reports_v2_multilingual": 52.4419,
+     "ViDoRe_esg_reports_human_labeled_v2": 57.1838,
+     "ViDoRe_esg_reports_v2_multilingual": 55.9982,
+     "ViDoRe_infovqa": 81.8131,
+     "ViDoRe_shiftproject": 48.7365,
+     "ViDoRe_syntheticDocQA_artificial_intelligence": 86.4124,
+     "ViDoRe_syntheticDocQA_energy": 84.3827,
+     "ViDoRe_syntheticDocQA_government_reports": 84.791,
+     "ViDoRe_syntheticDocQA_healthcare_industry": 86.3745,
+     "ViDoRe_tabfquad": 75.219,
+     "ViDoRe_tatdqa": 46.2888,
+     "ViDoSeek-doc": 79.7555,
+     "ViDoSeek-page": 81.2063,
+     "VisRAG_ArxivQA": 76.0886,
+     "VisRAG_ChartQA": 81.1255,
+     "VisRAG_InfoVQA": 80.4218,
+     "VisRAG_MP-DocVQA": 74.9812,
+     "VisRAG_PlotQA": 63.3888,
+     "VisRAG_SlideVQA": 86.5475
+    }
+   }
+  },
+  "Gemma-4-E4B, listwise": {
+   "image": {
+    "metric": "hit@1",
+    "n_tasks": 12,
+    "complete": true,
+    "mean": 62.0333,
+    "tasks": {
+     "CIRR": 35.5,
+     "EDIS": 78.0,
+     "FashionIQ": 19.7,
+     "MSCOCO_i2t": 63.7,
+     "MSCOCO_t2i": 68.2,
+     "NIGHTS": 57.8,
+     "OVEN": 59.8,
+     "VisDial": 73.8,
+     "VisualNews_i2t": 57.6,
+     "VisualNews_t2i": 66.5,
+     "WebQA": 84.2,
+     "Wiki-SS-NQ": 79.6
+    }
+   },
+   "visdoc": {
+    "metric": "ndcg_linear@5",
+    "n_tasks": 24,
+    "complete": true,
+    "mean": 78.6015,
+    "tasks": {
+     "MMLongBench-doc": 54.6747,
+     "MMLongBench-page": 57.4054,
+     "ViDoRe_arxivqa": 81.2523,
+     "ViDoRe_biomedical_lectures_v2_multilingual": 65.0505,
+     "ViDoRe_docvqa": 51.6727,
+     "ViDoRe_economics_reports_v2_multilingual": 61.168,
+     "ViDoRe_esg_reports_human_labeled_v2": 71.8273,
+     "ViDoRe_esg_reports_v2_multilingual": 66.8844,
+     "ViDoRe_infovqa": 87.7835,
+     "ViDoRe_shiftproject": 75.8039,
+     "ViDoRe_syntheticDocQA_artificial_intelligence": 94.3093,
+     "ViDoRe_syntheticDocQA_energy": 91.1469,
+     "ViDoRe_syntheticDocQA_government_reports": 92.4402,
+     "ViDoRe_syntheticDocQA_healthcare_industry": 92.3194,
+     "ViDoRe_tabfquad": 96.3038,
+     "ViDoRe_tatdqa": 61.2779,
+     "ViDoSeek-doc": 81.5383,
+     "ViDoSeek-page": 90.7093,
+     "VisRAG_ArxivQA": 83.2134,
+     "VisRAG_ChartQA": 88.2307,
+     "VisRAG_InfoVQA": 92.3281,
+     "VisRAG_MP-DocVQA": 87.7117,
+     "VisRAG_PlotQA": 66.5642,
+     "VisRAG_SlideVQA": 94.82
+    }
+   }
+  },
+  "Gemma-4-12B, listwise": {
+   "image": {
+    "metric": "hit@1",
+    "n_tasks": 12,
+    "complete": true,
+    "mean": 73.5333,
+    "tasks": {
+     "CIRR": 71.3,
+     "EDIS": 85.7,
+     "FashionIQ": 41.2,
+     "MSCOCO_i2t": 72.5,
+     "MSCOCO_t2i": 79.0,
+     "NIGHTS": 67.4,
+     "OVEN": 67.4,
+     "VisDial": 82.0,
+     "VisualNews_i2t": 69.7,
+     "VisualNews_t2i": 74.2,
+     "WebQA": 88.6,
+     "Wiki-SS-NQ": 83.4
+    }
+   },
+   "visdoc": {
+    "metric": "ndcg_linear@5",
+    "n_tasks": 24,
+    "complete": true,
+    "mean": 81.8085,
+    "tasks": {
+     "MMLongBench-doc": 54.2728,
+     "MMLongBench-page": 61.473,
+     "ViDoRe_arxivqa": 84.8353,
+     "ViDoRe_biomedical_lectures_v2_multilingual": 70.3165,
+     "ViDoRe_docvqa": 55.0042,
+     "ViDoRe_economics_reports_v2_multilingual": 65.689,
+     "ViDoRe_esg_reports_human_labeled_v2": 72.1294,
+     "ViDoRe_esg_reports_v2_multilingual": 68.9797,
+     "ViDoRe_infovqa": 90.3292,
+     "ViDoRe_shiftproject": 84.5634,
+     "ViDoRe_syntheticDocQA_artificial_intelligence": 98.2619,
+     "ViDoRe_syntheticDocQA_energy": 94.0717,
+     "ViDoRe_syntheticDocQA_government_reports": 96.8235,
+     "ViDoRe_syntheticDocQA_healthcare_industry": 96.9106,
+     "ViDoRe_tabfquad": 97.6403,
+     "ViDoRe_tatdqa": 66.4045,
+     "ViDoSeek-doc": 82.2534,
+     "ViDoSeek-page": 94.6181,
+     "VisRAG_ArxivQA": 86.587,
+     "VisRAG_ChartQA": 91.4777,
+     "VisRAG_InfoVQA": 93.7091,
+     "VisRAG_MP-DocVQA": 90.2744,
+     "VisRAG_PlotQA": 70.6897,
+     "VisRAG_SlideVQA": 96.0904
+    }
+   }
+  },
+  "Gemma-4-26B-A4B, listwise": {
+   "image": {
+    "metric": "hit@1",
+    "n_tasks": 12,
+    "complete": true,
+    "mean": 73.1083,
+    "tasks": {
+     "CIRR": 68.1,
+     "EDIS": 93.9,
+     "FashionIQ": 35.9,
+     "MSCOCO_i2t": 69.0,
+     "MSCOCO_t2i": 78.2,
+     "NIGHTS": 59.7,
+     "OVEN": 67.3,
+     "VisDial": 81.2,
+     "VisualNews_i2t": 71.9,
+     "VisualNews_t2i": 77.3,
+     "WebQA": 91.5,
+     "Wiki-SS-NQ": 83.3
+    }
+   },
+   "visdoc": {
+    "metric": "ndcg_linear@5",
+    "n_tasks": 24,
+    "complete": true,
+    "mean": 82.1353,
+    "tasks": {
+     "MMLongBench-doc": 54.7765,
+     "MMLongBench-page": 61.8676,
+     "ViDoRe_arxivqa": 84.0826,
+     "ViDoRe_biomedical_lectures_v2_multilingual": 67.7677,
+     "ViDoRe_docvqa": 56.4162,
+     "ViDoRe_economics_reports_v2_multilingual": 64.5273,
+     "ViDoRe_esg_reports_human_labeled_v2": 76.8985,
+     "ViDoRe_esg_reports_v2_multilingual": 71.7963,
+     "ViDoRe_infovqa": 92.02,
+     "ViDoRe_shiftproject": 84.474,
+     "ViDoRe_syntheticDocQA_artificial_intelligence": 97.7856,
+     "ViDoRe_syntheticDocQA_energy": 94.1031,
+     "ViDoRe_syntheticDocQA_government_reports": 96.4781,
+     "ViDoRe_syntheticDocQA_healthcare_industry": 94.0712,
+     "ViDoRe_tabfquad": 97.4894,
+     "ViDoRe_tatdqa": 69.3365,
+     "ViDoSeek-doc": 81.9976,
+     "ViDoSeek-page": 93.8248,
+     "VisRAG_ArxivQA": 85.7299,
+     "VisRAG_ChartQA": 91.6855,
+     "VisRAG_InfoVQA": 95.1032,
+     "VisRAG_MP-DocVQA": 91.306,
+     "VisRAG_PlotQA": 71.0255,
+     "VisRAG_SlideVQA": 96.6843
+    }
+   }
+  },
+  "Gemma-4-31B, listwise": {
+   "image": {
+    "metric": "hit@1",
+    "n_tasks": 12,
+    "complete": true,
+    "mean": 77.4083,
+    "tasks": {
+     "CIRR": 75.8,
+     "EDIS": 96.0,
+     "FashionIQ": 43.1,
+     "MSCOCO_i2t": 74.3,
+     "MSCOCO_t2i": 80.1,
+     "NIGHTS": 65.8,
+     "OVEN": 74.7,
+     "VisDial": 85.6,
+     "VisualNews_i2t": 77.7,
+     "VisualNews_t2i": 79.5,
+     "WebQA": 91.4,
+     "Wiki-SS-NQ": 84.9
+    }
+   },
+   "visdoc": {
+    "metric": "ndcg_linear@5",
+    "n_tasks": 24,
+    "complete": true,
+    "mean": 80.8533,
+    "tasks": {
+     "MMLongBench-doc": 49.5484,
+     "MMLongBench-page": 60.2569,
+     "ViDoRe_arxivqa": 84.606,
+     "ViDoRe_biomedical_lectures_v2_multilingual": 63.9011,
+     "ViDoRe_docvqa": 55.3817,
+     "ViDoRe_economics_reports_v2_multilingual": 61.1817,
+     "ViDoRe_esg_reports_human_labeled_v2": 74.2538,
+     "ViDoRe_esg_reports_v2_multilingual": 65.2148,
+     "ViDoRe_infovqa": 91.3783,
+     "ViDoRe_shiftproject": 85.6629,
+     "ViDoRe_syntheticDocQA_artificial_intelligence": 99.6309,
+     "ViDoRe_syntheticDocQA_energy": 93.3536,
+     "ViDoRe_syntheticDocQA_government_reports": 97.0178,
+     "ViDoRe_syntheticDocQA_healthcare_industry": 96.4307,
+     "ViDoRe_tabfquad": 97.3894,
+     "ViDoRe_tatdqa": 68.1488,
+     "ViDoSeek-doc": 73.3271,
+     "ViDoSeek-page": 94.1498,
+     "VisRAG_ArxivQA": 87.5238,
+     "VisRAG_ChartQA": 91.3676,
+     "VisRAG_InfoVQA": 95.7928,
+     "VisRAG_MP-DocVQA": 91.904,
+     "VisRAG_PlotQA": 69.4593,
+     "VisRAG_SlideVQA": 93.5974
+    }
+   }
   }
  }
 }

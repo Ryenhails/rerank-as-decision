@@ -5,6 +5,7 @@ Nothing below is redistributed in this repository; the scripts download or read 
 | What | Where | License | Used for |
 |---|---|---|---|
 | Qwen3.8-27B | https://huggingface.co/Qwen/Qwen3.8-27B | Apache-2.0 | listwise readout (no tuning) |
+| Gemma 4 (E2B, E4B, 12B, 26B-A4B, 31B; `-it`) | https://huggingface.co/google/gemma-4-31B-it and the other four sizes | Apache-2.0 | listwise readout on a second backbone family (no tuning) |
 | JEV-27B-VL | https://huggingface.co/autotrust/JEV-27B-VL | Apache-2.0 (model card) | comparison: decision-tuned Jev-style model, `/v1/decide` |
 | Qwen3-VL-Embedding-2B | https://huggingface.co/Qwen/Qwen3-VL-Embedding-2B | Apache-2.0 | first-stage retriever |
 | Qwen3-VL-Reranker-2B, -8B | https://huggingface.co/Qwen/Qwen3-VL-Reranker-2B, https://huggingface.co/Qwen/Qwen3-VL-Reranker-8B | Apache-2.0 | supervised baselines |

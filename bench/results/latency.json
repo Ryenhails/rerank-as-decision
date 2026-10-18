@@ -64,6 +64,46 @@
    "p90_s": 3.6093214750289917,
    "mean_prefill_tokens": 29872.8,
    "calls_per_query": 16
+  },
+  "Gemma-4-E2B, listwise": {
+   "n": 100,
+   "mean_s": 0.4696586900926195,
+   "median_s": 0.478295148932375,
+   "p90_s": 0.4928167089819908,
+   "mean_prefill_tokens": 4409.2,
+   "calls_per_query": 1
+  },
+  "Gemma-4-E4B, listwise": {
+   "n": 100,
+   "mean_s": 0.4938899031188339,
+   "median_s": 0.502904619439505,
+   "p90_s": 0.5141567771788687,
+   "mean_prefill_tokens": 4409.2,
+   "calls_per_query": 1
+  },
+  "Gemma-4-12B, listwise": {
+   "n": 100,
+   "mean_s": 0.5480470337951556,
+   "median_s": 0.5474627579096705,
+   "p90_s": 0.5591018800623715,
+   "mean_prefill_tokens": 4413.2,
+   "calls_per_query": 1
+  },
+  "Gemma-4-26B-A4B, listwise": {
+   "n": 100,
+   "mean_s": 0.7783640459016897,
+   "median_s": 0.8027314064092934,
+   "p90_s": 0.8163164868019521,
+   "mean_prefill_tokens": 4413.2,
+   "calls_per_query": 1
+  },
+  "Gemma-4-31B, listwise": {
+   "n": 100,
+   "mean_s": 1.2722234796872363,
+   "median_s": 1.2935812374344096,
+   "p90_s": 1.311763600911945,
+   "mean_prefill_tokens": 4413.2,
+   "calls_per_query": 1
   }
  }
 }

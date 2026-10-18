@@ -58,8 +58,8 @@ with `JevDecideBackend("http://127.0.0.1:8000")`.
 
 ## Results
 
-From the technical report. Every reranker refines the same top-16 of Qwen3-VL-Embedding-2B and sees images at the same
-budget.
+From the technical report. Every reranker refines the same top-16 of Qwen3-VL-Embedding-2B and receives the same
+images; the Gemma 4 processor reduces each image to at most 280 visual tokens (the others use up to 1800).
 
 | | MMEB-V2 image<br><sub>hit@1 · 12 tasks</sub> | MMEB-V2 visdoc<br><sub>nDCG@5 · 24 tasks</sub> | ViDoRe V3<br><sub>nDCG@10 · 8 datasets</sub> |
 |:--|:--:|:--:|:--:|
@@ -70,6 +70,12 @@ budget.
 | *Listwise readout, one prefill* | | | |
 | JEV-27B-VL, listwise (text decision tuning) | 76.80 | 85.42 | 62.03 |
 | **Qwen3.8-27B, listwise** (no decision tuning) | 76.76 | 84.79 | 60.94 |
+| *Gemma 4, listwise readout (no decision tuning)* | | | |
+| Gemma-4-E2B, listwise | 64.68 | 68.87 | 42.21 |
+| Gemma-4-E4B, listwise | 62.03 | 78.60 | 51.89 |
+| Gemma-4-12B, listwise | 73.53 | 81.81 | 55.62 |
+| Gemma-4-26B-A4B, listwise | 73.11 | 82.14 | 56.40 |
+| Gemma-4-31B, listwise | 77.41 | 80.85 | 55.42 |
 
 <sub>ViDoRe V3 pools its six languages within each dataset.</sub>
 
@@ -86,17 +92,22 @@ budget.
 <br>
 
 Wall time per query from request to scores, preprocessing included, at concurrency 1: the same top-16 ViDoRe V3 pages
-for 100 English queries, about 29k input tokens per query. Qwen3-VL-Reranker runs with its released code, which scores
-the 16 pairs one after another; the 27B models run on vLLM 0.30.0.
+for 100 English queries. Input tokens are summed over a query's model calls. Qwen3-VL-Reranker runs with its released
+code, which scores the 16 pairs one after another; the 27B and Gemma 4 models run on vLLM 0.30.0.
 
-| reranker | model calls | seconds / query |
-|:--|:--:|:--:|
-| Qwen3-VL-Reranker-2B | 16 | 2.75 |
-| Qwen3-VL-Reranker-8B | 16 | 3.67 |
-| Qwen3.8-27B, listwise | 1 | 3.97 |
-| JEV-27B-VL, listwise | 1 | 4.48 |
-| Qwen3.8-27B, pointwise | 16 | 3.10 |
-| JEV-27B-VL, pointwise | 16 | 3.57 |
+| reranker | model calls | input tokens / query | seconds / query |
+|:--|:--:|:--:|:--:|
+| Qwen3-VL-Reranker-2B | 16 | 29.6k | 2.75 |
+| Qwen3-VL-Reranker-8B | 16 | 29.6k | 3.67 |
+| Qwen3.8-27B, listwise | 1 | 28.8k | 3.97 |
+| JEV-27B-VL, listwise | 1 | 28.9k | 4.48 |
+| Qwen3.8-27B, pointwise | 16 | 29.8k | 3.10 |
+| JEV-27B-VL, pointwise | 16 | 29.9k | 3.57 |
+| Gemma-4-E2B, listwise | 1 | 4.4k | 0.47 |
+| Gemma-4-E4B, listwise | 1 | 4.4k | 0.49 |
+| Gemma-4-12B, listwise | 1 | 4.4k | 0.55 |
+| Gemma-4-26B-A4B, listwise | 1 | 4.4k | 0.78 |
+| Gemma-4-31B, listwise | 1 | 4.4k | 1.27 |
 
 </details>
 

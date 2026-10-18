@@ -4,6 +4,7 @@ A cell shows the JSON mean to two decimals once the run is complete (every task 
 """
 import json
 import re
+from decimal import ROUND_HALF_EVEN, Decimal
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -28,14 +29,20 @@ def table(header_start):
     return rows
 
 
+def show(v):
+    """Two decimals, round half to even (as the report's tables): 64.675 -> 64.68, 71.425 -> 71.42."""
+    return str(Decimal(f"{v:.6f}").quantize(Decimal("0.01"), rounding=ROUND_HALF_EVEN))
+
+
 def expected(entry):
-    return "%.2f" % entry["mean"] if entry and entry["complete"] else "—"
+    return show(entry["mean"]) if entry and entry["complete"] else "—"
 
 
 MAIN_ROWS = {"Qwen3-VL-Embedding-2B (first stage)": "Qwen3-VL-Embedding-2B",
              "Qwen3-VL-Reranker-2B": "Qwen3-VL-Reranker-2B", "Qwen3-VL-Reranker-8B": "Qwen3-VL-Reranker-8B",
              "JEV-27B-VL, listwise (text decision tuning)": "JEV-27B-VL, listwise",
-             "Qwen3.8-27B, listwise (no decision tuning)": "Qwen3.8-27B, listwise"}
+             "Qwen3.8-27B, listwise (no decision tuning)": "Qwen3.8-27B, listwise",
+             **{f"Gemma-4-{g}, listwise": f"Gemma-4-{g}, listwise" for g in ("E2B", "E4B", "12B", "26B-A4B", "31B")}}
 LISTWISE = {"Qwen3.8-27B": "Qwen3.8-27B, listwise", "JEV-27B-VL": "JEV-27B-VL, listwise"}
 
 
@@ -61,6 +68,7 @@ def test_readout_table():
 def test_latency_table():
     rows = table("| reranker | model calls |")
     assert len(rows) == len(LATENCY)
-    for name, calls, seconds in rows:
+    for name, calls, tokens, seconds in rows:
         assert seconds == "%.2f" % LATENCY[name]["mean_s"], name
+        assert tokens == "%.1fk" % (LATENCY[name]["mean_prefill_tokens"] / 1000), name
         assert int(calls) == round(LATENCY[name]["calls_per_query"]), name

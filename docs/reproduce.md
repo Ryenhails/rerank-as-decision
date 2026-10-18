@@ -11,7 +11,8 @@ Every number in the report and the README comes from the steps below. Each run u
 | Qwen3-VL-Reranker-2B / -8B | revisions `4bd860a` / `b212dc8` |
 | JEV-27B-VL (bundles the unchanged Qwen3.8-27B weights) | revision `fee8c1d` |
 | Qwen side | torch 2.8, transformers 5.8, flash-attn 2.7.3, datasets 4.8 |
-| 27B models | vLLM 0.30.0 |
+| Gemma 4 instruction models | E2B `3e22461`, E4B `ee0ef60`, 12B `707f0a3`, 26B-A4B `4d7ae49`, 31B `842da37` |
+| 27B and Gemma 4 models | vLLM 0.30.0 |
 
 ## 1. First stage: Qwen3-VL-Embedding-2B
 
@@ -123,6 +124,29 @@ python scripts/eval_vidore3.py score --out runs/vidore3
 Both scripts send 8 queries at a time (`--workers 8`) and log every call, so an interrupted run resumes where it
 stopped. On one H200, the listwise readout took about 1.3 hours for the 12,000 MMEB-V2 image queries.
 
+### Gemma 4
+
+The same listwise readout on `google/gemma-4-{E2B,E4B,12B,26B-A4B,31B}-it`, each served with a stock vLLM:
+
+```bash
+vllm serve google/gemma-4-31B-it --logprobs-mode processed_logprobs --max-model-len 32768 \
+    --limit-mm-per-prompt '{"image": 40}' --gpu-memory-utilization 0.9 --enable-prefix-caching
+for M in image visdoc; do
+  python scripts/eval_mmeb.py --qwen-repo Qwen3-VL-Embedding --data-basedir $MMEB \
+      --config Qwen3-VL-Embedding/scripts/evaluation/mmeb_v2/${M}_retrieval.yaml \
+      --encode-output-path Qwen3-VL-Embedding/outputs/Qwen3-VL-Embedding-2B/$M \
+      --out runs/mmeb/gemma-4-31B-it_listwise/$M --backend chat --url http://127.0.0.1:8000 \
+      --model google/gemma-4-31B-it --readout listwise --workers 16
+done
+python scripts/eval_vidore3.py rerank --out runs/vidore3 --backend chat --url http://127.0.0.1:8000 \
+    --model google/gemma-4-31B-it --readout listwise --name gemma-4-31B-it_listwise --topk 16 --langs all --workers 16
+```
+
+The chat template with thinking disabled ends in an empty thinking block, and the labels A–P are single tokens in the
+Gemma tokenizer. The released processor configuration reduces each image to at most 280 visual tokens, so a ViDoRe V3
+query has about 4.4k input tokens. Our runs split each model into units (one MMEB-V2 task or one ViDoRe V3 dataset) on
+one-hour jobs; the scripts resume per query, so the split does not change the results.
+
 ## 4. Latency
 
 ```bash
@@ -132,7 +156,9 @@ python scripts/latency.py vlm --vidore-out runs/vidore3 --backend jev --url http
     --readout listwise --name jev_listwise --out runs/latency
 ```
 
-The server for the latency runs used `--mm-processor-cache-gb 0`, so that a later configuration does not reuse the
+For Gemma 4, `scripts/latency.py vlm --backend chat --model google/gemma-4-<size>-it` with the server flags above
+plus `--limit-mm-per-prompt '{"image": 20}' --max-num-seqs 8`. The server for the latency runs used
+`--mm-processor-cache-gb 0`, so that a later configuration does not reuse the
 image preprocessing of an earlier one. 55 English queries from each of two datasets (computer_science, hr); the first
 10 are dropped as warm-up, which leaves 100.
 
