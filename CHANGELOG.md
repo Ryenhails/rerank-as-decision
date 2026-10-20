@@ -2,7 +2,7 @@
 
 ## 0.1.0 (unreleased)
 
-First public version, released with the technical report *Multimodal Reranking as a System One Decision*.
+First public version, released with the technical report *Multimodal Reranking Is a System One Decision*.
 
 - `Ranker.rank(query, candidates)`: up to 16 candidates (images, document pages, text or a mix) in one prompt under the
   labels A–P, ranked by the next-token probabilities of the labels (listwise); or one yes/no question per candidate

@@ -6,7 +6,7 @@
   <a href="https://github.com/Ryenhails/rerank-as-decision/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Ryenhails/rerank-as-decision/actions/workflows/ci.yml/badge.svg"></a>
 </p>
 
-Code of the technical report *Multimodal Reranking as a System One Decision*. The report takes the position that a
+Code of the technical report *Multimodal Reranking Is a System One Decision*. The report takes the position that a
 general vision-language model (VLM) can serve as a multimodal reranker through System One decisions, and that decision
 tuning can improve its reranking. Reranking is one such decision: the state holds the query and its candidates, the
 question asks which candidate best matches the query, and the options are the candidates.
@@ -145,7 +145,7 @@ and [ROADMAP.md](ROADMAP.md).
 
 ```bibtex
 @techreport{liu2026systemone,
-  title       = {Multimodal Reranking as a System One Decision},
+  title       = {Multimodal Reranking Is a System One Decision},
   author      = {Liu, Zhuchenyang and Zhang, Yao and Xiao, Yu},
   institution = {Aalto University},
   year        = {2026}
