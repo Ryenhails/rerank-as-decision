@@ -22,7 +22,7 @@ keywords:
   - system one
 preferred-citation:
   type: report
-  title: "VLMs as Zero-Shot System One Rerankers for Multimodal Retrieval"
+  title: "Multimodal Reranking as a System One Decision"
   authors:
     - family-names: Liu
       given-names: Zhuchenyang

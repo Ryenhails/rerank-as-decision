@@ -38,11 +38,13 @@ def expected(entry):
     return show(entry["mean"]) if entry and entry["complete"] else "—"
 
 
+# README row label -> system name in bench/results ("choice" and "yes/no" are the report's names for the listwise and
+# pointwise readouts)
 MAIN_ROWS = {"Qwen3-VL-Embedding-2B (first stage)": "Qwen3-VL-Embedding-2B",
              "Qwen3-VL-Reranker-2B": "Qwen3-VL-Reranker-2B", "Qwen3-VL-Reranker-8B": "Qwen3-VL-Reranker-8B",
-             "JEV-27B-VL, listwise (text decision tuning)": "JEV-27B-VL, listwise",
-             "Qwen3.8-27B, listwise (no decision tuning)": "Qwen3.8-27B, listwise",
-             **{f"Gemma-4-{g}, listwise": f"Gemma-4-{g}, listwise" for g in ("E2B", "E4B", "12B", "26B-A4B", "31B")}}
+             "Qwen3.8-27B, choice (no decision tuning)": "Qwen3.8-27B, listwise",
+             "JEV-27B-VL, choice (text decision tuning)": "JEV-27B-VL, listwise",
+             **{f"Gemma-4-{g}, choice": f"Gemma-4-{g}, listwise" for g in ("E2B", "E4B", "12B", "26B-A4B", "31B")}}
 LISTWISE = {"Qwen3.8-27B": "Qwen3.8-27B, listwise", "JEV-27B-VL": "JEV-27B-VL, listwise"}
 
 
@@ -59,7 +61,7 @@ def test_main_table():
 def test_readout_table():
     first_stage = expected(MMEB["Qwen3-VL-Embedding-2B"]["image"])
     assert f"the first stage scores {first_stage}" in README
-    for row, listwise, pointwise in table("| backbone | listwise · 1 prompt |"):
+    for row, listwise, pointwise in table("| backbone | choice · 1 prompt |"):
         backbone = row.split(" (")[0]  # "Qwen3.8-27B (no decision tuning)" -> "Qwen3.8-27B"
         assert listwise == expected(MMEB.get(LISTWISE[backbone], {}).get("image")), backbone
         assert pointwise == expected(MMEB.get(f"{backbone}, pointwise", {}).get("image")), backbone
@@ -68,7 +70,8 @@ def test_readout_table():
 def test_latency_table():
     rows = table("| reranker | model calls |")
     assert len(rows) == len(LATENCY)
-    for name, calls, tokens, seconds in rows:
+    for label, calls, tokens, seconds in rows:
+        name = label.replace(", choice", ", listwise").replace(", yes/no", ", pointwise")
         assert seconds == "%.2f" % LATENCY[name]["mean_s"], name
         assert tokens == "%.1fk" % (LATENCY[name]["mean_prefill_tokens"] / 1000), name
         assert int(calls) == round(LATENCY[name]["calls_per_query"]), name
