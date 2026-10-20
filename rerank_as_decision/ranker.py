@@ -26,9 +26,9 @@ class RankResult:
 
 class Ranker:
     """`backend`: a `ChatBackend`, `JevDecideBackend` or any object with `choice` and `yes_no` (see
-    `listwise_rerank.backends.base`). `readout`: ``"listwise"`` (one prompt with all candidates under the labels A..P,
-    ranked by the probability of each label) or ``"pointwise"`` (one yes/no prompt per candidate, sent `workers` at a
-    time)."""
+    `rerank_as_decision.backends.base`). `readout`: ``"listwise"`` (one prompt with all candidates under the labels
+    A..P, ranked by the probability of each label) or ``"pointwise"`` (one yes/no prompt per candidate, sent `workers`
+    at a time)."""
 
     def __init__(self, backend, readout: str = "listwise", max_pixels: int = DEFAULT_MAX_PIXELS, workers: int = 16):
         if readout not in ("listwise", "pointwise"):

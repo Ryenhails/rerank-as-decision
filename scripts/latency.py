@@ -22,7 +22,7 @@ import time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from eval_vidore3 import QUERY_INSTRUCTION, iter_pages, load_meta, make_ranker, select  # noqa: E402
 
-from listwise_rerank import to_data_url  # noqa: E402
+from rerank_as_decision import to_data_url  # noqa: E402
 
 
 def workload(vidore_out, datasets, n_per_dataset, k):

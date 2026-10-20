@@ -45,7 +45,7 @@ Under transformers 5, first apply the patch to the Qwen repository (without it t
 `get_rope_index`; under transformers 4.57 the patch changes nothing):
 
 ```bash
-cd Qwen3-VL-Embedding && git apply ../vlm-listwise-rerank/patches/qwen3vl_reranker_tf5_compat.patch
+cd Qwen3-VL-Embedding && git apply ../rerank-as-decision/patches/qwen3vl_reranker_tf5_compat.patch
 ```
 
 **MMEB-V2**, in the Qwen repository:

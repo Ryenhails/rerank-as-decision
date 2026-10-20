@@ -22,8 +22,8 @@ import sys
 import threading
 import time
 
-from listwise_rerank import MAX_CANDIDATES, ChatBackend, JevDecideBackend, Ranker
-from listwise_rerank.ranker import DEFAULT_INSTRUCTION
+from rerank_as_decision import MAX_CANDIDATES, ChatBackend, JevDecideBackend, Ranker
+from rerank_as_decision.ranker import DEFAULT_INSTRUCTION
 
 
 def make_ranker(args):
@@ -78,7 +78,8 @@ def main():
         for k in ["image_root", "video_root", "frame_root", "clip_root", "data_path"]:
             if cfg.get(k):
                 cfg[k] = os.path.join(args.data_basedir, cfg[k])
-        qry, corpus = AutoEvalPairDataset.instantiate(model_args=RerankArguments(model_name_or_path="listwise_rerank"),
+        model_args = RerankArguments(model_name_or_path="rerank_as_decision")  # a label; the loaders do not read it
+        qry, corpus = AutoEvalPairDataset.instantiate(model_args=model_args,
                                                       data_args=DataArguments(dataset_config=args.config), **cfg)
         cands = generate_cand_dataset(qry, corpus)
         qry = qry.add_column("topk_ids", topk_ids)
@@ -136,7 +137,7 @@ def main():
         metrics = RankingMetrics(cfg.get("metrics", ["hit", "ndcg", "precision", "recall", "f1", "map", "mrr"]))
         sd = metrics.evaluate(preds)
         sd.update(num_pred=len(preds), num_data=len(preds), topk=args.topk,
-                  reranker_model=f"listwise_rerank backend={ranker.backend.name} readout={args.readout}",
+                  reranker_model=f"rerank_as_decision backend={ranker.backend.name} readout={args.readout}",
                   failed=sum(1 for r in recs if not r["probs"]),
                   mean_prompt_tokens=sum(r["prompt_tokens"] for r in recs) / max(1, len(recs)),
                   wall_seconds=round(time.time() - t_task, 1))

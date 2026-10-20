@@ -1,9 +1,9 @@
-# vlm-listwise-rerank
+# rerank-as-decision
 
 <p>
   <a href="#citation"><img alt="Technical report" src="https://img.shields.io/badge/technical%20report-coming%20soon-D96570"></a>
   <a href="LICENSE"><img alt="License: Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-34A853"></a>
-  <a href="https://github.com/Ryenhails/vlm-listwise-rerank/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Ryenhails/vlm-listwise-rerank/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/Ryenhails/rerank-as-decision/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Ryenhails/rerank-as-decision/actions/workflows/ci.yml/badge.svg"></a>
 </p>
 
 Code of the technical report *Multimodal Reranking as a System One Decision*. The report takes the position that a
@@ -33,7 +33,7 @@ Qwen3-VL-Reranker; asked zero-shot, it falls below the first stage in the report
 
 The prompt, simplified: one user turn holds the instruction, the query and the candidates, each after its label, and
 the question. The assistant turn opens with thinking off, and the next-token logits at that position are read for the
-labels A–P. Chat-template tokens are omitted; `listwise_rerank/ranker.py` builds the exact prompt.
+labels A–P. Chat-template tokens are omitted; `rerank_as_decision/ranker.py` builds the exact prompt.
 
 ## Quickstart
 
@@ -45,7 +45,7 @@ vllm serve Qwen/Qwen3.8-27B --logprobs-mode processed_logprobs \
 
 ```python
 from PIL import Image
-from listwise_rerank import ChatBackend, Ranker
+from rerank_as_decision import ChatBackend, Ranker
 
 ranker = Ranker(ChatBackend("http://127.0.0.1:8000", model="Qwen/Qwen3.8-27B"))
 

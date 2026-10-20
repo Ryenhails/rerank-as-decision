@@ -2,8 +2,8 @@ import math
 
 import pytest
 
-from listwise_rerank import ChatBackend, JevDecideBackend, LabelTokenError
-from listwise_rerank.prompts import choice_prompt
+from rerank_as_decision import ChatBackend, JevDecideBackend, LabelTokenError
+from rerank_as_decision.prompts import choice_prompt
 
 from .conftest import CharTokenizer
 

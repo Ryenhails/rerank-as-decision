@@ -1,4 +1,4 @@
-"""listwise_rerank: zero-shot listwise reranking with a vision-language model (one prefill, label readout).
+"""rerank_as_decision: zero-shot listwise reranking with a vision-language model (one prefill, label readout).
 
 The query and up to 16 candidates (images, document pages, text, or a mix) go into one prompt under the labels A..P;
 the next-token probabilities of the labels rank the candidates, from one forward pass, with no decoding and no training.

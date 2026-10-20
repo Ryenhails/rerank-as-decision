@@ -30,7 +30,7 @@ import sys
 import threading
 import time
 
-from listwise_rerank import MAX_CANDIDATES, ChatBackend, JevDecideBackend, Ranker, to_data_url
+from rerank_as_decision import MAX_CANDIDATES, ChatBackend, JevDecideBackend, Ranker, to_data_url
 
 DATASETS = ["computer_science", "energy", "finance_en", "finance_fr", "hr", "industrial", "pharmaceuticals", "physics"]
 QUERY_INSTRUCTION = "Find a document image that matches the given query."  # the MMEB VisDoc query instruction
