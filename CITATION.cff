@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite the technical report."
+message: "If you use this software, please cite the paper."
 title: "rerank-as-decision"
 type: software
 license: Apache-2.0
@@ -23,6 +23,7 @@ keywords:
 preferred-citation:
   type: report
   title: "Multimodal Reranking Is a System One Decision"
+  url: "https://arxiv.org/abs/2610.28435"
   authors:
     - family-names: Liu
       given-names: Zhuchenyang

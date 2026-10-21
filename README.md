@@ -1,12 +1,14 @@
 # rerank-as-decision
 
 <p>
-  <a href="#citation"><img alt="Technical report" src="https://img.shields.io/badge/technical%20report-coming%20soon-D96570"></a>
+  <a href="https://arxiv.org/abs/2610.28435"><img alt="arXiv 2610.28435" src="https://img.shields.io/badge/arXiv-2610.28435-D96570"></a>
+  <a href="https://ryenhails.github.io/rerank-as-decision/"><img alt="Project page" src="https://img.shields.io/badge/project-page-4285F4"></a>
   <a href="LICENSE"><img alt="License: Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-34A853"></a>
   <a href="https://github.com/Ryenhails/rerank-as-decision/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Ryenhails/rerank-as-decision/actions/workflows/ci.yml/badge.svg"></a>
 </p>
 
-Code of the technical report *Multimodal Reranking Is a System One Decision*. The report takes the position that a
+Code of the paper [*Multimodal Reranking Is a System One Decision*](https://arxiv.org/abs/2610.28435)
+([project page](https://ryenhails.github.io/rerank-as-decision/)). The paper takes the position that a
 general vision-language model (VLM) can serve as a multimodal reranker through System One decisions, and that decision
 tuning can improve its reranking. Reranking is one such decision: the state holds the query and its candidates, the
 question asks which candidate best matches the query, and the options are the candidates.
@@ -63,7 +65,7 @@ with `JevDecideBackend("http://127.0.0.1:8000")`.
 
 ## Results
 
-From the technical report, in brief:
+From the paper, in brief:
 
 - **Question type.** Asked one choice over all candidates, a general VLM improves the first stage; asked a yes/no
   question per candidate, it falls below it (MMEB-V2 image retrieval).
@@ -144,11 +146,14 @@ and [ROADMAP.md](ROADMAP.md).
 ## Citation
 
 ```bibtex
-@techreport{liu2026systemone,
-  title       = {Multimodal Reranking Is a System One Decision},
-  author      = {Liu, Zhuchenyang and Zhang, Yao and Xiao, Yu},
-  institution = {Aalto University},
-  year        = {2026}
+@misc{liu2026multimodalrerankingdecision,
+  title         = {Multimodal Reranking Is a System One Decision},
+  author        = {Zhuchenyang Liu and Yao Zhang and Yu Xiao},
+  year          = {2026},
+  eprint        = {2610.28435},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.IR},
+  url           = {https://arxiv.org/abs/2610.28435}
 }
 ```
 
