@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multimodal Reranking Is a System One Decision</title>
+<meta name="description" content="Position paper: a general vision-language model can serve as a multimodal reranker through System One decisions, and decision tuning can improve its reranking.">
+<meta property="og:title" content="Multimodal Reranking Is a System One Decision">
+<meta property="og:description" content="A general VLM can serve as a multimodal reranker through System One decisions, and decision tuning can improve its reranking.">
+<meta property="og:image" content="https://ryenhails.github.io/rerank-as-decision/assets/how_it_works.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23D96570' stroke-width='4'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23D96570'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1F1F1F; --muted: #444746; --subtle: #5E6368; --line: #DDE3EA; --line2: #E3E8EF;
+  --fill: #F0F4F9; --ground: #F8FAFD; --link: #0B57D0;
+  --blue: #4285F4; --purple: #9B72CB; --rose: #D96570; --red: #EA4335; --yellow: #FBBC04; --green: #34A853;
+  --grad: linear-gradient(90deg, #4285F4 0%, #4285F4 25%, #9B72CB 52%, #D96570 75%, #D96570 100%);
+  --shadow: 0 1px 2px rgba(31, 31, 31, .04), 0 6px 20px rgba(31, 31, 31, .05);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--ground); color: var(--ink);
+  font: 400 16.5px/1.65 "Noto Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.wrap { max-width: 1000px; margin: 0 auto; padding: 0 16px; }
+code, .mono { font-family: "Noto Sans Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+/* ---------------------------------------------------------------- hero */
+header.hero { padding: 64px 0 28px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 8px; padding: 5px 13px 5px 10px;
+  background: #fff; border: 1px solid var(--line2); border-radius: 999px;
+  font-size: 13.5px; font-weight: 500; color: var(--muted);
+}
+.target { width: 13px; height: 13px; border-radius: 50%; border: 2.4px solid var(--rose); position: relative; flex: none; }
+.target::after { content: ""; position: absolute; inset: 2.2px; border-radius: 50%; background: var(--rose); }
+h1 { font-size: clamp(30px, 5.2vw, 46px); line-height: 1.15; font-weight: 600; letter-spacing: -.01em; margin: 22px 0 18px; }
+.rule { width: 112px; height: 5px; border-radius: 3px; background: var(--grad); margin-bottom: 22px; }
+.authors { font-size: 17.5px; font-weight: 500; margin: 0; }
+.affil { color: var(--subtle); margin: 2px 0 24px; }
+.buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: 999px;
+  font-weight: 600; font-size: 15px; border: 1px solid var(--ink); background: var(--ink); color: #fff;
+}
+.btn:hover { text-decoration: none; opacity: .9; }
+.btn.light { background: #fff; color: var(--ink); border-color: var(--line); }
+.btn.off { background: var(--fill); color: var(--subtle); border-color: var(--line2); cursor: default; }
+.btn svg { width: 17px; height: 17px; }
+
+/* ---------------------------------------------------------------- sections */
+section { padding: 26px 0; }
+.sh { display: flex; align-items: flex-start; gap: 12px; margin: 0 0 16px; }
+.sh .num { margin-top: 1px; }
+.num {
+  width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: #fff; flex: none;
+  display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600;
+}
+h2 { font-size: 24px; font-weight: 600; margin: 0; letter-spacing: -.005em; }
+h3 { font-size: 17px; font-weight: 600; margin: 0 0 6px; }
+p { margin: 0 0 14px; }
+.lead { color: var(--muted); }
+.card {
+  background: #fff; border: 1px solid var(--line2); border-radius: 18px; box-shadow: var(--shadow);
+  padding: 24px 26px;
+}
+.card + .card { margin-top: 16px; }
+.figure { padding: 18px; }
+.figure img { width: 100%; height: auto; display: block; border-radius: 10px; }
+.cap { color: var(--subtle); font-size: 14.5px; margin: 12px 4px 0; }
+.cap b { color: var(--ink); font-weight: 600; }
+
+/* the position */
+.position { position: relative; overflow: hidden; padding: 30px 30px 26px 36px; }
+.position::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--grad); }
+.position .statement { font-size: clamp(20px, 3vw, 26px); line-height: 1.4; font-weight: 600; margin: 4px 0 14px; }
+.kicker { font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--subtle); margin: 0; }
+
+/* finding boxes, like the report's */
+.finding {
+  display: flex; gap: 12px; align-items: flex-start; background: var(--fill); border-radius: 14px;
+  padding: 14px 18px; margin-top: 16px;
+}
+.finding .target { margin-top: 6px; }
+.finding p { margin: 0; }
+.finding b { font-weight: 600; }
+
+/* tables */
+.tw { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; min-width: 560px; }
+th, td { padding: 9px 12px; text-align: center; border-bottom: 1px solid var(--line2); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-weight: 600; color: var(--muted); font-size: 14px; border-bottom: 1.5px solid var(--line); }
+thead .sub { display: block; font-weight: 400; color: var(--subtle); font-size: 12.5px; }
+tr.group td { border-bottom: none; padding-top: 14px; font-size: 13px; color: var(--subtle); font-weight: 600;
+  letter-spacing: .04em; text-transform: uppercase; }
+td.best { font-weight: 700; }
+td.second { text-decoration: underline; text-underline-offset: 3px; }
+tr.ours td:first-child { font-weight: 600; }
+.mapping td, .mapping th { white-space: normal; text-align: left; vertical-align: top; }
+.mapping td:first-child { color: var(--subtle); font-weight: 500; white-space: nowrap; }
+.mapping { min-width: 600px; }
+.q { font-family: "Noto Sans Mono", ui-monospace, monospace; font-size: 13.5px; background: var(--fill);
+  border-radius: 6px; padding: 1px 6px; }
+
+/* charts */
+svg text { font-family: "Noto Sans", system-ui, sans-serif; }
+svg .tick { font-size: 15px; fill: var(--subtle); }
+svg .ticksub { font-size: 13px; fill: var(--subtle); }
+svg .axis { font-size: 15px; fill: var(--muted); }
+svg .note { font-size: 12.5px; fill: var(--muted); }
+svg .row { font-size: 14.5px; font-weight: 600; fill: var(--ink); }
+svg .rowsub { font-size: 12.5px; fill: var(--subtle); }
+svg .val { font-size: 12.5px; font-weight: 600; fill: var(--ink); }
+.chart .sv { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.chart .sv > svg { width: 100%; height: auto; display: block; }
+.only-narrow { display: none; }
+table.compact { min-width: 0; }
+td .sub { display: block; font-size: 12.5px; color: var(--subtle); font-weight: 400; }
+.legend svg { width: auto; height: 14px; display: inline-block; flex: none; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13.5px; color: var(--muted); margin-top: 10px; }
+.lg { display: inline-flex; align-items: center; gap: 7px; }
+.key { display: inline-flex; align-items: center; gap: 7px; margin-right: 16px; font-size: 14px; color: var(--muted); }
+.dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+/* grids */
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.grid2 .card + .card { margin-top: 0; }
+.grid2 .card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.mini .icon { width: 34px; height: 34px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+.mini .icon svg { width: 19px; height: 19px; }
+.mini { padding: 18px 20px; border-radius: 16px; }
+.mini p { margin: 0; color: var(--muted); font-size: 15.5px; }
+.tag { font-family: "Noto Sans Mono", monospace; font-size: 12.5px; font-weight: 600; color: var(--rose); margin-bottom: 4px; display: block; }
+.stat { display: flex; flex-wrap: wrap; gap: 14px; margin: 4px 0 16px; }
+.stat div { background: var(--fill); border-radius: 12px; padding: 10px 14px; min-width: 150px; flex: 1; }
+.stat b { display: block; font-size: 22px; font-weight: 600; line-height: 1.2; }
+.stat span { font-size: 13.5px; color: var(--subtle); }
+
+/* bibtex */
+pre {
+  margin: 0; background: #fff; border: 1px solid var(--line2); border-radius: 14px; padding: 18px 20px;
+  overflow-x: auto; font-size: 14px; line-height: 1.55;
+}
+.bibwrap { position: relative; }
+.copy {
+  position: absolute; top: 10px; right: 10px; font: 600 13px "Noto Sans", sans-serif; padding: 5px 12px;
+  border-radius: 999px; border: 1px solid var(--line); background: var(--fill); color: var(--ink); cursor: pointer;
+}
+footer { padding: 30px 0 48px; color: var(--subtle); font-size: 14px; }
+footer .rule { width: 64px; height: 3px; margin-bottom: 14px; }
+
+@media (max-width: 720px) {
+  header.hero { padding: 40px 0 18px; }
+  .grid2 { grid-template-columns: 1fr; }
+  .card { padding: 20px 18px; }
+  .position { padding: 24px 20px 20px 26px; }
+  body { font-size: 16px; }
+  h2 { font-size: 20px; line-height: 1.35; }
+  .chart .sv > svg { min-width: 600px; }
+  .only-wide { display: none; }
+  .only-narrow { display: block; }
+  .chart .sv { margin: 0 -4px; padding-bottom: 6px; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="chip"><span class="target"></span>Position paper · arXiv 2026</span>
+    <h1>Multimodal Reranking Is a System One Decision</h1>
+    <div class="rule"></div>
+    <p class="authors">Zhuchenyang Liu, Yao Zhang, Yu Xiao</p>
+    <p class="affil">Aalto University</p>
+    <div class="buttons">
+      <a class="btn" href="https://arxiv.org/pdf/2610.28435">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>
+        Paper</a>
+      <a class="btn light" href="https://arxiv.org/abs/2610.28435">arXiv 2610.28435</a>
+      <a class="btn" href="https://github.com/Ryenhails/rerank-as-decision">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+        Code</a>
+      <a class="btn light" href="#bibtex">BibTeX</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="position">
+  <div class="card position">
+    <p class="kicker">The position</p>
+    <p class="statement">A general vision-language model can serve as a multimodal reranker through System One decisions, and decision tuning can improve its reranking.</p>
+    <p class="lead" style="margin:0">Multimodal rerankers are usually dedicated models, trained on retrieval data to score the candidates of a query. Reranking is also a decision of the kind System One models make: the state holds the query and its candidates, the question asks which candidate best matches the query, and the options are the candidates.</p>
+  </div>
+</section>
+
+<section id="why">
+  <div class="sh"><span class="num">1</span><h2>Why the position matters</h2></div>
+  <div class="grid2">
+    <div class="card mini">
+      <span class="icon" style="background:#E8F0FE;color:var(--blue)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01"/></svg></span>
+      <h3>For deployment</h3>
+      <p>Retrieval-augmented systems often already serve a large VLM to generate answers. If that model can rerank through one decision over the candidates, the system needs no separate reranker to train, serve and keep up to date.</p>
+    </div>
+    <div class="card mini">
+      <span class="icon" style="background:#F3EDFA;color:var(--purple)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L4.5 18.5A1.6 1.6 0 0 0 5.9 21h12.2a1.6 1.6 0 0 0 1.4-2.5L14 9V3"/><path d="M7.5 15h9"/></svg></span>
+      <h3>For research</h3>
+      <p>If reranking is one decision among many, it can improve with decision tuning across tasks, without reranking-specific training.</p>
+    </div>
+  </div>
+</section>
+
+<section id="abstract">
+  <div class="sh"><span class="num">2</span><h2>Abstract</h2></div>
+  <div class="card">
+    <p style="margin:0">Multimodal rerankers are usually dedicated models: a vision-language model (VLM) is trained on retrieval data to score the candidates of a query. Scoring options is not specific to reranking. System One decision models such as Jev map a state and a typed question to one probability per option without generating text, and general models can make such decisions with little or no training. Reranking is one such decision, with the query and its candidates as the state and the candidates as the options. We therefore argue that a general VLM can serve as a multimodal reranker through System One decisions, and that decision tuning can improve its reranking. We ask a VLM one choice question over the top 16 candidates of a first-stage retriever and rank the candidates by the probabilities of their labels, read from one forward pass. On MMEB-V2 image retrieval, this choice scores 5.4 to 7.3 hit@1 above a yes/no question per candidate, and the yes/no question falls below the first stage. With the choice, zero-shot Qwen3.8-27B beats the supervised Qwen3-VL-Reranker-2B on all three benchmarks and comes within 1.6 points of Reranker-8B on each. It matches Reranker-8B on MMEB-V2 visual documents (84.79 vs. 84.78 nDCG@5), at 1.1 to 1.5 times its latency. JEV-27B-VL, the same backbone tuned on text decisions only, improves page reranking by 0.6 to 1.1 points, with gains on most tasks (sign test, p ≤ 0.017), and leaves natural images unchanged. The zero-shot model is larger than the supervised rerankers and of a newer generation, so these comparisons are confounded; we discuss this and other alternative views, and the experiments that would test the position.</p>
+  </div>
+</section>
+
+<section id="method">
+  <div class="sh"><span class="num">3</span><h2>Reranking as one decision</h2></div>
+  <div class="card figure">
+    <img src="assets/how_it_works.png" alt="One prompt with the query and the labelled candidates; one forward pass of the VLM; the next-token probabilities of the labels A to P, renormalized, give the new order" width="2400" height="906" loading="lazy">
+    <p class="cap"><b>The choice readout.</b> (1) The query and the top-K candidates of a first-stage retriever go into one prompt under the labels A–P. (2) One forward pass of a vision-language model, with no decoding. (3) The next-token distribution, restricted to the label tokens and renormalized, gives one probability per candidate, and the candidates are reordered by it. Bar lengths are illustrative.</p>
+  </div>
+  <div class="card">
+    <h3>A reranking decision as a Jev request</h3>
+    <p class="lead">Both readouts use the same instruction, query and candidates. The choice readout asks one question over all candidates; the yes/no readout, the form of supervised pointwise rerankers, asks one question per candidate.</p>
+    <div class="tw">
+    <table class="mapping">
+      <thead><tr><th></th><th>Choice readout (listwise)</th><th>Yes/no readout (pointwise)</th></tr></thead>
+      <tbody>
+        <tr><td>question type</td><td><span class="q">choice</span></td><td><span class="q">noul</span></td></tr>
+        <tr><td>state</td><td>instruction, query, and the K candidates under the labels A, B, …</td><td>instruction, query, and one candidate</td></tr>
+        <tr><td>question</td><td>“Which candidate best matches the query, following the instruction?”</td><td>“Does this candidate match the query, following the instruction?”</td></tr>
+        <tr><td>options</td><td>the K candidate labels</td><td>none (a yes/no question)</td></tr>
+        <tr><td>output</td><td>one probability per candidate, summing to one</td><td>P(yes) for the candidate</td></tr>
+        <tr><td>requests per query</td><td>1</td><td>K</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+  <div class="card figure">
+    <img src="assets/listwise_prompt.png" alt="The choice prompt: a user turn with the instruction, the query and sixteen page images labelled A to P, then the question; an assistant turn with thinking off, where the next-token logits of A to P are read and renormalized into one probability per candidate" width="2404" height="1059" loading="lazy">
+    <p class="cap"><b>The prompt, simplified.</b> The instruction, the query and the 16 first-stage candidates, each after its label, form one user turn. The assistant turn opens with thinking off, and the next-token logits at that position, restricted to the labels A–P and renormalized, give one probability per candidate. Thumbnails and bar heights are illustrative.</p>
+  </div>
+</section>
+
+<section id="setup">
+  <div class="sh"><span class="num">4</span><h2>Setup</h2></div>
+  <div class="card">
+    <p>We rerank the top 16 candidates of Qwen3-VL-Embedding-2B on <b>MMEB-V2</b> image retrieval (12 tasks, hit@1) and visual-document retrieval (24 tasks, nDCG@5), and on <b>ViDoRe V3</b> (8 datasets, six languages pooled, nDCG@10). Every reranker receives the same candidates and the same images, at most 1800 visual tokens each.</p>
+    <p style="margin:0">The controlled pair is <b>Qwen3.8-27B</b> as released (no decision tuning) and <b>JEV-27B-VL</b>, the same backbone with a LoRA adapter and a decision head trained by its developers on text decisions only (text decision tuning). The dedicated references are the supervised <b>Qwen3-VL-Reranker-2B and -8B</b>.</p>
+  </div>
+</section>
+
+<section id="preliminary">
+  <div class="sh"><span class="num">5</span><h2>Preliminary: choice vs. yes/no</h2></div>
+  <div class="card chart">
+    <div class="only-wide"><span class="key"><span class="dot" style="background:var(--blue)"></span>choice · 1 prompt</span><span class="key"><span class="dot" style="background:var(--rose)"></span>yes/no · 16 prompts</span></div>
+    <div class="sv only-wide"><svg viewBox="0 0 900 190" role="img" aria-label="Choice versus yes/no readout on MMEB-V2 image retrieval">
+<line x1="230.0" x2="230.0" y1="34" y2="150" stroke="#DDE3EA" stroke-width="1"/>
+<text x="230.0" y="168" class="tick" text-anchor="middle">66</text>
+<line x1="321.4" x2="321.4" y1="34" y2="150" stroke="#DDE3EA" stroke-width="1"/>
+<text x="321.4" y="168" class="tick" text-anchor="middle">68</text>
+<line x1="412.9" x2="412.9" y1="34" y2="150" stroke="#DDE3EA" stroke-width="1"/>
+<text x="412.9" y="168" class="tick" text-anchor="middle">70</text>
+<line x1="504.3" x2="504.3" y1="34" y2="150" stroke="#DDE3EA" stroke-width="1"/>
+<text x="504.3" y="168" class="tick" text-anchor="middle">72</text>
+<line x1="595.7" x2="595.7" y1="34" y2="150" stroke="#DDE3EA" stroke-width="1"/>
+<text x="595.7" y="168" class="tick" text-anchor="middle">74</text>
+<line x1="687.1" x2="687.1" y1="34" y2="150" stroke="#DDE3EA" stroke-width="1"/>
+<text x="687.1" y="168" class="tick" text-anchor="middle">76</text>
+<line x1="778.6" x2="778.6" y1="34" y2="150" stroke="#DDE3EA" stroke-width="1"/>
+<text x="778.6" y="168" class="tick" text-anchor="middle">78</text>
+<line x1="870.0" x2="870.0" y1="34" y2="150" stroke="#DDE3EA" stroke-width="1"/>
+<text x="870.0" y="168" class="tick" text-anchor="middle">80</text>
+<text x="550.0" y="186" class="axis" text-anchor="middle">hit@1</text>
+<line x1="634.6" x2="634.6" y1="26" y2="150" stroke="#5E6368" stroke-width="1.5" stroke-dasharray="4 4"/>
+<text x="634.6" y="20" class="note" text-anchor="middle">first stage 74.85</text>
+<text x="0" y="63" class="row">Qwen3.8-27B</text>
+<text x="0" y="79" class="rowsub">no decision tuning</text>
+<line x1="390.0" x2="721.9" y1="66" y2="66" stroke="#DDE3EA" stroke-width="4" stroke-linecap="round"/>
+<circle cx="390.0" cy="66" r="7" fill="#D96570"/>
+<circle cx="721.9" cy="66" r="7" fill="#4285F4"/>
+<text x="390.0" y="53" class="val" text-anchor="middle">69.50</text>
+<text x="721.9" y="53" class="val" text-anchor="middle">76.76</text>
+<text x="0" y="121" class="row">JEV-27B-VL</text>
+<text x="0" y="137" class="rowsub">text decision tuning</text>
+<line x1="477.8" x2="723.7" y1="124" y2="124" stroke="#DDE3EA" stroke-width="4" stroke-linecap="round"/>
+<circle cx="477.8" cy="124" r="7" fill="#D96570"/>
+<circle cx="723.7" cy="124" r="7" fill="#4285F4"/>
+<text x="477.8" y="111" class="val" text-anchor="middle">71.42</text>
+<text x="723.7" y="111" class="val" text-anchor="middle">76.80</text>
+</svg></div>
+    <div class="tw only-narrow">
+    <table class="compact">
+      <thead><tr><th>hit@1</th><th>choice<span class="sub">1 prompt</span></th><th>yes/no<span class="sub">16 prompts</span></th></tr></thead>
+      <tbody>
+        <tr><td>none (first stage)</td><td colspan="2">74.85</td></tr>
+        <tr><td>Qwen3.8-27B<span class="sub">no decision tuning</span></td><td><b>76.76</b></td><td>69.50</td></tr>
+        <tr><td>JEV-27B-VL<span class="sub">text decision tuning</span></td><td><b>76.80</b></td><td>71.42</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="cap">MMEB-V2 image retrieval (12 tasks, hit@1, top 16 of Qwen3-VL-Embedding-2B). The choice is higher on all 12 tasks for both models; the yes/no readout falls below the first stage on 11 tasks for Qwen3.8-27B and on 9 for JEV-27B-VL.</p>
+    <div class="finding"><span class="target"></span><p><b>Preliminary.</b> Of the two System One question types, one choice over all candidates improves the first-stage ranking on image retrieval, and a yes/no question for each candidate, the form of supervised pointwise rerankers, makes it worse.</p></div>
+  </div>
+</section>
+
+<section id="finding1">
+  <div class="sh"><span class="num">6</span><h2>Finding 1: as a System One decision, a general VLM competes with dedicated rerankers</h2></div>
+  <div class="card">
+    <div class="tw">
+    <table>
+      <thead><tr><th>Reranker</th><th>MMEB-V2 image<span class="sub">hit@1</span></th><th>MMEB-V2 visdoc<span class="sub">nDCG@5</span></th><th>ViDoRe V3<span class="sub">nDCG@10</span></th></tr></thead>
+      <tbody>
+        <tr><td>none (first stage)</td><td>74.85</td><td>79.20</td><td>53.01</td></tr>
+        <tr class="group"><td colspan="4">Dedicated, supervised</td></tr>
+        <tr><td>Qwen3-VL-Reranker-2B</td><td>74.49</td><td>82.72</td><td>59.18</td></tr>
+        <tr><td>Qwen3-VL-Reranker-8B</td><td class="best">78.36</td><td>84.78</td><td class="second">61.98</td></tr>
+        <tr class="group"><td colspan="4">General VLM, one choice question</td></tr>
+        <tr class="ours"><td>Qwen3.8-27B (no decision tuning)</td><td>76.76</td><td class="second">84.79</td><td>60.94</td></tr>
+        <tr class="ours"><td>JEV-27B-VL (text decision tuning)</td><td class="second">76.80</td><td class="best">85.42</td><td class="best">62.03</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="cap">MMEB-V2: mean over tasks; ViDoRe V3: mean over datasets, all languages. Bold: best reranker in the column; underlined: second best. Zero-shot, Qwen3.8-27B comes within 1.6 points of Reranker-8B on each benchmark and matches it on MMEB-V2 visual documents (84.79 vs. 84.78).</p>
+    <div class="finding"><span class="target"></span><p><b>Finding 1.</b> Reranking through one System One decision, with no training for reranking, a general VLM beats the smaller dedicated reranker on every benchmark and matches the larger one on MMEB-V2 visual documents.</p></div>
+  </div>
+</section>
+
+<section id="finding2">
+  <div class="sh"><span class="num">7</span><h2>Finding 2: text decision tuning improves reranking of pages</h2></div>
+  <div class="card">
+    <div class="tw">
+    <table>
+      <thead><tr><th>Benchmark</th><th>Qwen3.8-27B<span class="sub">no decision tuning</span></th><th>JEV-27B-VL<span class="sub">text decision tuning</span></th><th>difference</th><th>JEV-27B-VL higher</th></tr></thead>
+      <tbody>
+        <tr><td>MMEB-V2 image, hit@1</td><td>76.76</td><td>76.80</td><td>+0.04</td><td>4 of 12 tasks</td></tr>
+        <tr><td>MMEB-V2 visdoc, nDCG@5</td><td>84.79</td><td>85.42</td><td>+0.63</td><td>17 of 24 tasks (2 ties)</td></tr>
+        <tr><td>ViDoRe V3, nDCG@10</td><td>60.94</td><td>62.03</td><td>+1.09</td><td>8 of 8 datasets</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="cap">Both models use the choice readout and share every weight except the adapter and the decision head. A two-sided sign test over tasks gives p = 0.017 (visdoc) and p = 0.008 (ViDoRe V3).</p>
+    <div class="finding"><span class="target"></span><p><b>Finding 2.</b> Decision tuning on text alone slightly improves the VLM's reranking of document pages and leaves natural images unchanged.</p></div>
+  </div>
+</section>
+
+<section id="scale">
+  <div class="sh"><span class="num">8</span><h2>Where it helps, and at what scale</h2></div>
+  <div class="card">
+    <p>Over the 12 image tasks, the choice readout on Qwen3.8-27B gains on all nine tasks whose query contains text, most on CIRR (+7.1 hit@1), whose queries combine an image with a modification text. It loses on the three tasks whose query is an image alone: MSCOCO image-to-text (−4.1), VisualNews image-to-text (−1.7) and NIGHTS (−0.7).</p>
+    <p style="margin:0">Replacing the backbone with the five instruction-tuned Gemma 4 models, unchanged and with no training: E2B and E4B lower the first stage on all three benchmarks; from 12B upward the readout improves visual-document retrieval, by 1.7 to 2.9 nDCG@5 and 2.4 to 3.4 nDCG@10; on natural images only 31B improves the first stage (+2.6 hit@1).</p>
+  </div>
+  <div class="card chart">
+    <div class="sv"><svg viewBox="0 0 900 410" role="img" aria-label="Gain over the first stage against model size">
+<line x1="70" x2="884" y1="299.4" y2="299.4" stroke="#DDE3EA" stroke-width="1"/>
+<text x="62" y="303.4" class="tick" text-anchor="end">-12</text>
+<line x1="70" x2="884" y1="250.1" y2="250.1" stroke="#DDE3EA" stroke-width="1"/>
+<text x="62" y="254.1" class="tick" text-anchor="end">-8</text>
+<line x1="70" x2="884" y1="200.8" y2="200.8" stroke="#DDE3EA" stroke-width="1"/>
+<text x="62" y="204.8" class="tick" text-anchor="end">-4</text>
+<line x1="70" x2="884" y1="151.5" y2="151.5" stroke="#DDE3EA" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="62" y="155.5" class="tick" text-anchor="end">0</text>
+<line x1="70" x2="884" y1="102.2" y2="102.2" stroke="#DDE3EA" stroke-width="1"/>
+<text x="62" y="106.2" class="tick" text-anchor="end">+4</text>
+<line x1="70" x2="884" y1="53.0" y2="53.0" stroke="#DDE3EA" stroke-width="1"/>
+<text x="62" y="57.0" class="tick" text-anchor="end">+8</text>
+<text transform="translate(16 170) rotate(-90)" class="axis" text-anchor="middle">gain over the first stage (points)</text>
+<text x="192.6" y="344" class="tick" text-anchor="middle">E2B</text>
+<text x="192.6" y="360" class="ticksub" text-anchor="middle">5.1B</text>
+<text x="261.5" y="344" class="tick" text-anchor="middle">E4B</text>
+<text x="261.5" y="360" class="ticksub" text-anchor="middle">8.0B</text>
+<text x="356.3" y="344" class="tick" text-anchor="middle">12B</text>
+<text x="356.3" y="360" class="ticksub" text-anchor="middle">12.0B</text>
+<text x="687.9" y="344" class="tick" text-anchor="middle">26B-A4B</text>
+<text x="687.9" y="360" class="ticksub" text-anchor="middle">25.8B</text>
+<text x="818.6" y="344" class="tick" text-anchor="middle">31B</text>
+<text x="818.6" y="360" class="ticksub" text-anchor="middle">31.3B</text>
+<text x="477" y="406" class="axis" text-anchor="middle">model size (total parameters)</text>
+<polyline points="192.6,276.8 261.5,309.5 356.3,167.8 687.9,173.0 818.6,120.0" fill="none" stroke="#4285F4" stroke-width="2.4" stroke-linejoin="round"/>
+<circle cx="192.6" cy="276.8" r="5.0" fill="#4285F4" stroke="#4285F4" stroke-width="1.8"/>
+<circle cx="261.5" cy="309.5" r="5.0" fill="#4285F4" stroke="#4285F4" stroke-width="1.8"/>
+<circle cx="356.3" cy="167.8" r="5.0" fill="#4285F4" stroke="#4285F4" stroke-width="1.8"/>
+<circle cx="687.9" cy="173.0" r="5.0" fill="#4285F4" stroke="#4285F4" stroke-width="1.8"/>
+<circle cx="818.6" cy="120.0" r="5.0" fill="#4285F4" stroke="#4285F4" stroke-width="1.8"/>
+<polyline points="192.6,278.8 261.5,158.9 356.3,119.4 687.9,115.3 818.6,131.2" fill="none" stroke="#9B72CB" stroke-width="2.4" stroke-linejoin="round"/>
+<rect x="188.3" y="274.5" width="8.5" height="8.5" fill="#9B72CB" stroke="#9B72CB" stroke-width="1.8"/>
+<rect x="257.3" y="154.7" width="8.5" height="8.5" fill="#9B72CB" stroke="#9B72CB" stroke-width="1.8"/>
+<rect x="352.1" y="115.1" width="8.5" height="8.5" fill="#9B72CB" stroke="#9B72CB" stroke-width="1.8"/>
+<rect x="683.7" y="111.0" width="8.5" height="8.5" fill="#9B72CB" stroke="#9B72CB" stroke-width="1.8"/>
+<rect x="814.4" y="126.9" width="8.5" height="8.5" fill="#9B72CB" stroke="#9B72CB" stroke-width="1.8"/>
+<polyline points="192.6,284.6 261.5,165.3 356.3,119.4 687.9,109.8 818.6,121.8" fill="none" stroke="#D96570" stroke-width="2.4" stroke-linejoin="round"/>
+<polygon points="192.6,279.1 187.6,288.3 197.6,288.3" fill="#D96570" stroke="#D96570" stroke-width="1.8"/>
+<polygon points="261.5,159.8 256.5,169.1 266.5,169.1" fill="#D96570" stroke="#D96570" stroke-width="1.8"/>
+<polygon points="356.3,113.9 351.3,123.1 361.3,123.1" fill="#D96570" stroke="#D96570" stroke-width="1.8"/>
+<polygon points="687.9,104.3 682.9,113.5 692.9,113.5" fill="#D96570" stroke="#D96570" stroke-width="1.8"/>
+<polygon points="818.6,116.3 813.6,125.6 823.6,125.6" fill="#D96570" stroke="#D96570" stroke-width="1.8"/>
+<polygon points="117.9,150.5 123.4,156.0 117.9,161.5 112.4,156.0" fill="#FFFFFF" stroke="#4285F4" stroke-width="1.8"/>
+<polygon points="117.9,102.7 123.4,108.2 117.9,113.7 112.4,108.2" fill="#FFFFFF" stroke="#9B72CB" stroke-width="1.8"/>
+<polygon points="117.9,70.0 123.4,75.5 117.9,81.0 112.4,75.5" fill="#FFFFFF" stroke="#D96570" stroke-width="1.8"/>
+<polygon points="261.5,102.5 267.0,106.5 264.9,112.9 258.1,112.9 256.0,106.5" fill="#FFFFFF" stroke="#4285F4" stroke-width="1.8"/>
+<polygon points="261.5,77.0 267.0,81.0 264.9,87.4 258.1,87.4 256.0,81.0" fill="#FFFFFF" stroke="#9B72CB" stroke-width="1.8"/>
+<polygon points="261.5,35.2 267.0,39.2 264.9,45.7 258.1,45.7 256.0,39.2" fill="#FFFFFF" stroke="#D96570" stroke-width="1.8"/>
+<polygon points="716.4,121.7 718.0,125.8 722.4,126.0 719.0,128.8 720.1,133.1 716.4,130.7 712.7,133.1 713.8,128.8 710.4,126.0 714.8,125.8" fill="#FFFFFF" stroke="#4285F4" stroke-width="1.8"/>
+<polygon points="716.4,76.3 718.0,80.4 722.4,80.7 719.0,83.5 720.1,87.8 716.4,85.4 712.7,87.8 713.8,83.5 710.4,80.7 714.8,80.4" fill="#FFFFFF" stroke="#9B72CB" stroke-width="1.8"/>
+<polygon points="716.4,47.5 718.0,51.6 722.4,51.9 719.0,54.7 720.1,58.9 716.4,56.6 712.7,58.9 713.8,54.7 710.4,51.9 714.8,51.6" fill="#FFFFFF" stroke="#D96570" stroke-width="1.8"/>
+<path d="M740.7,123.1 L749.5,131.9 M740.7,131.9 L749.5,123.1" stroke="#4285F4" stroke-width="2.2" stroke-linecap="round"/>
+<path d="M740.7,70.5 L749.5,79.3 M740.7,79.3 L749.5,70.5" stroke="#9B72CB" stroke-width="2.2" stroke-linecap="round"/>
+<path d="M740.7,36.0 L749.5,44.8 M740.7,44.8 L749.5,36.0" stroke="#D96570" stroke-width="2.2" stroke-linecap="round"/>
+</svg></div>
+    <div class="legend"><span class="lg"><svg viewBox="0 0 28 14" width="28" height="14"><line x1="1" x2="27" y1="7" y2="7" stroke="#4285F4" stroke-width="2.4"/><circle cx="14.0" cy="7.0" r="4.2" fill="#4285F4" stroke="#4285F4" stroke-width="1.8"/></svg>Gemma 4, MMEB-V2 image (hit@1)</span>
+<span class="lg"><svg viewBox="0 0 28 14" width="28" height="14"><line x1="1" x2="27" y1="7" y2="7" stroke="#9B72CB" stroke-width="2.4"/><rect x="10.4" y="3.4" width="7.1" height="7.1" fill="#9B72CB" stroke="#9B72CB" stroke-width="1.8"/></svg>Gemma 4, MMEB-V2 visdoc (nDCG@5)</span>
+<span class="lg"><svg viewBox="0 0 28 14" width="28" height="14"><line x1="1" x2="27" y1="7" y2="7" stroke="#D96570" stroke-width="2.4"/><polygon points="14.0,2.4 9.8,10.2 18.2,10.2" fill="#D96570" stroke="#D96570" stroke-width="1.8"/></svg>Gemma 4, ViDoRe V3 (nDCG@10)</span>
+<span class="lg"><svg viewBox="0 0 16 16" width="16" height="16"><polygon points="8.0,3.0 13.0,8.0 8.0,13.0 3.0,8.0" fill="#FFFFFF" stroke="#5E6368" stroke-width="1.8"/></svg>Qwen3-VL-Reranker-2B</span>
+<span class="lg"><svg viewBox="0 0 16 16" width="16" height="16"><polygon points="8.0,2.8 13.0,6.4 11.1,12.2 4.9,12.2 3.0,6.4" fill="#FFFFFF" stroke="#5E6368" stroke-width="1.8"/></svg>Qwen3-VL-Reranker-8B</span>
+<span class="lg"><svg viewBox="0 0 16 16" width="16" height="16"><polygon points="8.0,2.2 9.5,6.0 13.5,6.2 10.4,8.8 11.4,12.7 8.0,10.5 4.6,12.7 5.6,8.8 2.5,6.2 6.5,6.0" fill="#FFFFFF" stroke="#5E6368" stroke-width="1.8"/></svg>Qwen3.8-27B, choice</span>
+<span class="lg"><svg viewBox="0 0 16 16" width="16" height="16"><path d="M4.0,4.0 L12.0,12.0 M4.0,12.0 L12.0,4.0" stroke="#5E6368" stroke-width="2.2" stroke-linecap="round"/></svg>JEV-27B-VL, choice</span></div>
+    <p class="cap">Gain over the first stage, in points of each benchmark's metric. Lines: the choice readout on the five Gemma 4 models, at their total parameters. Hollow markers: the rerankers of the main setup at their nominal size, coloured by benchmark; JEV-27B-VL is drawn slightly to the right of Qwen3.8-27B. Gemma 4 keeps its processor's default of 280 visual tokens per image, against up to 1800 for the other models, so the comparison across families changes the image budget along with the backbone.</p>
+  </div>
+</section>
+
+<section id="efficiency">
+  <div class="sh"><span class="num">9</span><h2>Efficiency</h2></div>
+  <div class="card">
+    <div class="stat">
+      <div><b>3.97 s</b><span>one choice pass of Qwen3.8-27B</span></div>
+      <div><b>3.67 s</b><span>Reranker-8B, released code (16 pairs in sequence)</span></div>
+      <div><b>2.61 s</b><span>Reranker-8B, 16 pairs in one batch</span></div>
+    </div>
+    <p style="margin:0">Latency per query on one H200 at concurrency 1, for the same top-16 ViDoRe V3 pages (100 English queries), preprocessing included. One choice pass takes 1.1 times as long as Reranker-8B with its released code and 1.5 times as long with batched scoring; all three read about 29k input tokens per query. JEV-27B-VL takes 4.48 s. A Gemma 4 model takes 0.47 to 1.27 s at about 4.4k input tokens.</p>
+  </div>
+</section>
+
+<section id="alternatives">
+  <div class="sh"><span class="num">10</span><h2>Alternative views</h2></div>
+  <div class="grid2">
+    <div class="card mini"><span class="tag">AV1</span><h3>Stronger VLMs make stronger dedicated rerankers too</h3><p>Our comparison changes supervision together with scale and model generation. It shows that a zero-shot VLM can match a dedicated 8B reranker on MMEB-V2 visual documents today, and leaves open whether it would match a dedicated reranker trained from the same backbone.</p></div>
+    <div class="card mini"><span class="tag">AV2</span><h3>A general VLM is too expensive</h3><p>Qwen3.8-27B has more than three times the parameters of Reranker-8B and takes 1.1 to 1.5 times as long per query. A system that already serves a VLM could rerank with the same model.</p></div>
+    <div class="card mini"><span class="tag">AV3</span><h3>Small models cannot do it</h3><p>Gemma 4 E2B and E4B lower the first stage where Reranker-2B improves it, so Finding 1 holds only for sufficiently large models.</p></div>
+    <div class="card mini"><span class="tag">AV4</span><h3>Dedicated listwise rerankers already exist</h3><p>ZipRerank trains for reranking with the readout we use. Our position is that decision tuning can also produce a good reranker, and the two routes can coexist.</p></div>
+    <div class="card mini"><span class="tag">AV5</span><h3>The readout has practical limits</h3><p>One prompt holds at most 16 candidates under the labels A–P, and listwise readouts depend on option order and prefer some labels whatever the input. We present the candidates in first-stage order only.</p></div>
+  </div>
+</section>
+
+<section id="tests">
+  <div class="sh"><span class="num">11</span><h2>Testing the position</h2></div>
+  <div class="grid2">
+    <div class="card mini"><h3>Multimodal decision tuning</h3><p>Tune a VLM on decisions of many kinds that include visual options. The position is refuted if this tuning does not improve its reranking, in particular on natural images and on queries that are an image alone.</p></div>
+    <div class="card mini"><h3>The gap on one backbone</h3><p>On one VLM at several sizes, compare the zero-shot choice, the same model after multimodal decision tuning, and a dedicated reranker trained from it.</p></div>
+    <div class="card mini"><h3>Backbone and image budget</h3><p>Run Qwen3.8-27B at the image budget of Gemma 4, or Gemma 4 at a larger one, to tell whether the gap between the two families comes from the backbone or from the image budget.</p></div>
+    <div class="card mini"><h3>The choice readout</h3><p>Measure how the choice probabilities change with the order of the candidates and how well they are calibrated, and correct for order, for example by averaging over cyclic rotations.</p></div>
+  </div>
+</section>
+
+<section id="bibtex">
+  <div class="sh"><span class="num">12</span><h2>BibTeX</h2></div>
+  <div class="bibwrap">
+<button class="copy" type="button" onclick="copyBib(this)">Copy</button>
+<pre class="mono" id="bib">@misc{liu2026multimodalrerankingdecision,
+  title         = {Multimodal Reranking Is a System One Decision},
+  author        = {Zhuchenyang Liu and Yao Zhang and Yu Xiao},
+  year          = {2026},
+  eprint        = {2610.28435},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.IR},
+  url           = {https://arxiv.org/abs/2610.28435}
+}</pre>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="rule"></div>
+    <p style="margin:0">Code: <a href="https://github.com/Ryenhails/rerank-as-decision">github.com/Ryenhails/rerank-as-decision</a> · Apache-2.0. An independent research project, not affiliated with TypeSafe AI (Jev) or AutoTrust (JEV-27B-VL).</p>
+  </div>
+</footer>
+
+<script>
+function copyBib(btn) {
+  const text = document.getElementById("bib").innerText;
+  const done = () => { btn.textContent = "Copied"; setTimeout(() => { btn.textContent = "Copy"; }, 1600); };
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(done, () => {});
+  } else {
+    const t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select();
+    try { document.execCommand("copy"); done(); } catch (e) {} document.body.removeChild(t);
+  }
+}
+</script>
+</body>
+</html>
