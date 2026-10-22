@@ -209,14 +209,14 @@ footer a { color: var(--text); }
 @media (max-width: 834px) {
   .nav .links { display: none; }
   .nav .pill { margin-left: auto; }
-  .g3, .stats { grid-template-columns: 1fr; }
+  .g3, .stats { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 734px) {
   body { font-size: 17px; }
   section { padding: 72px 0; }
   .hero { padding: 64px 0 44px; }
   .hero-figure { margin-top: 44px; }
-  .g2, .compare { grid-template-columns: 1fr; }
+  .g2, .compare { grid-template-columns: minmax(0, 1fr); }
   .tile { padding: 26px 22px; border-radius: 22px; }
   .tile.figure { padding: 12px; }
   .tile.figure img { border-radius: 12px; }
@@ -231,6 +231,77 @@ footer a { color: var(--text); }
   pre { padding: 22px; font-size: 13px; }
   .copy { top: 10px; right: 10px; }
 }
+
+/* ---------------------------------------------------------------- v3: visuals in place of text */
+.map { display: flex; align-items: stretch; justify-content: center; gap: 14px; margin: 34px auto 0; max-width: 920px; flex-wrap: wrap; }
+.map .chipbox { flex: 1 1 220px; background: #1d1d1f; border-radius: 20px; padding: 20px 22px; text-align: left; }
+.map .chipbox b { display: block; font-size: 13px; font-weight: 600; letter-spacing: .02em; text-transform: uppercase; color: #a1a1a6; margin-bottom: 6px; }
+.map .chipbox span { font-size: 19px; font-weight: 600; color: #f5f5f7; letter-spacing: -.02em; line-height: 1.3; }
+.map .eq { align-self: center; color: #6e6e73; font-size: 26px; font-weight: 300; }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.oneliner { display: flex; gap: 14px; align-items: flex-start; margin-top: 26px; }
+.oneliner .icon { margin: 0; flex: none; width: 40px; height: 40px; }
+.oneliner p { margin: 0; color: var(--text2); font-size: 17px; }
+.oneliner p b { color: var(--text); font-weight: 600; display: block; font-size: 19px; letter-spacing: -.02em; margin-bottom: 2px; }
+.panel { padding: 28px 28px 22px; }
+.panel h3 { margin-bottom: 2px; }
+.panel .q { color: var(--text2); font-size: 15px; margin: 14px 0 0; }
+.panel svg { width: 100%; height: auto; display: block; margin-top: 14px; }
+.panel svg .sm { font-size: 14px; fill: var(--text2); }
+.panel svg .xs { font-size: 10px; fill: var(--text3); font-family: var(--mono); }
+.panel svg .cap2 { font-size: 13px; fill: var(--text3); }
+.panel svg .vlm { font-size: 18px; font-weight: 700; fill: var(--text); }
+details { margin-top: 18px; }
+details summary { list-style: none; cursor: pointer; color: var(--link); font-size: 17px; display: inline-flex; align-items: center; gap: 6px; }
+details summary::-webkit-details-marker { display: none; }
+details summary::after { content: "+"; font-size: 20px; line-height: 1; transition: transform .25s var(--ease); }
+details[open] summary::after { transform: rotate(45deg); }
+details > .tile, details > div { margin-top: 16px; }
+.pipe { display: grid; grid-template-columns: 1fr auto 1fr auto 1.25fr; align-items: center; gap: 14px; }
+.pipe .arrow { color: var(--text3); font-size: 24px; font-weight: 300; }
+.pipe .stage { background: #fff; border-radius: 22px; padding: 20px; }
+.pipe .stage > b { display: block; font-size: 12.5px; font-weight: 600; color: var(--text3); letter-spacing: .02em; text-transform: uppercase; margin-bottom: 10px; }
+.chip { display: block; background: var(--bg2); border-radius: 12px; padding: 9px 12px; font-size: 15px; font-weight: 600; letter-spacing: -.015em; }
+.chip + .chip { margin-top: 8px; }
+.chip small { display: block; font-weight: 400; color: var(--text2); font-size: 13px; }
+.chip.blue { background: #e8f0fe; } .chip.purple { background: #f3edfa; }
+.pipe-note { text-align: center; color: var(--text2); font-size: 15px; margin-top: 20px; }
+.bgroup + .bgroup { margin-top: 26px; }
+.bh { font-size: 15px; font-weight: 600; margin: 0 0 10px; letter-spacing: -.015em; }
+.bh span { font-weight: 400; color: var(--text3); margin-left: 6px; }
+.bars { display: grid; gap: 9px; max-width: 860px; }
+.bars + .cap, .waffle + .cap { margin-top: 24px; }
+.brow { display: grid; grid-template-columns: minmax(118px, 28%) 1fr 64px; align-items: center; gap: 14px; font-size: 15px; }
+.brow .bl { line-height: 1.2; }
+.brow .bl .sub { display: block; color: var(--text3); font-size: 12.5px; }
+.brow.ours .bl { font-weight: 600; }
+.track { position: relative; height: 14px; }
+.track .zero { position: absolute; top: -5px; bottom: -5px; width: 1px; background: var(--line); }
+.track .bar { position: absolute; top: 0; height: 100%; border-radius: 7px; min-width: 3px; }
+.brow .bv { font-variant-numeric: tabular-nums; font-weight: 600; text-align: right; font-size: 15px; }
+.legend2 { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 14px; color: var(--text2); margin-bottom: 18px; }
+.waffle { display: grid; gap: 22px; }
+.cells { display: flex; flex-wrap: wrap; gap: 6px; }
+.w { width: 22px; height: 22px; border-radius: 6px; display: inline-block; }
+.w.hi { background: var(--blue); } .w.tie { background: #d2d2d7; } .w.lo { background: #f2c6cb; }
+.lists { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.lists ul { list-style: none; margin: 0; padding: 0; }
+.lists li { padding: 16px 0; border-top: 1px solid var(--hair); }
+.lists li:first-child { border-top: none; padding-top: 4px; }
+.lists li b { display: block; font-size: 17px; font-weight: 600; letter-spacing: -.02em; color: var(--text); }
+.lists li span { color: var(--text2); font-size: 15px; }
+.lists h3 { margin-bottom: 14px; }
+@media (max-width: 834px) {
+  .pipe { grid-template-columns: minmax(0, 1fr); }
+  .pipe .arrow { transform: rotate(90deg); justify-self: center; }
+}
+@media (max-width: 734px) {
+  .two, .lists { grid-template-columns: minmax(0, 1fr); }
+  .map .eq { display: none; }
+  .brow { grid-template-columns: 96px 1fr 52px; gap: 10px; font-size: 14px; }
+  .w { width: 18px; height: 18px; border-radius: 5px; }
+  .panel { padding: 22px 18px 18px; }
+}
 </style>
 </head>
 <body>
@@ -244,7 +315,7 @@ footer a { color: var(--text); }
       <a href="#method">Method</a>
       <a href="#findings">Findings</a>
       <a href="#scale">Scale</a>
-      <a href="#views">Alternative views</a>
+      <a href="#views">Views</a>
       <a href="#cite">Cite</a>
     </div>
     <a class="pill" href="https://arxiv.org/pdf/2610.28435">Paper</a>
@@ -263,11 +334,11 @@ footer a { color: var(--text); }
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
         Code</a>
       <a class="more" href="https://arxiv.org/abs/2610.28435">arXiv</a>
-      <a class="more" href="#cite">BibTeX</a>
+      <a class="more" href="#cite">Abstract &amp; BibTeX</a>
     </div>
     <div class="hero-figure tile figure reveal">
       <a class="zoom" href="assets/how_it_works.png" aria-label="Open the figure at full size"><img src="assets/how_it_works.png" alt="One prompt with the query and the labelled candidates; one forward pass of the VLM; the next-token probabilities of the labels A to P, renormalized, give the new order" width="2400" height="906"></a>
-      <p class="cap" style="text-align:left"><b>The choice readout.</b> (1) The query and the top-K candidates of a first-stage retriever go into one prompt under the labels A–P. (2) One forward pass of a vision-language model, with no decoding. (3) The next-token distribution, restricted to the label tokens and renormalized, gives one probability per candidate, and the candidates are reordered by it. Bar lengths are illustrative.</p>
+      <p class="cap" style="text-align:center">One prompt, one forward pass, one probability per candidate. Bar lengths are illustrative.</p>
     </div>
   </div>
 </header>
@@ -276,7 +347,13 @@ footer a { color: var(--text); }
   <div class="wrap reveal">
     <p class="eyebrow">The position</p>
     <p class="statement">A general vision-language model can serve as a multimodal reranker through <span class="gradtext">System One decisions</span>, and decision tuning can improve its reranking.</p>
-    <p class="intro">Multimodal rerankers are usually dedicated models, trained on retrieval data to score the candidates of a query. Reranking is also a decision of the kind System One models make: the state holds the query and its candidates, the question asks which candidate best matches the query, and the options are the candidates.</p>
+    <div class="map" aria-label="Reranking as a System One decision">
+      <div class="chipbox"><b>State</b><span>the query and its candidates</span></div>
+      <div class="eq">→</div>
+      <div class="chipbox"><b>Question</b><span>which candidate best matches the query?</span></div>
+      <div class="eq">→</div>
+      <div class="chipbox"><b>Options</b><span>the candidates</span></div>
+    </div>
   </div>
 </section>
 
@@ -289,100 +366,160 @@ footer a { color: var(--text); }
     <div class="tile figure reveal">
       <a class="zoom" href="assets/scene1_motivation.png" aria-label="Open the figure at full size"><img src="assets/scene1_motivation.png" alt="Left, deployment: with two models, a retriever, a dedicated reranker that must be trained, served and updated, and a VLM that answers; with one model, the VLM both reranks and answers. Right, research: a VLM decision-tuned on decisions of many kinds, over text and images, reranks better although reranking is not in the tuning data" width="1184" height="472" loading="lazy"></a>
     </div>
-    <div class="grid g2" style="margin-top:20px">
-      <div class="tile reveal">
+    <div class="two reveal">
+      <div class="oneliner">
         <span class="icon" style="background:#e8f0fe;color:var(--blue)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01"/></svg></span>
-        <h3>For deployment</h3>
-        <p>Retrieval-augmented systems often already serve a large VLM to generate answers. If that model can rerank through one decision over the candidates, the system needs no separate reranker to train, serve and keep up to date.</p>
+        <p><b>Deployment</b>If the VLM that answers can also rerank, there is no separate reranker to train, serve and keep up to date.</p>
       </div>
-      <div class="tile reveal">
+      <div class="oneliner">
         <span class="icon" style="background:#f3edfa;color:var(--purple)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6L4.5 18.5A1.6 1.6 0 0 0 5.9 21h12.2a1.6 1.6 0 0 0 1.4-2.5L14 9V3"/><path d="M7.5 15h9"/></svg></span>
-        <h3>For research</h3>
-        <p>If reranking is one decision among many, it can improve with decision tuning across tasks, without reranking-specific training.</p>
+        <p><b>Research</b>If reranking is one decision among many, it can improve with decision tuning across tasks, without reranking-specific training.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="alt" id="abstract">
-  <div class="wrap">
-    <div class="narrow reveal">
-      <p class="eyebrow grad">Abstract</p>
-      <p class="abstract">Multimodal rerankers are usually dedicated models: a vision-language model (VLM) is trained on retrieval data to score the candidates of a query. Scoring options is not specific to reranking. System One decision models such as Jev map a state and a typed question to one probability per option without generating text, and general models can make such decisions with little or no training. Reranking is one such decision, with the query and its candidates as the state and the candidates as the options. We therefore argue that a general VLM can serve as a multimodal reranker through System One decisions, and that decision tuning can improve its reranking. We ask a VLM one choice question over the top 16 candidates of a first-stage retriever and rank the candidates by the probabilities of their labels, read from one forward pass. On MMEB-V2 image retrieval, this choice scores 5.4 to 7.3 hit@1 above a yes/no question per candidate, and the yes/no question falls below the first stage. With the choice, zero-shot Qwen3.8-27B beats the supervised Qwen3-VL-Reranker-2B on all three benchmarks and comes within 1.6 points of Reranker-8B on each. It matches Reranker-8B on MMEB-V2 visual documents (84.79 vs. 84.78 nDCG@5), at 1.1 to 1.5 times its latency. JEV-27B-VL, the same backbone tuned on text decisions only, improves page reranking by 0.6 to 1.1 points, with gains on most tasks (sign test, p ≤ 0.017), and leaves natural images unchanged. The zero-shot model is larger than the supervised rerankers and of a newer generation, so these comparisons are confounded; we discuss this and other alternative views, and the experiments that would test the position.</p>
-    </div>
-  </div>
-</section>
-
-<section id="method">
+<section class="alt" id="method">
   <div class="wrap">
     <div class="head center reveal">
       <p class="eyebrow grad">Method</p>
-      <h2>Reranking as one decision.</h2>
-      <p class="intro">Both readouts use the same instruction, query and candidates. The <b>choice</b> readout asks one question over all candidates. The <b>yes/no</b> readout, the form of supervised pointwise rerankers, asks one question per candidate.</p>
+      <h2>Two ways to ask. Same instruction, query and candidates.</h2>
     </div>
-    <div class="compare">
-      <div class="tile col reveal">
-        <h3>Choice readout <span class="tag" style="background:#e8f0fe;color:#1a56c4">choice</span></h3>
-        <p>Listwise: one request per query.</p>
-        <dl>
-          <dt>State</dt><dd>Instruction, query, and the K candidates under the labels A, B, …</dd>
-          <dt>Question</dt><dd>“Which candidate best matches the query, following the instruction?”</dd>
-          <dt>Options</dt><dd>The K candidate labels</dd>
-          <dt>Output</dt><dd>One probability per candidate, summing to one</dd>
-        </dl>
+    <div class="two">
+      <div class="tile panel reveal">
+        <h3>Choice readout</h3>
+        <p class="q">“Which candidate best matches the query, following the instruction?”</p>
+        <svg viewBox="0 0 484 250" role="img" aria-label="choice readout schematic">
+<rect x="10" y="20" width="170" height="200" rx="18" fill="#fff" stroke="#E3E3E8" stroke-width="1.5"/>
+<rect x="26" y="36" width="138" height="22" rx="11" fill="#F5F5F7"/><text x="95" y="51" class="sm" text-anchor="middle">query</text>
+<rect x="30" y="72" width="26" height="26" rx="6" fill="#F5F5F7" stroke="#E3E3E8"/><rect x="35" y="77" width="11" height="2.5" rx="1" fill="#4285F4"/><text x="43" y="92" class="xs" text-anchor="middle">A</text>
+<rect x="64" y="72" width="26" height="26" rx="6" fill="#F5F5F7" stroke="#E3E3E8"/><rect x="69" y="77" width="11" height="2.5" rx="1" fill="#D96570"/><text x="77" y="92" class="xs" text-anchor="middle">B</text>
+<rect x="98" y="72" width="26" height="26" rx="6" fill="#F5F5F7" stroke="#E3E3E8"/><rect x="103" y="77" width="11" height="2.5" rx="1" fill="#FBBC04"/><text x="111" y="92" class="xs" text-anchor="middle">C</text>
+<rect x="132" y="72" width="26" height="26" rx="6" fill="#F5F5F7" stroke="#E3E3E8"/><rect x="137" y="77" width="11" height="2.5" rx="1" fill="#34A853"/><text x="145" y="92" class="xs" text-anchor="middle">D</text>
+<rect x="30" y="106" width="26" height="26" rx="6" fill="#F5F5F7" stroke="#E3E3E8"/><rect x="35" y="111" width="11" height="2.5" rx="1" fill="#4285F4"/><text x="43" y="126" class="xs" text-anchor="middle">E</text>
+<rect x="64" y="106" width="26" height="26" rx="6" fill="#F5F5F7" stroke="#E3E3E8"/><rect x="69" y="111" width="11" height="2.5" rx="1" fill="#D96570"/><text x="77" y="126" class="xs" text-anchor="middle">F</text>
+<rect x="98" y="106" width="26" height="26" rx="6" fill="#F5F5F7" stroke="#E3E3E8"/><rect x="103" y="111" width="11" height="2.5" rx="1" fill="#FBBC04"/><text x="111" y="126" class="xs" text-anchor="middle">G</text>
+<rect x="132" y="106" width="26" height="26" rx="6" fill="#F5F5F7" stroke="#E3E3E8"/><rect x="137" y="111" width="11" height="2.5" rx="1" fill="#34A853"/><text x="145" y="126" class="xs" text-anchor="middle">H</text>
+<rect x="30" y="140" width="26" height="26" rx="6" fill="#F5F5F7" stroke="#E3E3E8"/><rect x="35" y="145" width="11" height="2.5" rx="1" fill="#4285F4"/><text x="43" y="160" class="xs" text-anchor="middle">I</text>
+<rect x="64" y="140" width="26" height="26" rx="6" fill="#F5F5F7" stroke="#E3E3E8"/><rect x="69" y="145" width="11" height="2.5" rx="1" fill="#D96570"/><text x="77" y="160" class="xs" text-anchor="middle">J</text>
+<rect x="98" y="140" width="26" height="26" rx="6" fill="#F5F5F7" stroke="#E3E3E8"/><rect x="103" y="145" width="11" height="2.5" rx="1" fill="#FBBC04"/><text x="111" y="160" class="xs" text-anchor="middle">K</text>
+<rect x="132" y="140" width="26" height="26" rx="6" fill="#F5F5F7" stroke="#E3E3E8"/><rect x="137" y="145" width="11" height="2.5" rx="1" fill="#34A853"/><text x="145" y="160" class="xs" text-anchor="middle">L</text>
+<rect x="30" y="174" width="26" height="26" rx="6" fill="#F5F5F7" stroke="#E3E3E8"/><rect x="35" y="179" width="11" height="2.5" rx="1" fill="#4285F4"/><text x="43" y="194" class="xs" text-anchor="middle">M</text>
+<rect x="64" y="174" width="26" height="26" rx="6" fill="#F5F5F7" stroke="#E3E3E8"/><rect x="69" y="179" width="11" height="2.5" rx="1" fill="#D96570"/><text x="77" y="194" class="xs" text-anchor="middle">N</text>
+<rect x="98" y="174" width="26" height="26" rx="6" fill="#F5F5F7" stroke="#E3E3E8"/><rect x="103" y="179" width="11" height="2.5" rx="1" fill="#FBBC04"/><text x="111" y="194" class="xs" text-anchor="middle">O</text>
+<rect x="132" y="174" width="26" height="26" rx="6" fill="#F5F5F7" stroke="#E3E3E8"/><rect x="137" y="179" width="11" height="2.5" rx="1" fill="#34A853"/><text x="145" y="194" class="xs" text-anchor="middle">P</text>
+<text x="95" y="242" class="cap2" text-anchor="middle">1 prompt</text>
+<path d="M188 120 h28" stroke="#6E6E73" stroke-width="2" marker-end="url(#ah-choice)"/>
+<rect x="224" y="92" width="68" height="56" rx="16" fill="#fff" stroke="url(#g-choice)" stroke-width="2.4"/><text x="258" y="125" class="vlm" text-anchor="middle">VLM</text>
+<path d="M300 120 h22" stroke="#6E6E73" stroke-width="2" marker-end="url(#ah-choice)"/>
+<rect x="334.0" y="140" width="5.4" height="30" rx="1.5" fill="#C7C7CC"/>
+<rect x="341.4" y="162" width="5.4" height="8" rx="1.5" fill="#C7C7CC"/>
+<rect x="348.8" y="108" width="5.4" height="62" rx="1.5" fill="#4285F4"/>
+<rect x="356.2" y="158" width="5.4" height="12" rx="1.5" fill="#C7C7CC"/>
+<rect x="363.6" y="150" width="5.4" height="20" rx="1.5" fill="#C7C7CC"/>
+<rect x="371.0" y="164" width="5.4" height="6" rx="1.5" fill="#C7C7CC"/>
+<rect x="378.4" y="160" width="5.4" height="10" rx="1.5" fill="#C7C7CC"/>
+<rect x="385.8" y="130" width="5.4" height="40" rx="1.5" fill="#C7C7CC"/>
+<rect x="393.2" y="165" width="5.4" height="5" rx="1.5" fill="#C7C7CC"/>
+<rect x="400.6" y="156" width="5.4" height="14" rx="1.5" fill="#C7C7CC"/>
+<rect x="408.0" y="162" width="5.4" height="8" rx="1.5" fill="#C7C7CC"/>
+<rect x="415.4" y="148" width="5.4" height="22" rx="1.5" fill="#C7C7CC"/>
+<rect x="422.8" y="164" width="5.4" height="6" rx="1.5" fill="#C7C7CC"/>
+<rect x="430.2" y="161" width="5.4" height="9" rx="1.5" fill="#C7C7CC"/>
+<rect x="437.6" y="154" width="5.4" height="16" rx="1.5" fill="#C7C7CC"/>
+<rect x="445.0" y="163" width="5.4" height="7" rx="1.5" fill="#C7C7CC"/>
+<line x1="332" x2="454" y1="171" y2="171" stroke="#E3E3E8"/>
+<text x="393" y="192" class="sm" text-anchor="middle">P(A) … P(P)</text><text x="393" y="210" class="cap2" text-anchor="middle">one distribution, sums to 1</text>
+<defs><marker id="ah-choice" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#6E6E73"/></marker><linearGradient id="g-choice" x1="0" x2="1"><stop offset="0" stop-color="#4285F4"/><stop offset=".5" stop-color="#9B72CB"/><stop offset="1" stop-color="#D96570"/></linearGradient></defs>
+</svg>
       </div>
-      <div class="tile col reveal">
-        <h3>Yes/no readout <span class="tag" style="background:#fbecee;color:#b8434f">noul</span></h3>
-        <p>Pointwise: K requests per query.</p>
-        <dl>
-          <dt>State</dt><dd>Instruction, query, and one candidate</dd>
-          <dt>Question</dt><dd>“Does this candidate match the query, following the instruction?”</dd>
-          <dt>Options</dt><dd>None (a yes/no question)</dd>
-          <dt>Output</dt><dd>P(yes) for the candidate</dd>
-        </dl>
+      <div class="tile panel reveal">
+        <h3>Yes/no readout</h3>
+        <p class="q">“Does this candidate match the query, following the instruction?”</p>
+        <svg viewBox="0 0 484 250" role="img" aria-label="yesno readout schematic">
+<rect x="10" y="20" width="150" height="150" rx="16" fill="#fff" stroke="#E3E3E8" stroke-width="1.5"/>
+<rect x="17" y="29" width="150" height="150" rx="16" fill="#fff" stroke="#E3E3E8" stroke-width="1.5"/>
+<rect x="24" y="38" width="150" height="150" rx="16" fill="#fff" stroke="#E3E3E8" stroke-width="1.5"/>
+<rect x="31" y="47" width="150" height="150" rx="16" fill="#fff" stroke="#E3E3E8" stroke-width="1.5"/>
+<rect x="38" y="56" width="150" height="150" rx="16" fill="#fff" stroke="#E3E3E8" stroke-width="1.5"/>
+<rect x="46" y="70" width="118" height="22" rx="11" fill="#F5F5F7"/><text x="105" y="85" class="sm" text-anchor="middle">query</text>
+<rect x="88" y="108" width="34" height="34" rx="8" fill="#F5F5F7" stroke="#E3E3E8"/><rect x="94" y="114" width="14" height="3" rx="1" fill="#4285F4"/><text x="105" y="162" class="xs" text-anchor="middle">one candidate</text>
+<text x="85" y="242" class="cap2" text-anchor="middle">16 prompts</text>
+<path d="M188 120 h28" stroke="#6E6E73" stroke-width="2" marker-end="url(#ah-yesno)"/>
+<rect x="224" y="92" width="68" height="56" rx="16" fill="#fff" stroke="#E3E3E8" stroke-width="2"/><text x="258" y="125" class="vlm" text-anchor="middle">VLM</text><text x="258" y="166" class="cap2" text-anchor="middle">× 16</text>
+<path d="M300 120 h22" stroke="#6E6E73" stroke-width="2" marker-end="url(#ah-yesno)"/>
+<rect x="334.0" y="102" width="5.4" height="34" rx="1.5" fill="#F5F5F7"/><rect x="334.0" y="110" width="5.4" height="26" rx="1.5" fill="#D96570" opacity=".75"/>
+<rect x="341.4" y="102" width="5.4" height="34" rx="1.5" fill="#F5F5F7"/><rect x="341.4" y="118" width="5.4" height="18" rx="1.5" fill="#D96570" opacity=".75"/>
+<rect x="348.8" y="102" width="5.4" height="34" rx="1.5" fill="#F5F5F7"/><rect x="348.8" y="106" width="5.4" height="30" rx="1.5" fill="#D96570" opacity=".75"/>
+<rect x="356.2" y="102" width="5.4" height="34" rx="1.5" fill="#F5F5F7"/><rect x="356.2" y="114" width="5.4" height="22" rx="1.5" fill="#D96570" opacity=".75"/>
+<rect x="363.6" y="102" width="5.4" height="34" rx="1.5" fill="#F5F5F7"/><rect x="363.6" y="124" width="5.4" height="12" rx="1.5" fill="#D96570" opacity=".75"/>
+<rect x="371.0" y="102" width="5.4" height="34" rx="1.5" fill="#F5F5F7"/><rect x="371.0" y="108" width="5.4" height="28" rx="1.5" fill="#D96570" opacity=".75"/>
+<rect x="378.4" y="102" width="5.4" height="34" rx="1.5" fill="#F5F5F7"/><rect x="378.4" y="120" width="5.4" height="16" rx="1.5" fill="#D96570" opacity=".75"/>
+<rect x="385.8" y="102" width="5.4" height="34" rx="1.5" fill="#F5F5F7"/><rect x="385.8" y="112" width="5.4" height="24" rx="1.5" fill="#D96570" opacity=".75"/>
+<rect x="393.2" y="102" width="5.4" height="34" rx="1.5" fill="#F5F5F7"/><rect x="393.2" y="116" width="5.4" height="20" rx="1.5" fill="#D96570" opacity=".75"/>
+<rect x="400.6" y="102" width="5.4" height="34" rx="1.5" fill="#F5F5F7"/><rect x="400.6" y="109" width="5.4" height="27" rx="1.5" fill="#D96570" opacity=".75"/>
+<rect x="408.0" y="102" width="5.4" height="34" rx="1.5" fill="#F5F5F7"/><rect x="408.0" y="122" width="5.4" height="14" rx="1.5" fill="#D96570" opacity=".75"/>
+<rect x="415.4" y="102" width="5.4" height="34" rx="1.5" fill="#F5F5F7"/><rect x="415.4" y="111" width="5.4" height="25" rx="1.5" fill="#D96570" opacity=".75"/>
+<rect x="422.8" y="102" width="5.4" height="34" rx="1.5" fill="#F5F5F7"/><rect x="422.8" y="117" width="5.4" height="19" rx="1.5" fill="#D96570" opacity=".75"/>
+<rect x="430.2" y="102" width="5.4" height="34" rx="1.5" fill="#F5F5F7"/><rect x="430.2" y="107" width="5.4" height="29" rx="1.5" fill="#D96570" opacity=".75"/>
+<rect x="437.6" y="102" width="5.4" height="34" rx="1.5" fill="#F5F5F7"/><rect x="437.6" y="115" width="5.4" height="21" rx="1.5" fill="#D96570" opacity=".75"/>
+<rect x="445.0" y="102" width="5.4" height="34" rx="1.5" fill="#F5F5F7"/><rect x="445.0" y="119" width="5.4" height="17" rx="1.5" fill="#D96570" opacity=".75"/>
+<line x1="332" x2="454" y1="137" y2="137" stroke="#E3E3E8"/>
+<text x="393" y="192" class="sm" text-anchor="middle">P(yes) × 16</text><text x="393" y="210" class="cap2" text-anchor="middle">16 separate scores</text>
+<defs><marker id="ah-yesno" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#6E6E73"/></marker><linearGradient id="g-yesno" x1="0" x2="1"><stop offset="0" stop-color="#4285F4"/><stop offset=".5" stop-color="#9B72CB"/><stop offset="1" stop-color="#D96570"/></linearGradient></defs>
+</svg>
       </div>
     </div>
-    <div class="tile figure reveal" style="margin-top:20px">
-      <a class="zoom" href="assets/listwise_prompt.png" aria-label="Open the figure at full size"><img src="assets/listwise_prompt.png" alt="The choice prompt: a user turn with the instruction, the query and sixteen page images labelled A to P, then the question; an assistant turn with thinking off, where the next-token logits of A to P are read and renormalized into one probability per candidate" width="2404" height="1059" loading="lazy"></a>
-      <p class="cap"><b>The prompt, simplified.</b> The instruction, the query and the 16 first-stage candidates, each after its label, form one user turn. The assistant turn opens with thinking off, and the next-token logits at that position, restricted to the labels A–P and renormalized, give one probability per candidate. Thumbnails and bar heights are illustrative.</p>
-    </div>
+    <p class="cap reveal" style="text-align:center">Schematic; bar heights are illustrative. The yes/no readout is the form of supervised pointwise rerankers.</p>
+    <details class="reveal">
+      <summary>See the exact prompt</summary>
+      <div class="tile figure">
+        <a class="zoom" href="assets/listwise_prompt.png" aria-label="Open the figure at full size"><img src="assets/listwise_prompt.png" alt="The choice prompt: a user turn with the instruction, the query and sixteen page images labelled A to P, then the question; an assistant turn with thinking off, where the next-token logits of A to P are read and renormalized into one probability per candidate" width="2404" height="1059" loading="lazy"></a>
+        <p class="cap">The choice prompt, simplified. Thinking is off; the next-token logits restricted to A–P give one probability per candidate.</p>
+      </div>
+    </details>
   </div>
 </section>
 
-<section class="alt" id="setup">
+<section id="setup">
   <div class="wrap">
     <div class="head center reveal">
       <p class="eyebrow grad">Setup</p>
-      <h2>One first stage. The same candidates for every reranker.</h2>
+      <h2>One first stage. Same candidates for every reranker.</h2>
     </div>
-    <div class="grid g3">
-      <div class="tile reveal">
-        <p class="label">Benchmarks</p>
-        <p><b style="color:var(--text)">MMEB-V2</b> image retrieval (12 tasks, hit@1) and visual-document retrieval (24 tasks, nDCG@5), and <b style="color:var(--text)">ViDoRe V3</b> (8 datasets, six languages pooled, nDCG@10).</p>
-      </div>
-      <div class="tile reveal">
-        <p class="label">Candidates</p>
-        <p>The top 16 of Qwen3-VL-Embedding-2B. Every reranker receives the same candidates and the same images, at most 1800 visual tokens each.</p>
-      </div>
-      <div class="tile reveal">
-        <p class="label">Models</p>
-        <p><b style="color:var(--text)">Qwen3.8-27B</b> as released (no decision tuning) and <b style="color:var(--text)">JEV-27B-VL</b>, the same backbone with a LoRA adapter and a decision head trained by its developers on text decisions only. References: the supervised <b style="color:var(--text)">Qwen3-VL-Reranker-2B and -8B</b>.</p>
+    <div class="tile reveal" style="background:var(--bg2)">
+      <div class="pipe">
+        <div class="stage"><b>Benchmarks</b>
+          <span class="chip">MMEB-V2 image<small>12 tasks · hit@1</small></span>
+          <span class="chip">MMEB-V2 visual documents<small>24 tasks · nDCG@5</small></span>
+          <span class="chip">ViDoRe V3<small>8 datasets · 6 languages · nDCG@10</small></span>
+        </div>
+        <div class="arrow">→</div>
+        <div class="stage"><b>First stage</b>
+          <span class="chip">Qwen3-VL-Embedding-2B<small>top 16 candidates</small></span>
+        </div>
+        <div class="arrow">→</div>
+        <div class="stage"><b>Rerankers</b>
+          <span class="chip">Qwen3-VL-Reranker-2B · 8B<small>supervised, yes/no</small></span>
+          <span class="chip blue">Qwen3.8-27B<small>zero-shot, no decision tuning</small></span>
+          <span class="chip purple">JEV-27B-VL<small>same backbone, text decision tuning</small></span>
+        </div>
       </div>
     </div>
+    <p class="pipe-note reveal">Every reranker sees the same candidates and images, at most 1800 visual tokens each.</p>
   </div>
 </section>
 
-<section id="preliminary">
+<section class="alt" id="preliminary">
   <div class="wrap">
     <div class="head center reveal">
       <p class="eyebrow grad">Preliminary</p>
       <h2>Ask one choice. Not one yes/no per candidate.</h2>
-      <p class="intro">Of the two System One question types, one choice over all candidates improves the first-stage ranking on image retrieval, and a yes/no question for each candidate, the form of supervised pointwise rerankers, makes it worse.</p>
     </div>
     <div class="stats">
-      <div class="tile stat reveal"><p class="n gradtext">+7.3<small>hit@1</small></p><p>Choice over yes/no, Qwen3.8-27B (no decision tuning)</p></div>
-      <div class="tile stat reveal"><p class="n gradtext">+5.4<small>hit@1</small></p><p>Choice over yes/no, JEV-27B-VL (text decision tuning)</p></div>
-      <div class="tile stat reveal"><p class="n">12<small>of 12 tasks</small></p><p>The choice is higher on every image task, for both models</p></div>
+      <div class="tile stat reveal"><p class="n gradtext">+7.3<small>hit@1</small></p><p>Choice over yes/no, Qwen3.8-27B</p></div>
+      <div class="tile stat reveal"><p class="n gradtext">+5.4<small>hit@1</small></p><p>Choice over yes/no, JEV-27B-VL</p></div>
+      <div class="tile stat reveal"><p class="n">12<small>of 12 tasks</small></p><p>Choice higher, for both models</p></div>
     </div>
     <div class="tile chart reveal" style="margin-top:20px">
       <div class="keys only-wide"><span class="key"><span class="dot" style="background:var(--blue)"></span>choice · 1 prompt</span><span class="key"><span class="dot" style="background:var(--rose)"></span>yes/no · 16 prompts</span></div>
@@ -426,75 +563,120 @@ footer a { color: var(--text); }
         <thead><tr><th>hit@1</th><th>choice<span class="sub">1 prompt</span></th><th>yes/no<span class="sub">16 prompts</span></th></tr></thead>
         <tbody>
           <tr><td>none (first stage)</td><td colspan="2">74.85</td></tr>
-          <tr><td>Qwen3.8-27B<span class="sub">no decision tuning</span></td><td><b>76.76</b></td><td>69.50</td></tr>
-          <tr><td>JEV-27B-VL<span class="sub">text decision tuning</span></td><td><b>76.80</b></td><td>71.42</td></tr>
+          <tr><td>Qwen3.8-27B</td><td><b>76.76</b></td><td>69.50</td></tr>
+          <tr><td>JEV-27B-VL</td><td><b>76.80</b></td><td>71.42</td></tr>
         </tbody>
       </table>
       </div>
-      <p class="cap">MMEB-V2 image retrieval (12 tasks, hit@1, top 16 of Qwen3-VL-Embedding-2B). The yes/no readout falls below the first stage on 11 tasks for Qwen3.8-27B and on 9 for JEV-27B-VL.</p>
+      <p class="cap">MMEB-V2 image retrieval, hit@1. The yes/no question falls below the first stage.</p>
     </div>
   </div>
 </section>
 
-<section class="alt" id="findings">
+<section id="findings">
   <div class="wrap">
     <div class="head center reveal">
       <p class="eyebrow grad">Finding 1</p>
       <h2>As a System One decision, a general VLM competes with dedicated rerankers.</h2>
     </div>
     <div class="stats">
-      <div class="tile stat reveal"><p class="n">84.79<small>vs. 84.78</small></p><p>Zero-shot Qwen3.8-27B against the supervised Reranker-8B, MMEB-V2 visual documents (nDCG@5)</p></div>
-      <div class="tile stat reveal"><p class="n">3<small>of 3</small></p><p>Benchmarks on which it beats the supervised Reranker-2B</p></div>
-      <div class="tile stat reveal"><p class="n">≤ 1.6<small>points</small></p><p>Its distance to Reranker-8B on each benchmark</p></div>
+      <div class="tile stat reveal"><p class="n">84.79<small>vs. 84.78</small></p><p>Zero-shot Qwen3.8-27B vs. supervised Reranker-8B, MMEB-V2 visual documents</p></div>
+      <div class="tile stat reveal"><p class="n">3<small>of 3</small></p><p>Benchmarks where it beats the supervised Reranker-2B</p></div>
+      <div class="tile stat reveal"><p class="n">≤ 1.6<small>points</small></p><p>Behind Reranker-8B on any benchmark</p></div>
     </div>
     <div class="tile reveal" style="margin-top:20px">
-      <div class="tw">
-      <table>
-        <thead><tr><th>Reranker</th><th>MMEB-V2 image<span class="sub">hit@1</span></th><th>MMEB-V2 visdoc<span class="sub">nDCG@5</span></th><th>ViDoRe V3<span class="sub">nDCG@10</span></th></tr></thead>
-        <tbody>
-          <tr><td>none (first stage)</td><td>74.85</td><td>79.20</td><td>53.01</td></tr>
-          <tr class="group"><td colspan="4">Dedicated, supervised</td></tr>
-          <tr><td>Qwen3-VL-Reranker-2B</td><td>74.49</td><td>82.72</td><td>59.18</td></tr>
-          <tr><td>Qwen3-VL-Reranker-8B</td><td class="best">78.36</td><td>84.78</td><td class="second">61.98</td></tr>
-          <tr class="group"><td colspan="4">General VLM, one choice question</td></tr>
-          <tr class="ours"><td>Qwen3.8-27B (no decision tuning)</td><td>76.76</td><td class="second">84.79</td><td>60.94</td></tr>
-          <tr class="ours"><td>JEV-27B-VL (text decision tuning)</td><td class="second">76.80</td><td class="best">85.42</td><td class="best">62.03</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p class="cap">MMEB-V2: mean over tasks; ViDoRe V3: mean over datasets, all languages. Bold: best reranker in the column; underlined: second best.</p>
+      <p class="bh" style="margin-bottom:18px">Gain over the first stage <span>points of each benchmark's metric</span></p>
+      <div class="bgroup"><p class="bh">MMEB-V2 image <span>hit@1</span></p><div class="bars">
+<div class="brow "><span class="bl">Reranker-2B<span class="sub">supervised</span></span><span class="track"><span class="zero" style="left:9.43%"></span><span class="bar" style="left:6.04%;width:3.40%;background:#C7C7CC"></span></span><span class="bv">-0.36</span></div>
+<div class="brow "><span class="bl">Reranker-8B<span class="sub">supervised</span></span><span class="track"><span class="zero" style="left:9.43%"></span><span class="bar" style="left:9.43%;width:33.11%;background:#8E8E93"></span></span><span class="bv">+3.51</span></div>
+<div class="brow ours"><span class="bl">Qwen3.8-27B<span class="sub">zero-shot choice</span></span><span class="track"><span class="zero" style="left:9.43%"></span><span class="bar" style="left:9.43%;width:18.02%;background:#4285F4"></span></span><span class="bv">+1.91</span></div>
+<div class="brow ours"><span class="bl">JEV-27B-VL<span class="sub">text decision tuning</span></span><span class="track"><span class="zero" style="left:9.43%"></span><span class="bar" style="left:9.43%;width:18.40%;background:#9B72CB"></span></span><span class="bv">+1.95</span></div>
+</div></div>
+<div class="bgroup"><p class="bh">MMEB-V2 visual documents <span>nDCG@5</span></p><div class="bars">
+<div class="brow "><span class="bl">Reranker-2B<span class="sub">supervised</span></span><span class="track"><span class="zero" style="left:9.43%"></span><span class="bar" style="left:9.43%;width:33.21%;background:#C7C7CC"></span></span><span class="bv">+3.52</span></div>
+<div class="brow "><span class="bl">Reranker-8B<span class="sub">supervised</span></span><span class="track"><span class="zero" style="left:9.43%"></span><span class="bar" style="left:9.43%;width:52.64%;background:#8E8E93"></span></span><span class="bv">+5.58</span></div>
+<div class="brow ours"><span class="bl">Qwen3.8-27B<span class="sub">zero-shot choice</span></span><span class="track"><span class="zero" style="left:9.43%"></span><span class="bar" style="left:9.43%;width:52.74%;background:#4285F4"></span></span><span class="bv">+5.59</span></div>
+<div class="brow ours"><span class="bl">JEV-27B-VL<span class="sub">text decision tuning</span></span><span class="track"><span class="zero" style="left:9.43%"></span><span class="bar" style="left:9.43%;width:58.68%;background:#9B72CB"></span></span><span class="bv">+6.22</span></div>
+</div></div>
+<div class="bgroup"><p class="bh">ViDoRe V3 <span>nDCG@10</span></p><div class="bars">
+<div class="brow "><span class="bl">Reranker-2B<span class="sub">supervised</span></span><span class="track"><span class="zero" style="left:9.43%"></span><span class="bar" style="left:9.43%;width:58.21%;background:#C7C7CC"></span></span><span class="bv">+6.17</span></div>
+<div class="brow "><span class="bl">Reranker-8B<span class="sub">supervised</span></span><span class="track"><span class="zero" style="left:9.43%"></span><span class="bar" style="left:9.43%;width:84.62%;background:#8E8E93"></span></span><span class="bv">+8.97</span></div>
+<div class="brow ours"><span class="bl">Qwen3.8-27B<span class="sub">zero-shot choice</span></span><span class="track"><span class="zero" style="left:9.43%"></span><span class="bar" style="left:9.43%;width:74.81%;background:#4285F4"></span></span><span class="bv">+7.93</span></div>
+<div class="brow ours"><span class="bl">JEV-27B-VL<span class="sub">text decision tuning</span></span><span class="track"><span class="zero" style="left:9.43%"></span><span class="bar" style="left:9.43%;width:85.09%;background:#9B72CB"></span></span><span class="bv">+9.02</span></div>
+</div></div>
+      <details>
+        <summary>Full table</summary>
+        <div class="tw">
+        <table>
+          <thead><tr><th>Reranker</th><th>MMEB-V2 image<span class="sub">hit@1</span></th><th>MMEB-V2 visdoc<span class="sub">nDCG@5</span></th><th>ViDoRe V3<span class="sub">nDCG@10</span></th></tr></thead>
+          <tbody>
+            <tr><td>none (first stage)</td><td>74.85</td><td>79.20</td><td>53.01</td></tr>
+            <tr><td>Qwen3-VL-Reranker-2B (supervised)</td><td>74.49</td><td>82.72</td><td>59.18</td></tr>
+            <tr><td>Qwen3-VL-Reranker-8B (supervised)</td><td class="best">78.36</td><td>84.78</td><td class="second">61.98</td></tr>
+            <tr class="ours"><td>Qwen3.8-27B, choice (no decision tuning)</td><td>76.76</td><td class="second">84.79</td><td>60.94</td></tr>
+            <tr class="ours"><td>JEV-27B-VL, choice (text decision tuning)</td><td class="second">76.80</td><td class="best">85.42</td><td class="best">62.03</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p class="cap">MMEB-V2: mean over tasks; ViDoRe V3: mean over datasets, all languages. Bold: best reranker; underlined: second best.</p>
+      </details>
     </div>
-    <div class="finding reveal"><p class="k"><span class="target"></span>Finding 1</p><p>Reranking through one System One decision, with no training for reranking, a general VLM beats the smaller dedicated reranker on every benchmark and matches the larger one on MMEB-V2 visual documents.</p></div>
+    <div class="finding reveal"><p class="k"><span class="target"></span>Finding 1</p><p>With no training for reranking, a general VLM beats the smaller dedicated reranker on every benchmark and matches the larger one on MMEB-V2 visual documents.</p></div>
   </div>
 </section>
 
-<section id="finding2">
+<section class="alt" id="finding2">
   <div class="wrap">
     <div class="head center reveal">
       <p class="eyebrow grad">Finding 2</p>
       <h2>Text decision tuning improves reranking of pages.</h2>
-      <p class="intro">Qwen3.8-27B and JEV-27B-VL share every weight except the adapter and the decision head, so comparing them isolates text decision tuning.</p>
+      <p class="intro">Same backbone. Only the adapter and the decision head differ.</p>
     </div>
     <div class="stats">
-      <div class="tile stat reveal"><p class="n gradtext">+0.63<small>nDCG@5</small></p><p>MMEB-V2 visual documents; higher on 17 of 24 tasks (2 ties), sign test p = 0.017</p></div>
-      <div class="tile stat reveal"><p class="n gradtext">+1.09<small>nDCG@10</small></p><p>ViDoRe V3; higher on all 8 datasets, sign test p = 0.008</p></div>
-      <div class="tile stat reveal"><p class="n">+0.04<small>hit@1</small></p><p>MMEB-V2 natural images; higher on 4 of 12 tasks</p></div>
+      <div class="tile stat reveal"><p class="n gradtext">+0.63<small>nDCG@5</small></p><p>MMEB-V2 visual documents · p = 0.017</p></div>
+      <div class="tile stat reveal"><p class="n gradtext">+1.09<small>nDCG@10</small></p><p>ViDoRe V3 · p = 0.008</p></div>
+      <div class="tile stat reveal"><p class="n">+0.04<small>hit@1</small></p><p>MMEB-V2 natural images</p></div>
+    </div>
+    <div class="tile reveal" style="margin-top:20px">
+      <div class="legend2"><span class="key"><i class="w hi" style="width:14px;height:14px"></i>JEV-27B-VL higher</span><span class="key"><i class="w tie" style="width:14px;height:14px"></i>tie</span><span class="key"><i class="w lo" style="width:14px;height:14px"></i>Qwen3.8-27B higher</span></div>
+      <div class="waffle">
+<div class="wrow"><p class="bh">MMEB-V2 image <span>4 of 12 higher</span></p><div class="cells"><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w lo"></i><i class="w lo"></i><i class="w lo"></i><i class="w lo"></i><i class="w lo"></i><i class="w lo"></i><i class="w lo"></i><i class="w lo"></i></div></div>
+<div class="wrow"><p class="bh">MMEB-V2 visual documents <span>17 of 24 higher</span></p><div class="cells"><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w tie"></i><i class="w tie"></i><i class="w lo"></i><i class="w lo"></i><i class="w lo"></i><i class="w lo"></i><i class="w lo"></i></div></div>
+<div class="wrow"><p class="bh">ViDoRe V3 <span>8 of 8 higher</span></p><div class="cells"><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i><i class="w hi"></i></div></div>
+</div>
+      <p class="cap">One square per task or dataset, both models with the choice readout. p: two-sided sign test over tasks.</p>
     </div>
     <div class="finding reveal"><p class="k"><span class="target"></span>Finding 2</p><p>Decision tuning on text alone slightly improves the VLM's reranking of document pages and leaves natural images unchanged.</p></div>
   </div>
 </section>
 
-<section class="alt" id="scale">
+<section id="scale">
   <div class="wrap">
     <div class="head center reveal">
       <p class="eyebrow grad">Where it helps, and at what scale</p>
       <h2>Queries with text gain. The readout needs scale.</h2>
-      <p class="intro">Over the 12 image tasks, the choice readout on Qwen3.8-27B gains on all nine tasks whose query contains text, most on CIRR (+7.1 hit@1). It loses on the three whose query is an image alone: MSCOCO image-to-text (−4.1), VisualNews image-to-text (−1.7) and NIGHTS (−0.7).</p>
     </div>
-    <div class="tile chart reveal">
-      <h3>Gemma 4, with the backbone swapped and no training</h3>
-      <p>E2B and E4B lower the first stage on all three benchmarks. From 12B upward the readout improves visual-document retrieval, by 1.7 to 2.9 nDCG@5 and 2.4 to 3.4 nDCG@10; on natural images only 31B improves the first stage (+2.6 hit@1).</p>
-      <div class="sv" style="margin-top:22px"><svg viewBox="0 0 900 410" role="img" aria-label="Gain over the first stage against model size">
+    <div class="tile reveal">
+      <p class="bh">Per image task <span>Qwen3.8-27B, gain in hit@1 over the first stage</span></p>
+      <div class="legend2" style="margin-bottom:14px"><span class="key"><span class="dot" style="background:var(--blue)"></span>query contains text</span><span class="key"><span class="dot" style="background:var(--rose)"></span>query is an image alone</span></div>
+      <div class="bars">
+<div class="brow "><span class="bl">CIRR</span><span class="track"><span class="zero" style="left:37.70%"></span><span class="bar" style="left:37.70%;width:58.20%;background:#4285F4"></span></span><span class="bv">+7.1</span></div>
+<div class="brow "><span class="bl">Wiki-SS-NQ</span><span class="track"><span class="zero" style="left:37.70%"></span><span class="bar" style="left:37.70%;width:31.15%;background:#4285F4"></span></span><span class="bv">+3.8</span></div>
+<div class="brow "><span class="bl">VisDial</span><span class="track"><span class="zero" style="left:37.70%"></span><span class="bar" style="left:37.70%;width:27.05%;background:#4285F4"></span></span><span class="bv">+3.3</span></div>
+<div class="brow "><span class="bl">FashionIQ</span><span class="track"><span class="zero" style="left:37.70%"></span><span class="bar" style="left:37.70%;width:25.41%;background:#4285F4"></span></span><span class="bv">+3.1</span></div>
+<div class="brow "><span class="bl">VisualNews t2i</span><span class="track"><span class="zero" style="left:37.70%"></span><span class="bar" style="left:37.70%;width:22.95%;background:#4285F4"></span></span><span class="bv">+2.8</span></div>
+<div class="brow "><span class="bl">MSCOCO t2i</span><span class="track"><span class="zero" style="left:37.70%"></span><span class="bar" style="left:37.70%;width:22.13%;background:#4285F4"></span></span><span class="bv">+2.7</span></div>
+<div class="brow "><span class="bl">EDIS</span><span class="track"><span class="zero" style="left:37.70%"></span><span class="bar" style="left:37.70%;width:20.49%;background:#4285F4"></span></span><span class="bv">+2.5</span></div>
+<div class="brow "><span class="bl">WebQA</span><span class="track"><span class="zero" style="left:37.70%"></span><span class="bar" style="left:37.70%;width:20.49%;background:#4285F4"></span></span><span class="bv">+2.5</span></div>
+<div class="brow "><span class="bl">OVEN</span><span class="track"><span class="zero" style="left:37.70%"></span><span class="bar" style="left:37.70%;width:13.11%;background:#4285F4"></span></span><span class="bv">+1.6</span></div>
+<div class="brow "><span class="bl">NIGHTS</span><span class="track"><span class="zero" style="left:37.70%"></span><span class="bar" style="left:31.97%;width:5.74%;background:#D96570"></span></span><span class="bv">-0.7</span></div>
+<div class="brow "><span class="bl">VisualNews i2t</span><span class="track"><span class="zero" style="left:37.70%"></span><span class="bar" style="left:23.77%;width:13.93%;background:#D96570"></span></span><span class="bv">-1.7</span></div>
+<div class="brow "><span class="bl">MSCOCO i2t</span><span class="track"><span class="zero" style="left:37.70%"></span><span class="bar" style="left:4.10%;width:33.61%;background:#D96570"></span></span><span class="bv">-4.1</span></div>
+</div>
+    </div>
+    <div class="tile chart reveal" style="margin-top:20px">
+      <p class="bh">Gemma 4, backbone swapped, no training <span>gain over the first stage</span></p>
+      <div class="sv" style="margin-top:8px"><svg viewBox="0 0 900 410" role="img" aria-label="Gain over the first stage against model size">
 <line x1="70" x2="884" y1="299.4" y2="299.4" stroke="#E3E3E8" stroke-width="1"/>
 <text x="62" y="303.4" class="tick" text-anchor="end">-12</text>
 <line x1="70" x2="884" y1="250.1" y2="250.1" stroke="#E3E3E8" stroke-width="1"/>
@@ -557,54 +739,58 @@ footer a { color: var(--text); }
 <span class="lg"><svg viewBox="0 0 16 16" width="16" height="16"><polygon points="8.0,2.8 13.0,6.4 11.1,12.2 4.9,12.2 3.0,6.4" fill="#FFFFFF" stroke="#6E6E73" stroke-width="1.8"/></svg>Qwen3-VL-Reranker-8B</span>
 <span class="lg"><svg viewBox="0 0 16 16" width="16" height="16"><polygon points="8.0,2.2 9.5,6.0 13.5,6.2 10.4,8.8 11.4,12.7 8.0,10.5 4.6,12.7 5.6,8.8 2.5,6.2 6.5,6.0" fill="#FFFFFF" stroke="#6E6E73" stroke-width="1.8"/></svg>Qwen3.8-27B, choice</span>
 <span class="lg"><svg viewBox="0 0 16 16" width="16" height="16"><path d="M4.0,4.0 L12.0,12.0 M4.0,12.0 L12.0,4.0" stroke="#6E6E73" stroke-width="2.2" stroke-linecap="round"/></svg>JEV-27B-VL, choice</span></div>
-      <p class="cap">Gain over the first stage, in points of each benchmark's metric. Lines: the choice readout on the five Gemma 4 models, at their total parameters. Hollow markers: the rerankers of the main setup at their nominal size, coloured by benchmark; JEV-27B-VL is drawn slightly to the right of Qwen3.8-27B. Gemma 4 keeps its processor's default of 280 visual tokens per image, against up to 1800 for the other models, so the comparison across families changes the image budget along with the backbone.</p>
+      <p class="cap">E2B and E4B fall below the first stage; from 12B upward, pages gain. Gemma 4 uses its processor's default of 280 visual tokens per image (others: up to 1800).</p>
     </div>
   </div>
 </section>
 
-<section id="efficiency">
+<section class="alt" id="efficiency">
   <div class="wrap">
     <div class="head center reveal">
       <p class="eyebrow grad">Efficiency</p>
       <h2>One prefill per query.</h2>
-      <p class="intro">Latency per query on one H200 at concurrency 1, for the same top-16 ViDoRe V3 pages (100 English queries), preprocessing included.</p>
     </div>
-    <div class="stats">
-      <div class="tile stat reveal"><p class="n">3.97<small>s</small></p><p>One choice pass of Qwen3.8-27B</p></div>
-      <div class="tile stat reveal"><p class="n">3.67<small>s</small></p><p>Reranker-8B with its released code, the 16 pairs in sequence</p></div>
-      <div class="tile stat reveal"><p class="n">2.61<small>s</small></p><p>Reranker-8B with the 16 pairs in one batch</p></div>
-    </div>
-    <p class="cap reveal" style="text-align:center;margin-top:22px">One choice pass takes 1.1 times as long as Reranker-8B with its released code and 1.5 times as long with batched scoring; all three read about 29k input tokens per query. JEV-27B-VL takes 4.48 s; a Gemma 4 model takes 0.47 to 1.27 s at about 4.4k input tokens.</p>
-  </div>
-</section>
-
-<section class="alt" id="views">
-  <div class="wrap">
-    <div class="head center reveal">
-      <p class="eyebrow grad">Alternative views</p>
-      <h2>What challenges the position.</h2>
-    </div>
-    <div class="grid g2">
-      <div class="tile reveal"><p class="label">AV1</p><h3>Stronger VLMs make stronger dedicated rerankers too</h3><p>Our comparison changes supervision together with scale and model generation. It shows that a zero-shot VLM can match a dedicated 8B reranker on MMEB-V2 visual documents today, and leaves open whether it would match a dedicated reranker trained from the same backbone.</p></div>
-      <div class="tile reveal"><p class="label">AV2</p><h3>A general VLM is too expensive</h3><p>Qwen3.8-27B has more than three times the parameters of Reranker-8B and takes 1.1 to 1.5 times as long per query. A system that already serves a VLM could rerank with the same model.</p></div>
-      <div class="tile reveal"><p class="label">AV3</p><h3>Small models cannot do it</h3><p>Gemma 4 E2B and E4B lower the first stage where Reranker-2B improves it, so Finding 1 holds only for sufficiently large models.</p></div>
-      <div class="tile reveal"><p class="label">AV4</p><h3>Dedicated listwise rerankers already exist</h3><p>ZipRerank trains for reranking with the readout we use. Our position is that decision tuning can also produce a good reranker, and the two routes can coexist.</p></div>
-      <div class="tile reveal" style="grid-column:1 / -1"><p class="label">AV5</p><h3>The readout has practical limits</h3><p>One prompt holds at most 16 candidates under the labels A–P, and listwise readouts depend on option order and prefer some labels whatever the input. We present the candidates in first-stage order only.</p></div>
+    <div class="tile reveal">
+      <p class="bh" style="margin-bottom:18px">Seconds per query <span>one H200, the same 16 ViDoRe V3 pages</span></p>
+      <div class="bars">
+<div class="brow "><span class="bl">Reranker-2B<span class="sub">released code</span></span><span class="track"><span class="zero" style="left:0.00%"></span><span class="bar" style="left:0.00%;width:58.51%;background:#C7C7CC"></span></span><span class="bv">2.75 s</span></div>
+<div class="brow "><span class="bl">Reranker-2B<span class="sub">batched</span></span><span class="track"><span class="zero" style="left:0.00%"></span><span class="bar" style="left:0.00%;width:35.74%;background:#E5E5EA"></span></span><span class="bv">1.68 s</span></div>
+<div class="brow "><span class="bl">Reranker-8B<span class="sub">released code</span></span><span class="track"><span class="zero" style="left:0.00%"></span><span class="bar" style="left:0.00%;width:78.09%;background:#8E8E93"></span></span><span class="bv">3.67 s</span></div>
+<div class="brow "><span class="bl">Reranker-8B<span class="sub">batched</span></span><span class="track"><span class="zero" style="left:0.00%"></span><span class="bar" style="left:0.00%;width:55.53%;background:#C7C7CC"></span></span><span class="bv">2.61 s</span></div>
+<div class="brow ours"><span class="bl">Qwen3.8-27B<span class="sub">one choice pass</span></span><span class="track"><span class="zero" style="left:0.00%"></span><span class="bar" style="left:0.00%;width:84.47%;background:#4285F4"></span></span><span class="bv">3.97 s</span></div>
+<div class="brow ours"><span class="bl">JEV-27B-VL<span class="sub">one choice pass</span></span><span class="track"><span class="zero" style="left:0.00%"></span><span class="bar" style="left:0.00%;width:95.32%;background:#9B72CB"></span></span><span class="bv">4.48 s</span></div>
+</div>
+      <p class="cap">1.1× the released Reranker-8B, 1.5× a batched one. A Gemma 4 model takes 0.47 to 1.27 s.</p>
     </div>
   </div>
 </section>
 
-<section id="tests">
+<section id="views">
   <div class="wrap">
     <div class="head center reveal">
-      <p class="eyebrow grad">Testing the position</p>
-      <h2>The experiments that would tell.</h2>
+      <p class="eyebrow grad">Alternative views and tests</p>
+      <h2>What challenges the position, and what would tell.</h2>
     </div>
-    <div class="grid g2">
-      <div class="tile reveal"><h3>Multimodal decision tuning</h3><p>Tune a VLM on decisions of many kinds that include visual options. The position is refuted if this tuning does not improve its reranking, in particular on natural images and on queries that are an image alone.</p></div>
-      <div class="tile reveal"><h3>The gap on one backbone</h3><p>On one VLM at several sizes, compare the zero-shot choice, the same model after multimodal decision tuning, and a dedicated reranker trained from it.</p></div>
-      <div class="tile reveal"><h3>Backbone and image budget</h3><p>Run Qwen3.8-27B at the image budget of Gemma 4, or Gemma 4 at a larger one, to tell whether the gap between the two families comes from the backbone or from the image budget.</p></div>
-      <div class="tile reveal"><h3>The choice readout</h3><p>Measure how the choice probabilities change with the order of the candidates and how well they are calibrated, and correct for order, for example by averaging over cyclic rotations.</p></div>
+    <div class="lists">
+      <div class="tile reveal">
+        <h3>Alternative views</h3>
+        <ul>
+          <li><b>Stronger VLMs make stronger dedicated rerankers too</b><span>Scale and model generation differ; the same-backbone comparison is open.</span></li>
+          <li><b>A general VLM is too expensive</b><span>More than 3× the parameters and 1.1–1.5× the latency of Reranker-8B; no extra model if the VLM is already served.</span></li>
+          <li><b>Small models cannot do it</b><span>Gemma 4 E2B and E4B lower the first stage.</span></li>
+          <li><b>Dedicated listwise rerankers already exist</b><span>ZipRerank trains a reranker with the same readout; the two routes can coexist.</span></li>
+          <li><b>The readout has practical limits</b><span>At most 16 candidates per prompt; option order and label preferences matter.</span></li>
+        </ul>
+      </div>
+      <div class="tile reveal">
+        <h3>Testing the position</h3>
+        <ul>
+          <li><b>Multimodal decision tuning</b><span>Refuted if it does not improve reranking, above all on natural images and image-only queries.</span></li>
+          <li><b>The gap on one backbone</b><span>Zero-shot vs. decision-tuned vs. dedicated, one VLM at several sizes.</span></li>
+          <li><b>Backbone and image budget</b><span>Qwen3.8-27B at Gemma 4's budget, or Gemma 4 at a larger one.</span></li>
+          <li><b>The choice readout</b><span>Measure order sensitivity and calibration, and correct for order.</span></li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
@@ -628,6 +814,10 @@ footer a { color: var(--text); }
   url           = {https://arxiv.org/abs/2610.28435}
 }</pre>
       </div>
+      <details class="reveal" id="abstract">
+        <summary>Read the abstract</summary>
+        <div><p class="abstract">Multimodal rerankers are usually dedicated models: a vision-language model (VLM) is trained on retrieval data to score the candidates of a query. Scoring options is not specific to reranking. System One decision models such as Jev map a state and a typed question to one probability per option without generating text, and general models can make such decisions with little or no training. Reranking is one such decision, with the query and its candidates as the state and the candidates as the options. We therefore argue that a general VLM can serve as a multimodal reranker through System One decisions, and that decision tuning can improve its reranking. We ask a VLM one choice question over the top 16 candidates of a first-stage retriever and rank the candidates by the probabilities of their labels, read from one forward pass. On MMEB-V2 image retrieval, this choice scores 5.4 to 7.3 hit@1 above a yes/no question per candidate, and the yes/no question falls below the first stage. With the choice, zero-shot Qwen3.8-27B beats the supervised Qwen3-VL-Reranker-2B on all three benchmarks and comes within 1.6 points of Reranker-8B on each. It matches Reranker-8B on MMEB-V2 visual documents (84.79 vs. 84.78 nDCG@5), at 1.1 to 1.5 times its latency. JEV-27B-VL, the same backbone tuned on text decisions only, improves page reranking by 0.6 to 1.1 points, with gains on most tasks (sign test, p ≤ 0.017), and leaves natural images unchanged. The zero-shot model is larger than the supervised rerankers and of a newer generation, so these comparisons are confounded; we discuss this and other alternative views, and the experiments that would test the position.</p></div>
+      </details>
     </div>
   </div>
 </section>
